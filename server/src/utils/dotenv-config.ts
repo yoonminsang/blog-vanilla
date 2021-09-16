@@ -3,5 +3,5 @@ import path from 'path';
 
 export default () =>
   dotenv.config({
-    path: path.resolve(process.cwd(), process.env.NODE_ENV === 'development' ? '.env.dev' : '.env'),
+    path: path.resolve(process.cwd(), process.env.NODE_ENV === 'development' ? '.dev.env' : '.env'),
   });
