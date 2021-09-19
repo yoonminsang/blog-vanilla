@@ -1,3 +1,4 @@
+import { USER_ENTITY } from 'constants/entity';
 import { Column, Entity, PrimaryColumn, Generated, OneToMany } from 'typeorm';
 import { BaseTimeEntity } from './base-time-entity';
 import Chatting from './chatting';
@@ -10,10 +11,10 @@ class User extends BaseTimeEntity {
   @Generated('uuid')
   id!: string;
 
-  @Column({ type: 'varchar', unique: true, length: 45 })
+  @Column({ type: 'varchar', unique: true, length: USER_ENTITY.emailMaxLength })
   email!: string;
 
-  @Column({ type: 'varchar', length: 15 })
+  @Column({ type: 'varchar', unique: true, length: USER_ENTITY.nicknameMaxLength })
   nickname!: string;
 
   @Column({ type: 'char', nullable: true, length: 60 })
