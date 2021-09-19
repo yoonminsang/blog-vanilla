@@ -18,6 +18,8 @@
     "import/prefer-default-export": "off",
     "import/no-unresolved": "off",
     "import/extensions": "off",
-    "no-console": "off"
+    "no-console": "off",
+    "class-methods-use-this": "off",
+    "no-else-return": "off"
   }
 }
