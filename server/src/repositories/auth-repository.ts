@@ -1,10 +1,10 @@
 import { EntityRepository, Repository } from 'typeorm';
 import User from 'entity/user';
-import { ICheckEmail, ICheckNickname, ICheckUser, ICreateUser } from 'types/auth';
+import { ICheckEmail, ICheckNickname, IGetUser, ICreateUser } from 'types/auth';
 
 @EntityRepository(User)
 class AuthRepository extends Repository<User> {
-  checkUser({ id }: ICheckUser) {
+  getUser({ id }: IGetUser) {
     return this.createQueryBuilder('user')
       .select(['user.id', 'user.email', 'user.nickname'])
       .where('user.id = :id', { id })

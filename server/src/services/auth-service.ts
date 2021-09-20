@@ -3,11 +3,11 @@ import bcrypt from 'bcryptjs';
 import User from 'entity/user';
 import AuthRepository from 'repositories/auth-repository';
 import errorGenerator from 'error/error-generator';
-import { ICheckUser, ICreateUser } from 'types/auth';
+import { IGetUser, ICreateUser } from 'types/auth';
 
 class AuthService {
-  async checkUser({ id }: ICheckUser): Promise<User | undefined> {
-    const user = await getCustomRepository(AuthRepository).checkUser({ id });
+  async getUser({ id }: IGetUser): Promise<User | undefined> {
+    const user = await getCustomRepository(AuthRepository).getUser({ id });
     return user;
   }
 

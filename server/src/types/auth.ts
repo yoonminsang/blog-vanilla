@@ -1,4 +1,4 @@
-export interface ICheckUser {
+export interface IGetUser {
   id: string;
 }
 
