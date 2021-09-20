@@ -1,4 +1,5 @@
 import { getCustomRepository } from 'typeorm';
+import bcrypt from 'bcryptjs';
 import User from 'entity/user';
 import AuthRepository from 'repositories/auth-repository';
 import errorGenerator from 'error/error-generator';
@@ -27,9 +28,9 @@ class AuthService {
       });
     }
 
-    // TODO : 비밀번호 암호화
-
-    const userId = await getCustomRepository(AuthRepository).createUser({ email, nickname, password });
+    const hashSaltRound = Number(process.env.HASH_SALT_ROUND);
+    const hash = await bcrypt.hash(password, hashSaltRound);
+    const userId = await getCustomRepository(AuthRepository).createUser({ email, nickname, password: hash });
     return userId;
   }
 }
