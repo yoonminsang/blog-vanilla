@@ -1,17 +1,24 @@
-export interface IGetUser {
+interface IUserId {
   id: string;
 }
 
-export interface ICheckEmail {
+interface IUserEmail {
   email: string;
 }
 
-export interface ICheckNickname {
+interface IUserNickname {
   nickname: string;
 }
 
-export interface ICreateUser {
+interface IUserSignup {
   email: string;
   nickname: string;
   password: string;
 }
+
+interface IUserLogin {
+  email: string;
+  password: string;
+}
+
+export { IUserId, IUserEmail, IUserNickname, IUserSignup, IUserLogin };

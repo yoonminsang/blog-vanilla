@@ -6,7 +6,7 @@ const authRouter = Router();
 
 const authController = new AuthController();
 
-authRouter.get('/', authController.getUser);
+authRouter.get('/', authController.autoLogin);
 authRouter.post('/', authValidation, authController.signup);
 
 export default authRouter;

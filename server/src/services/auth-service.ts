@@ -3,11 +3,11 @@ import bcrypt from 'bcryptjs';
 import User from 'entity/user';
 import AuthRepository from 'repositories/auth-repository';
 import errorGenerator from 'error/error-generator';
-import { IGetUser, ICreateUser } from 'types/auth';
+import { IUserId, IUserSignup } from 'types/auth';
 
 class AuthService {
-  async getUser({ id }: IGetUser): Promise<User | undefined> {
-    const user = await getCustomRepository(AuthRepository).getUser({ id });
+  async getUserById({ id }: IUserId): Promise<User | undefined> {
+    const user = await getCustomRepository(AuthRepository).getUserById({ id });
     if (!user) {
       throw errorGenerator({
         code: 409,
@@ -17,7 +17,7 @@ class AuthService {
     return user;
   }
 
-  async signup({ email, nickname, password }: ICreateUser) {
+  async signup({ email, nickname, password }: IUserSignup) {
     const existEmail = await getCustomRepository(AuthRepository).checkEmail({ email });
     if (existEmail) {
       throw errorGenerator({
