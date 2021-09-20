@@ -12,6 +12,9 @@ const errorAuth = (err: CustomError): IError => {
     case 'duplicate nickname':
       errorMessage = '닉네임이 존재합니다';
       break;
+    case 'not found user':
+      errorMessage = '유저가 존재하지 않습니다';
+      break;
     default:
       errorMessage = '다시 시도해주세요';
       break;

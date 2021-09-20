@@ -8,6 +8,12 @@ import { IGetUser, ICreateUser } from 'types/auth';
 class AuthService {
   async getUser({ id }: IGetUser): Promise<User | undefined> {
     const user = await getCustomRepository(AuthRepository).getUser({ id });
+    if (!user) {
+      throw errorGenerator({
+        code: 409,
+        message: 'not found user',
+      });
+    }
     return user;
   }
 
