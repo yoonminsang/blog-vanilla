@@ -1,4 +1,3 @@
-import { Request } from 'express';
 import jwt, { JwtPayload, VerifyErrors } from 'jsonwebtoken';
 import { INVALID_TOKEN } from 'constants/error-message';
 import errorGenerator from 'error/error-generator';
