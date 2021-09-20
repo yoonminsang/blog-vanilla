@@ -4,6 +4,7 @@ import AuthRepository from 'repositories/auth-repository';
 import errorGenerator from 'error/error-generator';
 import { IUserId, IUserLogin, IUserSignup } from 'types/auth';
 import { comparePassword, hashPassword } from 'utils/crypto';
+import { AUTH_ERROR_MESSAGE } from 'constants/error-message';
 
 class AuthService {
   async getUserById({ id }: IUserId): Promise<User | undefined> {
@@ -11,7 +12,7 @@ class AuthService {
     if (!user) {
       throw errorGenerator({
         code: 409,
-        message: 'not found user',
+        message: AUTH_ERROR_MESSAGE.notFoundUser,
       });
     }
     return user;
@@ -22,7 +23,7 @@ class AuthService {
     if (existEmail) {
       throw errorGenerator({
         code: 400,
-        message: 'duplicate email',
+        message: AUTH_ERROR_MESSAGE.duplicateEmail,
       });
     }
 
@@ -30,7 +31,7 @@ class AuthService {
     if (existNickname) {
       throw errorGenerator({
         code: 400,
-        message: 'duplicate nickname',
+        message: AUTH_ERROR_MESSAGE.duplicateNickname,
       });
     }
 
@@ -44,14 +45,14 @@ class AuthService {
     if (!user) {
       throw errorGenerator({
         code: 409,
-        message: 'not found email',
+        message: AUTH_ERROR_MESSAGE.notFoundEmail,
       });
     }
     const compare = await comparePassword({ reqPassword: password, dbPassword: user.password });
     if (!compare) {
       throw errorGenerator({
         code: 409,
-        message: 'not found password',
+        message: AUTH_ERROR_MESSAGE.notFoundPassword,
       });
     }
     return user;
