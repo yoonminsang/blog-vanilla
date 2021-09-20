@@ -1,5 +1,6 @@
+import errorAuth from 'error/controllers/error-auth';
 import CustomError from 'error/custom-error';
-import errorHandler from 'error/error-handler';
+import errorProcess from 'error/error-process';
 import { Request, Response } from 'express';
 import AuthService from 'services/auth-service';
 
@@ -11,12 +12,10 @@ class AuthController {
     try {
       // TODO : 로그인할때 수정
       const id = '2994f573-8e9b-427b-93f3-f3dee1e0fbce';
-      const user = await service.checkUser({ id });
-      res.status(200).json(user);
+      const user = (await service.checkUser({ id })) || null;
+      res.status(200).json({ user });
     } catch (err) {
-      console.log(err);
-      const { status, errorMessage } = errorHandler(err as CustomError);
-      res.status(status).json({ errorMessage });
+      errorProcess(res, err as CustomError, errorAuth);
     }
   }
 
@@ -26,9 +25,7 @@ class AuthController {
       const userId = await service.registerUser({ email, nickname, password });
       res.status(200).json({ userId });
     } catch (err) {
-      console.log(err);
-      const { status, errorMessage } = errorHandler(err as CustomError);
-      res.status(status).json({ errorMessage });
+      errorProcess(res, err as CustomError, errorAuth);
     }
   }
 }
