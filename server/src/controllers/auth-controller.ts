@@ -28,6 +28,16 @@ class AuthController {
       errorProcess(res, err as CustomError, errorAuth);
     }
   }
+
+  async login(req: Request, res: Response) {
+    try {
+      const { email, password } = req.body;
+      const userId = await service.login({ email, password });
+      res.status(200).json({ userId });
+    } catch (err) {
+      errorProcess(res, err as CustomError, errorAuth);
+    }
+  }
 }
 
 export default AuthController;
