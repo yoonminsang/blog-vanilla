@@ -1,9 +1,9 @@
 import { getCustomRepository } from 'typeorm';
-import bcrypt from 'bcryptjs';
 import User from 'entity/user';
 import AuthRepository from 'repositories/auth-repository';
 import errorGenerator from 'error/error-generator';
-import { IUserId, IUserSignup } from 'types/auth';
+import { IUserId, IUserLogin, IUserSignup } from 'types/auth';
+import { comparePassword, hashPassword } from 'utils/crypto';
 
 class AuthService {
   async getUserById({ id }: IUserId): Promise<User | undefined> {
@@ -34,10 +34,27 @@ class AuthService {
       });
     }
 
-    const hashSaltRound = Number(process.env.HASH_SALT_ROUND);
-    const hash = await bcrypt.hash(password, hashSaltRound);
+    const hash: string = await hashPassword({ password });
     const userId = await getCustomRepository(AuthRepository).createUser({ email, nickname, password: hash });
     return userId;
+  }
+
+  async login({ email, password }: IUserLogin) {
+    const user = await getCustomRepository(AuthRepository).getUserByEmail({ email });
+    if (!user) {
+      throw errorGenerator({
+        code: 409,
+        message: 'not found email',
+      });
+    }
+    const compare = await comparePassword({ reqPassword: password, dbPassword: user.password });
+    if (!compare) {
+      throw errorGenerator({
+        code: 409,
+        message: 'not found password',
+      });
+    }
+    return user;
   }
 }
 
