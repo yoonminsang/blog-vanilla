@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
 import errorGenerator from 'error/error-generator';
-import errorHandler from 'error/error-handler';
 import { USER_ENTITY } from 'constants/entity';
 import CustomError from 'error/custom-error';
+import errorJoi from 'error/controllers/error-joi';
+import errorProcess from 'error/error-process';
 
 export const authValidation = (req: Request, res: Response, next: NextFunction): void => {
   try {
@@ -53,8 +54,6 @@ export const authValidation = (req: Request, res: Response, next: NextFunction):
 
     next();
   } catch (err) {
-    console.log(err);
-    const { status, errorMessage } = errorHandler(err as CustomError);
-    res.status(status).json({ errorMessage });
+    errorProcess(res, err as CustomError, errorJoi);
   }
 };
