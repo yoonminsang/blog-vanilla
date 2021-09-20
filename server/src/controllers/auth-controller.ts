@@ -19,10 +19,10 @@ class AuthController {
     }
   }
 
-  async registerUser(req: Request, res: Response) {
+  async signup(req: Request, res: Response) {
     try {
       const { email, nickname, password } = req.body;
-      const userId = await service.registerUser({ email, nickname, password });
+      const userId = await service.signup({ email, nickname, password });
       res.status(200).json({ userId });
     } catch (err) {
       errorProcess(res, err as CustomError, errorAuth);

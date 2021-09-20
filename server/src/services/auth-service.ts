@@ -17,7 +17,7 @@ class AuthService {
     return user;
   }
 
-  async registerUser({ email, nickname, password }: ICreateUser) {
+  async signup({ email, nickname, password }: ICreateUser) {
     const existEmail = await getCustomRepository(AuthRepository).checkEmail({ email });
     if (existEmail) {
       throw errorGenerator({

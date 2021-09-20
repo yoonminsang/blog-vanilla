@@ -7,6 +7,6 @@ const authRouter = Router();
 const authController = new AuthController();
 
 authRouter.get('/', authController.getUser);
-authRouter.post('/', authValidation, authController.registerUser);
+authRouter.post('/', authValidation, authController.signup);
 
 export default authRouter;
