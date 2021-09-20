@@ -26,7 +26,7 @@ class AuthRepository extends Repository<User> {
     return user.identifiers[0].id;
   }
 
-  async getUserByEmail({ email }: IUserEmail) {
+  getUserByEmail({ email }: IUserEmail) {
     return this.createQueryBuilder('user')
       .select(['user.id', 'user.email', 'user.nickname'])
       .where('user.email = :email', { email })
