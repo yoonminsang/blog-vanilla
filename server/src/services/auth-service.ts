@@ -48,6 +48,7 @@ class AuthService {
         message: AUTH_ERROR_MESSAGE.notFoundEmail,
       });
     }
+
     const compare = await comparePassword({ reqPassword: password, dbPassword: user.password });
     if (!compare) {
       throw errorGenerator({
