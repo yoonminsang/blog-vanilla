@@ -15,6 +15,10 @@ const errorAuth = (err: CustomError): IError => {
     case 'not found user':
       errorMessage = '유저가 존재하지 않습니다';
       break;
+    case 'not found email':
+    case 'not found password':
+      errorMessage = '이메일 또는 비밀번호가 일치하지 않습니다';
+      break;
     default:
       errorMessage = '다시 시도해주세요';
       break;
