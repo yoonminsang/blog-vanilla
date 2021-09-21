@@ -3,7 +3,7 @@ import CustomError from 'error/custom-error';
 import errorProcess from 'error/error-process';
 import { Request, Response } from 'express';
 import AuthService from 'services/auth-service';
-// import { decodeToken } from 'utils/jwt';
+import { getAccessToken, getRefreshToken } from 'utils/jwt';
 
 // TODO : 클래스 인스턴스 바인딩하기!!
 const service = new AuthService();
@@ -11,11 +11,15 @@ const service = new AuthService();
 class AuthController {
   async autoLogin(req: Request, res: Response) {
     try {
-      // TODO : 로그인할때 수정
-      // console.log(decodeToken('access', '123123'));
-      const id = '2994f573-8e9b-427b-93f3-f3dee1e0fbce';
-      const user = (await service.getUserById({ id })) || null;
-      res.status(200).json({ user });
+      const accessToken = getAccessToken(req.headers.authorization);
+      const refreshToken = getRefreshToken(req.cookies);
+      const { newAccessToken, newRefreshToken, nickname } = await service.autoLogin({ accessToken, refreshToken });
+
+      if (newRefreshToken) {
+        res.cookie('refreshtoken', refreshToken, { httpOnly: true });
+      }
+
+      res.status(200).json({ nickname, accessToken: newAccessToken });
     } catch (err) {
       errorProcess(res, err as CustomError, errorAuth);
     }
@@ -24,8 +28,9 @@ class AuthController {
   async signup(req: Request, res: Response) {
     try {
       const { email, nickname, password } = req.body;
-      const userId = await service.signup({ email, nickname, password });
-      res.status(200).json({ userId });
+      const { accessToken, refreshToken } = await service.signup({ email, nickname, password });
+      res.cookie('refreshtoken', refreshToken, { httpOnly: true });
+      res.status(201).json({ nickname, accessToken });
     } catch (err) {
       errorProcess(res, err as CustomError, errorAuth);
     }
@@ -34,8 +39,9 @@ class AuthController {
   async login(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
-      const userId = await service.login({ email, password });
-      res.status(200).json({ userId });
+      const { nickname, accessToken, refreshToken } = await service.login({ email, password });
+      res.cookie('refreshtoken', refreshToken, { httpOnly: true });
+      res.status(200).json({ nickname, accessToken });
     } catch (err) {
       errorProcess(res, err as CustomError, errorAuth);
     }
