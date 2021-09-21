@@ -10,6 +10,9 @@ const AUTH_ERROR_MESSAGE = {
   notFoundPassword: 'not found password',
 };
 
-const INVALID_TOKEN = 'invalid token';
+const TOEKN_ERROR_MESSAGE = {
+  invalidToken: 'invalid token',
+  expiredToken: 'expired token',
+};
 
-export { JOI_ERROR_MESSAGE, AUTH_ERROR_MESSAGE, INVALID_TOKEN };
+export { JOI_ERROR_MESSAGE, AUTH_ERROR_MESSAGE, TOEKN_ERROR_MESSAGE };
