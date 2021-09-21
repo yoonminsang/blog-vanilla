@@ -2,20 +2,44 @@ import { getCustomRepository } from 'typeorm';
 import User from 'entity/user';
 import AuthRepository from 'repositories/auth-repository';
 import errorGenerator from 'error/error-generator';
-import { IUserId, IUserLogin, IUserSignup } from 'types/auth';
+import { IUserLogin, IUserSignup } from 'types/auth';
 import { comparePassword, hashPassword } from 'utils/crypto';
-import { AUTH_ERROR_MESSAGE } from 'constants/error-message';
+import { AUTH_ERROR_MESSAGE, TOEKN_ERROR_MESSAGE } from 'constants/error-message';
+import { checkTokenExpiration, createToken, decodeTokenOption } from 'utils/jwt';
+
+interface IToken {
+  accessToken: string | undefined;
+  refreshToken: string | undefined;
+}
 
 class AuthService {
-  async getUserById({ id }: IUserId): Promise<User | undefined> {
-    const user = await getCustomRepository(AuthRepository).getUserById({ id });
-    if (!user) {
+  async autoLogin({ accessToken, refreshToken }: IToken) {
+    if (!(refreshToken && accessToken)) {
       throw errorGenerator({
-        code: 409,
-        message: AUTH_ERROR_MESSAGE.notFoundUser,
+        code: 403,
+        message: TOEKN_ERROR_MESSAGE.invalidToken,
       });
     }
-    return user;
+
+    const isAccessTokenExpired = await checkTokenExpiration('access', accessToken);
+    const isRefreshTokenExpired = await checkTokenExpiration('refresh', refreshToken);
+
+    if (isAccessTokenExpired && isRefreshTokenExpired) {
+      throw errorGenerator({
+        code: 401,
+        message: TOEKN_ERROR_MESSAGE.expiredToken,
+      });
+    }
+
+    if (isRefreshTokenExpired) {
+      const { id, nickname } = decodeTokenOption('refresh', refreshToken);
+      const newRefreshToken = createToken('refresh', { id, nickname });
+      return { newRefreshToken, nickname };
+    } else {
+      const { id, nickname } = decodeTokenOption('access', accessToken);
+      const newAccessToken = createToken('access', { id, nickname });
+      return { newAccessToken, nickname };
+    }
   }
 
   async signup({ email, nickname, password }: IUserSignup) {
@@ -36,27 +60,39 @@ class AuthService {
     }
 
     const hash: string = await hashPassword({ password });
-    const userId = await getCustomRepository(AuthRepository).createUser({ email, nickname, password: hash });
-    return userId;
+    const id: string = await getCustomRepository(AuthRepository).createUser({
+      email,
+      nickname,
+      password: hash,
+    });
+
+    const accessToken = createToken('access', { id, nickname });
+    const refreshToken = createToken('refresh', { id, nickname });
+
+    return { accessToken, refreshToken };
   }
 
   async login({ email, password }: IUserLogin) {
-    const user = await getCustomRepository(AuthRepository).getUserByEmail({ email });
+    const user = (await getCustomRepository(AuthRepository).getUserByEmail({ email })) as User;
     if (!user) {
       throw errorGenerator({
         code: 409,
         message: AUTH_ERROR_MESSAGE.notFoundEmail,
       });
     }
+    const { id, nickname, password: dbPassword } = user;
 
-    const compare = await comparePassword({ reqPassword: password, dbPassword: user.password });
+    const compare = await comparePassword({ reqPassword: password, dbPassword });
     if (!compare) {
       throw errorGenerator({
         code: 409,
         message: AUTH_ERROR_MESSAGE.notFoundPassword,
       });
     }
-    return user;
+
+    const accessToken = createToken('access', { id, nickname });
+    const refreshToken = createToken('refresh', { id, nickname });
+    return { nickname, accessToken, refreshToken };
   }
 }
 
