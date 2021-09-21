@@ -1,16 +1,9 @@
 import { EntityRepository, Repository } from 'typeorm';
 import User from 'entity/user';
-import { IUserEmail, IUserId, IUserNickname, IUserSignup } from 'types/auth';
+import { IUserEmail, IUserNickname, IUserSignup } from 'types/auth';
 
 @EntityRepository(User)
 class AuthRepository extends Repository<User> {
-  getUserById({ id }: IUserId) {
-    return this.createQueryBuilder('user')
-      .select(['user.id', 'user.email', 'user.nickname'])
-      .where('user.id = :id', { id })
-      .getOne();
-  }
-
   async checkEmail({ email }: IUserEmail) {
     const user = await this.createQueryBuilder('user').where('user.email = :email', { email }).getOne();
     return !!user;
@@ -28,7 +21,7 @@ class AuthRepository extends Repository<User> {
 
   getUserByEmail({ email }: IUserEmail) {
     return this.createQueryBuilder('user')
-      .select(['user.id', 'user.email', 'user.nickname'])
+      .select(['user.id', 'user.nickname', 'user.password'])
       .where('user.email = :email', { email })
       .getOne();
   }
