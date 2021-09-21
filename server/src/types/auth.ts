@@ -1,7 +1,3 @@
-interface IUserId {
-  id: string;
-}
-
 interface IUserEmail {
   email: string;
 }
@@ -21,4 +17,4 @@ interface IUserLogin {
   password: string;
 }
 
-export { IUserId, IUserEmail, IUserNickname, IUserSignup, IUserLogin };
+export { IUserEmail, IUserNickname, IUserSignup, IUserLogin };
