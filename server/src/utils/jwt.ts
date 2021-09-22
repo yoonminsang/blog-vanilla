@@ -23,14 +23,14 @@ const getSecret = (tokenType: TokenType): string => {
 const createToken = (tokenType: TokenType, option: ITokenOption): string => {
   const exp = getExp(tokenType);
   const secret = getSecret(tokenType);
-  const token = jwt.sign({ exp, option }, secret);
+  const token = jwt.sign({ exp, ...option }, secret);
   return token;
 };
 
 const decodeToken = (tokenType: TokenType, token: string): JwtPayload => {
   const secret = getSecret(tokenType);
   const decoded = jwt.verify(token, secret);
-  if (typeof decoded !== 'object' || !decoded.option) {
+  if (typeof decoded !== 'object') {
     throw errorGenerator({
       code: 403,
       message: TOEKN_ERROR_MESSAGE.invalidToken,
@@ -40,38 +40,12 @@ const decodeToken = (tokenType: TokenType, token: string): JwtPayload => {
   return decoded;
 };
 
-const decodeTokenOption = (tokenType: TokenType, token: string): ITokenOption => {
-  const {
-    option: { id, nickname },
-  } = decodeToken(tokenType, token);
-  return { id, nickname };
-};
-
 const getAccessToken = (authorization: string | undefined): string | undefined => {
   return authorization?.split('Bearer ')[1];
 };
 
 const getRefreshToken = (cookies: { refreshtoken: string | undefined }): string | undefined => {
   return cookies?.refreshtoken;
-};
-
-const checkTokenExpiration = (tokenType: TokenType, token: string): Promise<boolean> => {
-  return new Promise((resolve, reject) => {
-    const secret = getSecret(tokenType);
-    jwt.verify(token, secret, (err: VerifyErrors | null) => {
-      if (err?.name === 'TokenExpiredError') {
-        resolve(true);
-      }
-      if (err) {
-        const error = errorGenerator({
-          code: 403,
-          message: TOEKN_ERROR_MESSAGE.invalidToken,
-        });
-        reject(error);
-      }
-      resolve(false);
-    });
-  });
 };
 
 const checkTokenValid = (tokenType: TokenType, token: string): Promise<boolean> => {
@@ -86,4 +60,4 @@ const checkTokenValid = (tokenType: TokenType, token: string): Promise<boolean> 
   });
 };
 
-export { createToken, decodeTokenOption, getAccessToken, getRefreshToken, checkTokenExpiration, checkTokenValid };
+export { createToken, decodeToken, getAccessToken, getRefreshToken, checkTokenValid };
