@@ -4,44 +4,10 @@ import AuthRepository from 'repositories/auth-repository';
 import errorGenerator from 'error/error-generator';
 import { IUserLogin, IUserSignup } from 'types/auth';
 import { comparePassword, hashPassword } from 'utils/crypto';
-import { AUTH_ERROR_MESSAGE, TOEKN_ERROR_MESSAGE } from 'constants/error-message';
-import { checkTokenExpiration, createToken, decodeTokenOption } from 'utils/jwt';
-
-interface IToken {
-  accessToken: string | undefined;
-  refreshToken: string | undefined;
-}
+import { AUTH_ERROR_MESSAGE } from 'constants/error-message';
+import { createToken } from 'utils/jwt';
 
 class AuthService {
-  async autoLogin({ accessToken, refreshToken }: IToken) {
-    if (!(refreshToken && accessToken)) {
-      throw errorGenerator({
-        code: 403,
-        message: TOEKN_ERROR_MESSAGE.invalidToken,
-      });
-    }
-
-    const isAccessTokenExpired = await checkTokenExpiration('access', accessToken);
-    const isRefreshTokenExpired = await checkTokenExpiration('refresh', refreshToken);
-
-    if (isAccessTokenExpired && isRefreshTokenExpired) {
-      throw errorGenerator({
-        code: 401,
-        message: TOEKN_ERROR_MESSAGE.expiredToken,
-      });
-    }
-
-    if (isRefreshTokenExpired) {
-      const { id, nickname } = decodeTokenOption('refresh', refreshToken);
-      const newRefreshToken = createToken('refresh', { id, nickname });
-      return { newRefreshToken, nickname };
-    } else {
-      const { id, nickname } = decodeTokenOption('access', accessToken);
-      const newAccessToken = createToken('access', { id, nickname });
-      return { newAccessToken, nickname };
-    }
-  }
-
   async signup({ email, nickname, password }: IUserSignup) {
     const existEmail = await getCustomRepository(AuthRepository).checkEmail({ email });
     if (existEmail) {
