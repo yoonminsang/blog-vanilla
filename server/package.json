@@ -6,10 +6,11 @@
   "author": "yoonminsang <apdlyooapdl@naver.com>",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=development tsc-watch --onSuccess \"ts-node -r tsconfig-paths/register ./dist/app.js\" ",
+    "start": "cross-env NODE_ENV=development && tsc-watch --onSuccess \"ts-node --files -r tsconfig-paths/register dist/app.js\" ",
     "build": "tsc",
-    "lint": "eslint ./src --ext .ts --parser-options=project:'./tsconfig.json'",
-    "lint:fix": "eslint ./src --ext .ts --parser-options=project:'./tsconfig.json' --fix"
+    "deploy": "cross-env NODE_ENV=production && eslint && tsc && ts-node --files -r tsconfig-paths/register dist/app.js",
+    "lint": "eslint src --ext .ts --parser-options=project:'tsconfig.json'",
+    "lint:fix": "eslint src --ext .ts --parser-options=project:'tsconfig.json' --fix"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
