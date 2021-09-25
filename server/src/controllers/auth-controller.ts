@@ -20,7 +20,7 @@ class AuthController {
   async signup(req: Request, res: Response) {
     try {
       const { email, nickname, password } = req.body;
-      const { accessToken, refreshToken } = await service.signup({ email, nickname, password });
+      const { accessToken, refreshToken } = await service.signup(email, nickname, password);
       res.cookie('refreshtoken', refreshToken, {
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7일
@@ -34,7 +34,7 @@ class AuthController {
   async login(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
-      const { nickname, accessToken, refreshToken } = await service.login({ email, password });
+      const { nickname, accessToken, refreshToken } = await service.login(email, password);
       res.cookie('refreshtoken', refreshToken, {
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7일

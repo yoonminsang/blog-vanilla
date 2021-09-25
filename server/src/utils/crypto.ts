@@ -1,20 +1,11 @@
 import bcrypt from 'bcryptjs';
 
-interface IHashPassword {
-  password: string;
-}
-
-interface IComparePassword {
-  reqPassword: string;
-  dbPassword: string;
-}
-
-const hashPassword = ({ password }: IHashPassword) => {
+const hashPassword = (password: string) => {
   const hashSaltRound = Number(process.env.HASH_SALT_ROUND);
   return bcrypt.hash(password, hashSaltRound);
 };
 
-const comparePassword = ({ reqPassword, dbPassword }: IComparePassword) => {
+const comparePassword = (reqPassword: string, dbPassword: string) => {
   return bcrypt.compare(reqPassword, dbPassword);
 };
 
