@@ -4,6 +4,7 @@ const USER_ENTITY = {
   nicknameMaxLength: 15,
   passwordMinLength: 4,
   passwordMaxLength: 20,
+  hashPasswordLength: 60,
 };
 
 const POST_ENTITY = {
