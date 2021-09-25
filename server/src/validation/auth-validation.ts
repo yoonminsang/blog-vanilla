@@ -3,10 +3,11 @@ import Joi from 'joi';
 import errorGenerator from 'error/error-generator';
 import { USER_ENTITY } from 'constants/entity';
 import CustomError from 'error/custom-error';
-import errorJoi from 'error/controllers/error-joi';
+import errorJoi from 'error/error-handler/error-joi';
 import errorProcess from 'error/error-process';
+import { JOI_ERROR_MESSAGE } from 'constants/error-message';
 
-export const authValidation = (req: Request, res: Response, next: NextFunction): void => {
+const authValidation = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const schema = Joi.object({
       email: Joi.string()
@@ -47,7 +48,7 @@ export const authValidation = (req: Request, res: Response, next: NextFunction):
     if (error) {
       throw errorGenerator({
         code: 400,
-        message: 'invalid request body',
+        message: JOI_ERROR_MESSAGE.invalidRequestBody,
         customMessage: error.message,
       });
     }
@@ -57,3 +58,5 @@ export const authValidation = (req: Request, res: Response, next: NextFunction):
     errorProcess(res, err as CustomError, errorJoi);
   }
 };
+
+export default authValidation;
