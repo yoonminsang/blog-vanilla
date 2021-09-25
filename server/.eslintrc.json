@@ -20,6 +20,7 @@
     "import/extensions": "off",
     "no-console": "off",
     "class-methods-use-this": "off",
-    "no-else-return": "off"
+    "no-else-return": "off",
+    "consistent-return": "off"
   }
 }
