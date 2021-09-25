@@ -17,7 +17,7 @@ class User extends BaseTimeEntity {
   @Column({ type: 'varchar', unique: true, length: USER_ENTITY.nicknameMaxLength })
   nickname!: string;
 
-  @Column({ type: 'char', nullable: true, length: 60 })
+  @Column({ type: 'char', nullable: true, length: USER_ENTITY.hashPasswordLength })
   password!: string;
 
   @OneToMany(() => Post, post => post.user)

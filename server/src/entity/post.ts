@@ -1,3 +1,4 @@
+import { POST_ENTITY } from 'constants/entity';
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseTimeEntity } from './base-time-entity';
 import Comment from './comment';
@@ -8,10 +9,10 @@ class Post extends BaseTimeEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ length: 40 })
+  @Column({ type: 'varchar', length: POST_ENTITY.titleMaxLength })
   title!: string;
 
-  @Column({ length: 15 })
+  @Column({ type: 'text' })
   content!: string;
 
   @ManyToOne(() => User, user => user.id, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
