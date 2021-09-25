@@ -4,11 +4,9 @@ import { createToken, decodeToken, getAccessToken, getRefreshToken } from 'utils
 const jwtMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const accessToken = getAccessToken(req.headers.authorization);
   const refreshToken = getRefreshToken(req.cookies);
-
-  if (!(accessToken && refreshToken)) {
-    next();
+  if (!accessToken || !refreshToken) {
+    return next();
   }
-
   const { exp: aExp, id: aId, nickname: aNickname } = decodeToken('access', accessToken as string);
   const { exp: rExp, id: rId, nickname: rNickname } = decodeToken('refresh', refreshToken as string);
   if (aId !== rId || aNickname !== rNickname) {
