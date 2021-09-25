@@ -1,4 +1,4 @@
-import errorAuth from 'error/controllers/error-auth';
+import errorAuth from 'error/error-handler/error-auth';
 import CustomError from 'error/custom-error';
 import errorProcess from 'error/error-process';
 import { Request, Response } from 'express';
