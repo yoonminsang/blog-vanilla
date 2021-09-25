@@ -6,4 +6,8 @@ const USER_ENTITY = {
   passwordMaxLength: 20,
 };
 
-export { USER_ENTITY };
+const POST_ENTITY = {
+  titleMaxLength: 40,
+};
+
+export { USER_ENTITY, POST_ENTITY };
