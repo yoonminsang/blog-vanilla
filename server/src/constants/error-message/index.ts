@@ -1,3 +1,8 @@
+const TOEKN_ERROR_MESSAGE = {
+  invalidToken: 'invalid token',
+  expiredToken: 'expired token',
+};
+
 const JOI_ERROR_MESSAGE = {
   invalidRequestBody: 'invalid request body',
 };
@@ -10,9 +15,8 @@ const AUTH_ERROR_MESSAGE = {
   notFoundPassword: 'not found password',
 };
 
-const TOEKN_ERROR_MESSAGE = {
-  invalidToken: 'invalid token',
-  expiredToken: 'expired token',
+const POST_ERROR_MESSAGE = {
+  notFoundUserId: 'not found user id',
 };
 
-export { JOI_ERROR_MESSAGE, AUTH_ERROR_MESSAGE, TOEKN_ERROR_MESSAGE };
+export { TOEKN_ERROR_MESSAGE, JOI_ERROR_MESSAGE, AUTH_ERROR_MESSAGE, POST_ERROR_MESSAGE };
