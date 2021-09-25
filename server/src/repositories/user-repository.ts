@@ -2,7 +2,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import User from 'entity/user';
 
 @EntityRepository(User)
-class AuthRepository extends Repository<User> {
+class UserRepository extends Repository<User> {
   async checkEmail(email: string): Promise<boolean> {
     const user = await this.createQueryBuilder('user').where('user.email = :email', { email }).getOne();
     return !!user;
@@ -18,12 +18,18 @@ class AuthRepository extends Repository<User> {
     return user.identifiers[0].id;
   }
 
-  getUserByEmail(email: string): Promise<User | undefined> {
-    return this.createQueryBuilder('user')
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    const user = await this.createQueryBuilder('user')
       .select(['user.id', 'user.nickname', 'user.password'])
       .where('user.email = :email', { email })
       .getOne();
+    return user;
+  }
+
+  async checkId(id: string): Promise<boolean> {
+    const user = await this.createQueryBuilder('user').where('user.id = :id', { id }).getOne();
+    return !!user;
   }
 }
 
-export default AuthRepository;
+export default UserRepository;
