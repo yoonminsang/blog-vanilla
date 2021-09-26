@@ -1,6 +1,6 @@
 import jwt, { JwtPayload, VerifyErrors } from 'jsonwebtoken';
 import errorGenerator from 'error/error-generator';
-import { TOEKN_ERROR_MESSAGE } from 'constants/error-message';
+import { JWT_ERROR_MESSAGE } from 'constants/error-message';
 
 type TokenType = 'access' | 'refresh';
 interface ITokenOption {
@@ -35,7 +35,7 @@ const decodeToken = (tokenType: TokenType, token: string): JwtPayload => {
   if (typeof decoded !== 'object') {
     throw errorGenerator({
       code: 403,
-      message: TOEKN_ERROR_MESSAGE.invalidToken,
+      message: JWT_ERROR_MESSAGE.invalidToken,
       from: FROM,
     });
   }

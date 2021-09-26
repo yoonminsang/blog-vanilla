@@ -3,7 +3,6 @@ import Joi from 'joi';
 import errorGenerator from 'error/error-generator';
 import { POST_ENTITY } from 'constants/entity';
 import CustomError from 'error/custom-error';
-import errorJoi from 'error/error-handler/error-joi';
 import errorProcess from 'error/error-process';
 import { JOI_ERROR_MESSAGE } from 'constants/error-message';
 
@@ -37,7 +36,7 @@ const postValidation = (req: Request, res: Response, next: NextFunction): void =
 
     next();
   } catch (err) {
-    errorProcess(res, err as CustomError, errorJoi);
+    errorProcess(res, err as CustomError);
   }
 };
 
