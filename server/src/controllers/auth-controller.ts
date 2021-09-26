@@ -1,23 +1,20 @@
-import errorAuth from 'error/error-handler/error-auth';
-import CustomError from 'error/custom-error';
-import errorProcess from 'error/error-process';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import AuthService from 'services/auth-service';
 
 // TODO : 클래스 인스턴스 바인딩하기!!
 const service = new AuthService();
 
 class AuthController {
-  async checkUser(req: Request, res: Response) {
+  async checkUser(req: Request, res: Response, next: NextFunction) {
     try {
       const user = req.user || null;
       res.status(200).json({ user });
     } catch (err) {
-      errorProcess(res, err as CustomError, errorAuth);
+      next(err);
     }
   }
 
-  async signup(req: Request, res: Response) {
+  async signup(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, nickname, password } = req.body;
       const { accessToken, refreshToken } = await service.signup(email, nickname, password);
@@ -27,11 +24,11 @@ class AuthController {
       });
       res.status(201).json({ nickname, accessToken });
     } catch (err) {
-      errorProcess(res, err as CustomError, errorAuth);
+      next(err);
     }
   }
 
-  async login(req: Request, res: Response) {
+  async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password } = req.body;
       const { nickname, accessToken, refreshToken } = await service.login(email, password);
@@ -41,7 +38,7 @@ class AuthController {
       });
       res.status(200).json({ nickname, accessToken });
     } catch (err) {
-      errorProcess(res, err as CustomError, errorAuth);
+      next(err);
     }
   }
 }
