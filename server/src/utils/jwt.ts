@@ -8,6 +8,8 @@ interface ITokenOption {
   nickname: string;
 }
 
+const FROM = 'jwt';
+
 const getExp = (tokenType: TokenType): number => {
   const ACCESS_TOKEN_EXPIRE_DATE = Math.floor(Date.now() / 1000) + 60 * 30; // 30분
   const REFRESH_TOKEN_EXPIRE_DATE = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7; // 7일
@@ -34,6 +36,7 @@ const decodeToken = (tokenType: TokenType, token: string): JwtPayload => {
     throw errorGenerator({
       code: 403,
       message: TOEKN_ERROR_MESSAGE.invalidToken,
+      from: FROM,
     });
   }
 

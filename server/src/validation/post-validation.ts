@@ -7,6 +7,8 @@ import errorJoi from 'error/error-handler/error-joi';
 import errorProcess from 'error/error-process';
 import { JOI_ERROR_MESSAGE } from 'constants/error-message';
 
+const FROM = 'joi';
+
 const postValidation = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const schema = Joi.object({
@@ -29,6 +31,7 @@ const postValidation = (req: Request, res: Response, next: NextFunction): void =
         code: 400,
         message: JOI_ERROR_MESSAGE.invalidRequestBody,
         customMessage: error.message,
+        from: FROM,
       });
     }
 

@@ -5,6 +5,8 @@ import { comparePassword, hashPassword } from 'utils/crypto';
 import { AUTH_ERROR_MESSAGE } from 'constants/error-message';
 import { createToken } from 'utils/jwt';
 
+const FROM = 'auth';
+
 class AuthService {
   async signup(email: string, nickname: string, password: string) {
     const existEmail = await getCustomRepository(UserRepository).checkEmail(email);
@@ -12,6 +14,7 @@ class AuthService {
       throw errorGenerator({
         code: 400,
         message: AUTH_ERROR_MESSAGE.duplicateEmail,
+        from: FROM,
       });
     }
 
@@ -20,6 +23,7 @@ class AuthService {
       throw errorGenerator({
         code: 400,
         message: AUTH_ERROR_MESSAGE.duplicateNickname,
+        from: FROM,
       });
     }
 
@@ -38,6 +42,7 @@ class AuthService {
       throw errorGenerator({
         code: 409,
         message: AUTH_ERROR_MESSAGE.notFoundEmail,
+        from: FROM,
       });
     }
     const { id, nickname, password: dbPassword } = user;
@@ -47,6 +52,7 @@ class AuthService {
       throw errorGenerator({
         code: 409,
         message: AUTH_ERROR_MESSAGE.notFoundPassword,
+        from: FROM,
       });
     }
 
