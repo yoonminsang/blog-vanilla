@@ -1,4 +1,6 @@
 import express, { Application } from 'express';
+import errorMiddleware from 'middlewares/errorMiddleware';
+import jwtMiddleware from 'middlewares/jwtMiddleware';
 import loaders from './loaders';
 import router from './routes';
 
@@ -8,11 +10,9 @@ const startServer = async () => {
 
   const port = process.env.PORT;
 
-  app.use('/api', router);
+  app.use('/api', jwtMiddleware, router);
 
-  app.all('*', (req, res) => {
-    res.status(404).send('404');
-  });
+  app.use(errorMiddleware);
 
   app.listen(port, () => {
     console.log(`Server running on ${port}`);
