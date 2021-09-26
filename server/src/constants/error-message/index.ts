@@ -1,4 +1,4 @@
-const TOEKN_ERROR_MESSAGE = {
+const JWT_ERROR_MESSAGE = {
   invalidToken: 'invalid token',
   expiredToken: 'expired token',
 };
@@ -19,4 +19,4 @@ const POST_ERROR_MESSAGE = {
   notFoundUserId: 'not found user id',
 };
 
-export { TOEKN_ERROR_MESSAGE, JOI_ERROR_MESSAGE, AUTH_ERROR_MESSAGE, POST_ERROR_MESSAGE };
+export { JWT_ERROR_MESSAGE, JOI_ERROR_MESSAGE, AUTH_ERROR_MESSAGE, POST_ERROR_MESSAGE };
