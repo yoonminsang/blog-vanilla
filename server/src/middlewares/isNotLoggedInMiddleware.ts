@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 
 const isLoggedInMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  if (req.user) {
+  if (!req.user) {
     return next();
   }
-  res.status(403).json({ errorMessage: '로그인이 필요합니다' });
+  res.status(403).json({ errorMessage: '로그아웃이 필요합니다' });
 };
 
 export default isLoggedInMiddleware;
