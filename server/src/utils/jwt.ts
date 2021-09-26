@@ -34,7 +34,7 @@ const decodeToken = (tokenType: TokenType, token: string): JwtPayload => {
   const decoded = jwt.verify(token, secret);
   if (typeof decoded !== 'object') {
     throw errorGenerator({
-      code: 403,
+      status: 403,
       message: JWT_ERROR_MESSAGE.invalidToken,
       from: FROM,
     });

@@ -11,7 +11,7 @@ class PostService {
     const existId = await getCustomRepository(UserRepository).checkId(userId);
     if (!existId) {
       throw errorGenerator({
-        code: 400,
+        status: 400,
         message: POST_ERROR_MESSAGE.notFoundUserId,
         from: FROM,
       });

@@ -48,7 +48,7 @@ const authValidation = (req: Request, res: Response, next: NextFunction): void =
 
     if (error) {
       throw errorGenerator({
-        code: 400,
+        status: 400,
         message: JOI_ERROR_MESSAGE.invalidRequestBody,
         customMessage: error.message,
         from: FROM,

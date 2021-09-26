@@ -12,7 +12,7 @@ class AuthService {
     const existEmail = await getCustomRepository(UserRepository).checkEmail(email);
     if (existEmail) {
       throw errorGenerator({
-        code: 400,
+        status: 400,
         message: AUTH_ERROR_MESSAGE.duplicateEmail,
         from: FROM,
       });
@@ -21,7 +21,7 @@ class AuthService {
     const existNickname = await getCustomRepository(UserRepository).checkNickname(nickname);
     if (existNickname) {
       throw errorGenerator({
-        code: 400,
+        status: 400,
         message: AUTH_ERROR_MESSAGE.duplicateNickname,
         from: FROM,
       });
@@ -40,7 +40,7 @@ class AuthService {
     const user = await getCustomRepository(UserRepository).getUserByEmail(email);
     if (!user) {
       throw errorGenerator({
-        code: 409,
+        status: 409,
         message: AUTH_ERROR_MESSAGE.notFoundEmail,
         from: FROM,
       });
@@ -50,7 +50,7 @@ class AuthService {
     const compare = await comparePassword(password, dbPassword);
     if (!compare) {
       throw errorGenerator({
-        code: 409,
+        status: 409,
         message: AUTH_ERROR_MESSAGE.notFoundPassword,
         from: FROM,
       });

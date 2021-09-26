@@ -9,14 +9,14 @@
 import CustomError from './custom-error';
 
 interface ParamType {
-  code: number;
+  status: number;
   message: string;
   from: string;
   customMessage?: string;
 }
 
-const errorGenerator = ({ code, message, from, customMessage }: ParamType): CustomError => {
-  return new CustomError(code, message, from, customMessage);
+const errorGenerator = ({ status, message, from, customMessage }: ParamType): CustomError => {
+  return new CustomError(status, message, from, customMessage);
 };
 
 export default errorGenerator;

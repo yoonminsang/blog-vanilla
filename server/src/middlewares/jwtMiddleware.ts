@@ -17,7 +17,7 @@ const jwtMiddleware = async (req: Request, res: Response, next: NextFunction) =>
   const { exp: rExp, id: rId, nickname: rNickname } = decodeToken('refresh', refreshToken as string);
   if (aId !== rId || aNickname !== rNickname) {
     const err = errorGenerator({
-      code: 401,
+      status: 401,
       message: JWT_ERROR_MESSAGE.invalidToken,
       from: FROM,
     });
@@ -35,7 +35,7 @@ const jwtMiddleware = async (req: Request, res: Response, next: NextFunction) =>
   if ((rExp as number) - now < 0) {
     // TODO: expiredToken:true를 줄까?? 쿠키, 로컬 값을 제거해야될까??
     const err = errorGenerator({
-      code: 401,
+      status: 401,
       message: JWT_ERROR_MESSAGE.expiredToken,
       from: FROM,
     });
