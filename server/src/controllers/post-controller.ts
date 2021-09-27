@@ -13,6 +13,16 @@ class PostController {
       next(err);
     }
   }
+
+  async readPost(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    try {
+      const post = await service.readPost(id as unknown as number);
+      res.status(200).json({ post });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export default PostController;
