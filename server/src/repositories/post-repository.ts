@@ -10,10 +10,12 @@ class PostRepository extends Repository<Post> {
 
   async readPost(id: number) {
     const post = await this.createQueryBuilder('post')
-      .select(['post.id', 'user.nickname'])
+      .select(['post.id', 'post.title', 'post.content', 'post.createdAt', 'user.nickname'])
+      .addSelect('CASE WHEN `post`.`created_at` = `post`.`updated_at` THEN 1 ELSE 0 END', 'isUpdated')
       .innerJoin('post.user', 'user')
       .where('post.id = :id', { id })
-      .getOne();
+      .getRawOne();
+    // .getOne();
     return post;
   }
 }
