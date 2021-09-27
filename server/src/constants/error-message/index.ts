@@ -5,6 +5,8 @@ const JWT_ERROR_MESSAGE = {
 
 const JOI_ERROR_MESSAGE = {
   invalidRequestBody: 'invalid request body',
+  invalidRequestParams: 'invalid request params',
+  invalidRequestQuery: 'invalid request query',
 };
 
 const AUTH_ERROR_MESSAGE = {
@@ -17,6 +19,7 @@ const AUTH_ERROR_MESSAGE = {
 
 const POST_ERROR_MESSAGE = {
   notFoundUserId: 'not found user id',
+  notFoundPostId: 'not found post id',
 };
 
 export { JWT_ERROR_MESSAGE, JOI_ERROR_MESSAGE, AUTH_ERROR_MESSAGE, POST_ERROR_MESSAGE };
