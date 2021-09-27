@@ -19,6 +19,18 @@ class PostService {
     const postId = await getCustomRepository(PostRepository).createPost(title, content, userId);
     return postId;
   }
+
+  async readPost(id: number) {
+    const post = await getCustomRepository(PostRepository).readPost(id);
+    if (!post) {
+      throw errorGenerator({
+        status: 400,
+        message: POST_ERROR_MESSAGE.notFoundPostId,
+        from: FROM,
+      });
+    }
+    return post;
+  }
 }
 
 export default PostService;
