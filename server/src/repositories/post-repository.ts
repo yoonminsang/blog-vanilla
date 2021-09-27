@@ -33,7 +33,5 @@ class PostRepository extends Repository<Post> {
     return post;
   }
 }
-// CAST ((CASE WHEN b.CurrRundate < s.ExpiryDate THEN '00'
-//             ELSE '01' END)
-//  AS VARCHAR(2)) AS RenewStatus,
+
 export default PostRepository;
