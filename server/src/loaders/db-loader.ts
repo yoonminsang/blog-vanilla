@@ -11,7 +11,8 @@ export default async (): Promise<void> => {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     synchronize: true,
-    logging: false,
+    // TODO: 로깅은 나중에 false로 수정
+    logging: true,
     entities: ['src/entity/**/*.ts'],
     migrations: ['src/migration/**/*.ts'],
     subscribers: ['src/subscriber/**/*.ts'],
