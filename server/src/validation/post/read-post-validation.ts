@@ -7,7 +7,7 @@ import { JOI_ERROR_MESSAGE } from 'constants/error-message';
 
 const FROM = 'joi';
 
-const postReadValidation = (req: Request, res: Response, next: NextFunction): void => {
+const readPostValidation = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const schema = Joi.object({
       id: Joi.number().integer().positive().required().empty(''),
@@ -31,4 +31,4 @@ const postReadValidation = (req: Request, res: Response, next: NextFunction): vo
   }
 };
 
-export default postReadValidation;
+export default readPostValidation;

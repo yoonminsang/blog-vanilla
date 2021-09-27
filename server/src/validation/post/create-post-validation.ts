@@ -8,7 +8,7 @@ import { JOI_ERROR_MESSAGE } from 'constants/error-message';
 
 const FROM = 'joi';
 
-const postValidation = (req: Request, res: Response, next: NextFunction): void => {
+const createPostValidation = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const schema = Joi.object({
       title: Joi.string()
@@ -40,4 +40,4 @@ const postValidation = (req: Request, res: Response, next: NextFunction): void =
   }
 };
 
-export default postValidation;
+export default createPostValidation;

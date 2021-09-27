@@ -8,7 +8,7 @@ import { JOI_ERROR_MESSAGE } from 'constants/error-message';
 
 const FROM = 'joi';
 
-const authValidation = (req: Request, res: Response, next: NextFunction): void => {
+const signupValidation = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const schema = Joi.object({
       email: Joi.string()
@@ -61,4 +61,4 @@ const authValidation = (req: Request, res: Response, next: NextFunction): void =
   }
 };
 
-export default authValidation;
+export default signupValidation;
