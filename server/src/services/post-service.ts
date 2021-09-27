@@ -29,6 +29,7 @@ class PostService {
         from: FROM,
       });
     }
+    post.isUpdated = post.isUpdated === '1';
     return post;
   }
 }
