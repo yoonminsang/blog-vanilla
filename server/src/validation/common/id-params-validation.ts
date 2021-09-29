@@ -20,7 +20,7 @@ const idParamsValidation = (req: Request, res: Response, next: NextFunction): vo
       throw errorGenerator({
         status: 400,
         message: JOI_ERROR_MESSAGE.invalidRequestParams,
-        customMessage: '존재하지 않는 페이지입니다',
+        customMessage: 'id를 확인해주세요',
         from: FROM,
       });
     }
