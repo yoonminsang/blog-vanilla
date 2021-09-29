@@ -12,6 +12,6 @@ const postController = new PostController();
 postRouter.post('/', isLoggedInMiddleware, createPostValidation, postController.createPost);
 postRouter.get('/:id', idParamsValidation, postController.readPost);
 postRouter.get('/', readPostListValidation, postController.readPostList);
-postRouter.put('/:id', isLoggedInMiddleware, idParamsValidation, postController.updatePost);
+postRouter.put('/:id', isLoggedInMiddleware, idParamsValidation, createPostValidation, postController.updatePost);
 
 export default postRouter;
