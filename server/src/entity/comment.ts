@@ -1,6 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, RelationId } from 'typeorm';
 import User from './user';
-import Post from './post';
 import { BaseTimeEntity } from './base-time-entity';
 
 @Entity({ name: 'comment' })
@@ -11,10 +10,13 @@ class Comment extends BaseTimeEntity {
   @Column({ length: 45 })
   chatting!: string;
 
-  @ManyToOne(() => User, user => user.id, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-  user!: string;
+  @ManyToOne(() => User, user => user, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  user!: User;
 
-  @ManyToOne(() => Post, post => post.id, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @RelationId((comment: Comment) => comment.user)
+  userId!: string;
+
+  @ManyToOne(() => Comment, post => post.id, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   post!: string;
 }
 
