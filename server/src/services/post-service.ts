@@ -45,6 +45,25 @@ class PostService {
     }
     return postList;
   }
+
+  async updatePost(id: number, title: string, content: string, userId: string) {
+    const post = await getCustomRepository(PostRepository).getPostForUserId(id);
+    if (!post) {
+      throw errorGenerator({
+        status: 400,
+        message: POST_ERROR_MESSAGE.notFoundPostId,
+        from: FROM,
+      });
+    }
+    if (post.userId !== userId) {
+      throw errorGenerator({
+        status: 400,
+        message: POST_ERROR_MESSAGE.diffrentUserId,
+        from: FROM,
+      });
+    }
+    await getCustomRepository(PostRepository).updatePost(id, title, content);
+  }
 }
 
 export default PostService;
