@@ -23,6 +23,16 @@ class PostController {
       next(err);
     }
   }
+
+  async readPostList(req: Request, res: Response, next: NextFunction) {
+    const { lastId } = req.query;
+    try {
+      const postList = await service.readPostList(lastId as unknown as number);
+      res.status(200).json({ postList });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export default PostController;
