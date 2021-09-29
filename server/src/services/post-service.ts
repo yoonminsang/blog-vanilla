@@ -21,16 +21,30 @@ class PostService {
   }
 
   async readPost(id: number) {
-    const post = await getCustomRepository(PostRepository).readPost(id);
-    if (!post) {
+    const postData = await getCustomRepository(PostRepository).readPost(id);
+    if (!postData) {
       throw errorGenerator({
         status: 400,
         message: POST_ERROR_MESSAGE.notFoundPostId,
         from: FROM,
       });
     }
-    post.isUpdated = post.isUpdated === '1';
+    console.log(postData);
+    const isUpdated = postData.createdAt !== postData.updatedAt;
+    const post = { ...postData, isUpdated };
     return post;
+  }
+
+  async readPostList(lastId: number) {
+    const postList = await getCustomRepository(PostRepository).readPostList(lastId);
+    if (!postList) {
+      throw errorGenerator({
+        status: 400,
+        message: POST_ERROR_MESSAGE.notFoundPostId,
+        from: FROM,
+      });
+    }
+    return postList;
   }
 }
 
