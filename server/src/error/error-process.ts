@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import CustomError from './custom-error';
 import errorAuth from './error-handler/error-auth';
+import errorComment from './error-handler/error-comment';
 import errorJoi from './error-handler/error-joi';
 import errorJwt from './error-handler/error-jwt';
 import errorPost from './error-handler/error-post';
@@ -15,6 +16,8 @@ const errorHandler = (err: CustomError) => {
       return errorAuth(err);
     case 'post':
       return errorPost(err);
+    case 'comment':
+      return errorComment(err);
     default:
       return { status: 500, errorMessage: '에러 핸들러가 존재하지 않습니다' };
   }
