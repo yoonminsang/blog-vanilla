@@ -41,6 +41,10 @@ class PostRepository extends Repository<Post> {
   async updatePost(id: number, title: string, content: string) {
     await this.createQueryBuilder('post').update(Post).set({ title, content }).where('post.id = :id', { id }).execute();
   }
+
+  async deletePost(id: number) {
+    await this.createQueryBuilder('post').update(Post).delete().where('post.id = :id', { id }).execute();
+  }
 }
 
 export default PostRepository;
