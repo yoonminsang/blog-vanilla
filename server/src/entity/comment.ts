@@ -2,6 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, RelationId } from 't
 import { COMMENT_ENTITY } from 'constants/entity';
 import { BaseTimeEntity } from './base-time-entity';
 import User from './user';
+import Post from './post';
 
 @Entity({ name: 'comment' })
 class Comment extends BaseTimeEntity {
@@ -17,8 +18,11 @@ class Comment extends BaseTimeEntity {
   @RelationId((comment: Comment) => comment.user)
   userId!: string;
 
-  @ManyToOne(() => Comment, post => post.id, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-  post!: string;
+  @ManyToOne(() => Post, post => post, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  post!: User;
+
+  @RelationId((comment: Comment) => comment.post)
+  postId!: string;
 }
 
 export default Comment;
