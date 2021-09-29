@@ -1,14 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import Post from 'entity/post';
 
-interface IPost {
-  id: number;
-  title: string;
-  content: string;
-  createdAt: string;
-  nickname: string;
-  isUpdated: string | boolean;
-}
+const LIMIT = 10;
 
 @EntityRepository(Post)
 class PostRepository extends Repository<Post> {
@@ -17,19 +10,23 @@ class PostRepository extends Repository<Post> {
     return post.identifiers[0].id;
   }
 
-  async readPost(id: number): Promise<IPost> {
+  async readPost(id: number) {
     const post = await this.createQueryBuilder('post')
-      .select([
-        'post.id as id',
-        'post.title as title',
-        'post.content as content',
-        'post.createdAt as createdAt',
-        'user.nickname as nickname',
-      ])
-      .addSelect('CASE WHEN post.createdAt != post.updatedAt THEN 1 ELSE 0 END', 'isUpdated')
+      .select(['post.id', 'post.title', 'post.content', 'post.createdAt', 'post.updatedAt', 'user.nickname'])
       .innerJoin('post.user', 'user')
       .where('post.id = :id', { id })
-      .getRawOne();
+      .getOne();
+    return post;
+  }
+
+  async readPostList(lastId: number) {
+    const post = await this.createQueryBuilder('post')
+      .select(['post.id', 'post.title', 'post.content', 'post.createdAt', 'user.nickname'])
+      .take(LIMIT)
+      .innerJoin('post.user', 'user')
+      .where('post.id < :id', { id: lastId })
+      .orderBy('post.id', 'DESC')
+      .getMany();
     return post;
   }
 }
