@@ -22,7 +22,7 @@ class Comment extends BaseTimeEntity {
   post!: User;
 
   @RelationId((comment: Comment) => comment.post)
-  postId!: string;
+  postId!: number;
 }
 
 export default Comment;
