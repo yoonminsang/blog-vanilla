@@ -11,4 +11,8 @@ const POST_ENTITY = {
   titleMaxLength: 40,
 };
 
-export { USER_ENTITY, POST_ENTITY };
+const COMMENT_ENTITY = {
+  contentMaxLength: 45,
+};
+
+export { USER_ENTITY, POST_ENTITY, COMMENT_ENTITY };
