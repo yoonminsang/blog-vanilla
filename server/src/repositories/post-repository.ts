@@ -31,7 +31,10 @@ class PostRepository extends Repository<Post> {
   }
 
   async getPostForUserId(id: number): Promise<Post | undefined> {
-    const post = await this.createQueryBuilder('post').select(['post.userId']).where('post.id = :id', { id }).getOne();
+    const post = await this.createQueryBuilder('post')
+      .select(['post.id', 'post.user.id'])
+      .where('post.id = :id', { id })
+      .getOne();
     return post;
   }
 
