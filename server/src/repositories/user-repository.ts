@@ -25,11 +25,6 @@ class UserRepository extends Repository<User> {
       .getOne();
     return user;
   }
-
-  async checkId(id: string): Promise<boolean> {
-    const user = await this.createQueryBuilder('user').where('user.id = :id', { id }).getOne();
-    return !!user;
-  }
 }
 
 export default UserRepository;
