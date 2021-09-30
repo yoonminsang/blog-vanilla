@@ -29,6 +29,18 @@ class CommentRepository extends Repository<Comment> {
       .getMany();
     return comment;
   }
+
+  async getCommentForUserId(id: number): Promise<Comment | undefined> {
+    const comment = await this.createQueryBuilder('comment')
+      .select(['comment.id', 'comment.user.id'])
+      .where('comment.id = :id', { id })
+      .getOne();
+    return comment;
+  }
+
+  async updateComment(id: number, content: string): Promise<void> {
+    await this.createQueryBuilder().update(Comment).set({ content }).where('comment.id = :id', { id }).execute();
+  }
 }
 
 export default CommentRepository;
