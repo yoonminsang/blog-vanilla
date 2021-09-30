@@ -39,11 +39,11 @@ class PostRepository extends Repository<Post> {
   }
 
   async updatePost(id: number, title: string, content: string): Promise<void> {
-    await this.createQueryBuilder('post').update(Post).set({ title, content }).where('post.id = :id', { id }).execute();
+    await this.createQueryBuilder().update(Post).set({ title, content }).where('post.id = :id', { id }).execute();
   }
 
   async deletePost(id: number): Promise<void> {
-    await this.createQueryBuilder('post').update(Post).delete().where('post.id = :id', { id }).execute();
+    await this.createQueryBuilder('post').delete().where('post.id = :id', { id }).execute();
   }
 
   async checkPost(id: number): Promise<boolean> {
