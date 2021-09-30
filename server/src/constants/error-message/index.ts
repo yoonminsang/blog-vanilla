@@ -26,6 +26,8 @@ const POST_ERROR_MESSAGE = {
 
 const COMMENT_ERROR_MESSAGE = {
   notFoundPostId: 'not found post id',
+  notFoundCommentId: 'not found comment id',
+  notFoundCommentList: 'not found comment list',
 };
 
 export { JWT_ERROR_MESSAGE, JOI_ERROR_MESSAGE, AUTH_ERROR_MESSAGE, POST_ERROR_MESSAGE, COMMENT_ERROR_MESSAGE };

@@ -9,6 +9,12 @@ const errorComment = (err: CustomError): IError => {
     case COMMENT_ERROR_MESSAGE.notFoundPostId:
       errorMessage = '글이 존재하지 않습니다';
       break;
+    case COMMENT_ERROR_MESSAGE.notFoundCommentId:
+      errorMessage = '댓글이 존재하지 않습니다';
+      break;
+    case COMMENT_ERROR_MESSAGE.notFoundCommentList:
+      errorMessage = '댓글 목록이 존재하지 않습니다';
+      break;
     default:
       errorMessage = '다시 시도해주세요';
       break;
