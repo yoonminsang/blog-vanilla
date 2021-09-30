@@ -39,6 +39,17 @@ class CommentController {
       next(err);
     }
   }
+
+  async updateComment(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    const { content } = req.body as IComment;
+    try {
+      await service.updateComment(+id, content, req.user.id);
+      res.status(200).json();
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export default CommentController;
