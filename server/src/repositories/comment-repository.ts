@@ -21,8 +21,8 @@ class CommentRepository extends Repository<Comment> {
   async readCommentList(postId: number, pageId: number): Promise<Comment[] | undefined> {
     const comment = await this.createQueryBuilder('comment')
       .select(['comment.id', 'comment.content', 'comment.createdAt', 'comment.updatedAt', 'user.nickname'])
-      .skip((pageId - 1) * LIMIT)
-      .take(LIMIT)
+      .limit(LIMIT)
+      .offset((pageId - 1) * LIMIT)
       .innerJoin('comment.user', 'user')
       .where('comment.post.id = :postId', { postId })
       .orderBy('comment.id', 'ASC')
@@ -40,6 +40,10 @@ class CommentRepository extends Repository<Comment> {
 
   async updateComment(id: number, content: string): Promise<void> {
     await this.createQueryBuilder().update(Comment).set({ content }).where('comment.id = :id', { id }).execute();
+  }
+
+  async deleteComment(id: number): Promise<void> {
+    await this.createQueryBuilder('comment').delete().where('comment.id = :id', { id }).execute();
   }
 }
 
