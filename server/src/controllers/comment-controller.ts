@@ -50,6 +50,16 @@ class CommentController {
       next(err);
     }
   }
+
+  async deleteComment(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    try {
+      await service.deleteComment(+id, req.user.id);
+      res.status(200).json();
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export default CommentController;
