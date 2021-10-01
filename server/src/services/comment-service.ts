@@ -61,6 +61,25 @@ class CommentService {
     }
     await getCustomRepository(CommentRepository).updateComment(id, content);
   }
+
+  async deleteComment(id: number, userId: string) {
+    const comment = await getCustomRepository(CommentRepository).getCommentForUserId(id);
+    if (!comment) {
+      throw errorGenerator({
+        status: 400,
+        message: COMMENT_ERROR_MESSAGE.notFoundCommentId,
+        from: FROM,
+      });
+    }
+    if (comment.userId !== userId) {
+      throw errorGenerator({
+        status: 400,
+        message: COMMENT_ERROR_MESSAGE.diffrentUserId,
+        from: FROM,
+      });
+    }
+    await getCustomRepository(CommentRepository).deleteComment(id);
+  }
 }
 
 export default CommentService;
