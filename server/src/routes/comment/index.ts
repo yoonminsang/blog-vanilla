@@ -20,5 +20,6 @@ commentRouter.put(
   updateCommentValidation,
   commentController.updateComment,
 );
+commentRouter.delete('/:id', isLoggedInMiddleware, idParamsValidation, commentController.deleteComment);
 
 export default commentRouter;
