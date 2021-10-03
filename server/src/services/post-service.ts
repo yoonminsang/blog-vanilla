@@ -48,7 +48,7 @@ class PostService {
     }
     if (post.userId !== userId) {
       throw errorGenerator({
-        status: 400,
+        status: 403,
         message: POST_ERROR_MESSAGE.diffrentUserId,
         from: FROM,
       });
@@ -67,7 +67,7 @@ class PostService {
     }
     if (post.userId !== userId) {
       throw errorGenerator({
-        status: 400,
+        status: 403,
         message: POST_ERROR_MESSAGE.diffrentUserId,
         from: FROM,
       });

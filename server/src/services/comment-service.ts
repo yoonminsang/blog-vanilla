@@ -54,7 +54,7 @@ class CommentService {
     }
     if (comment.userId !== userId) {
       throw errorGenerator({
-        status: 400,
+        status: 403,
         message: COMMENT_ERROR_MESSAGE.diffrentUserId,
         from: FROM,
       });
@@ -73,7 +73,7 @@ class CommentService {
     }
     if (comment.userId !== userId) {
       throw errorGenerator({
-        status: 400,
+        status: 403,
         message: COMMENT_ERROR_MESSAGE.diffrentUserId,
         from: FROM,
       });
