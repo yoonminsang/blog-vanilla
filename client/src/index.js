@@ -1,2 +1,3 @@
-import App from './app.js';
+import App from './app';
+
 new App(document.getElementById('root'));
