@@ -4,6 +4,7 @@ class Component {
     this.props = props;
     this.setup();
     this.render();
+    this.appendComponent();
     this.componentDidMount();
     this.setEvent();
   }
@@ -13,6 +14,8 @@ class Component {
   render() {
     this.target.innerHTML = this.markup();
   }
+
+  appendComponent() {}
 
   componentDidMount() {}
 
