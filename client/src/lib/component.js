@@ -13,6 +13,13 @@ class Component {
 
   render() {
     this.target.innerHTML = this.markup();
+    if (this.props?.class) {
+      const el = this.target.firstElementChild;
+      const classArr = this.props.class.split(' ');
+      classArr.forEach(className => {
+        el.classList.add(className);
+      });
+    }
   }
 
   appendComponent() {}
