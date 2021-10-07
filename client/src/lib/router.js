@@ -1,4 +1,5 @@
 import routerContext from './router-context';
+import { getPathname, getQuery, pathValidation } from './utils';
 
 class Router {
   constructor(target, routes, NotFoundPage) {
@@ -12,20 +13,11 @@ class Router {
   }
 
   route() {
-    const currentPathSplit = this.routerContext.state.pathname.slice(1).split('/');
+    const currentPath = this.routerContext.state.pathname.slice(1).split('/');
     for (let i = 0; i < this.routes.length; i++) {
       const routePath = this.routes[i].path.slice(1).split('/');
-      if (currentPathSplit.length !== routePath.length) continue;
-      const params = {};
-      for (let j = 0; j < currentPathSplit.length; j++) {
-        if (/^:/.test(routePath[j])) {
-          params[routePath[j].slice(1)] = currentPathSplit[j];
-          continue;
-        }
-        if (currentPathSplit[j] !== routePath[j]) {
-          return;
-        }
-      }
+      const params = pathValidation(currentPath, routePath);
+      if (!params) continue;
       routerContext.setState({ params });
       const Page = this.routes[i].component;
       new Page(this.target);
@@ -42,30 +34,16 @@ class Router {
       e.preventDefault();
       const path = closest.getAttribute('href');
       window.history.pushState(null, '', path);
-      routerContext.setState({ path: this.pathname(), query: this.searchToQuery() });
+      routerContext.setState({ path: getPathname(), query: getQuery() });
       this.route();
     });
   }
 
   addBackChangeHandler() {
     window.addEventListener('popstate', () => {
-      routerContext.setState({ path: this.pathname(), query: this.searchToQuery() });
+      routerContext.setState({ path: getPathname(), query: getQuery() });
       this.route();
     });
-  }
-
-  pathname() {
-    return window.location.pathname;
-  }
-
-  searchToQuery() {
-    const { search } = window.location;
-    const queries = new URLSearchParams(search);
-    const params = {};
-    queries.forEach((value, key) => {
-      params[key] = value;
-    });
-    return params;
   }
 }
 
