@@ -1,0 +1,48 @@
+body {
+  --background-button: linear-gradient(45deg, #0cebeb, #20e3b2, #29ffc6);
+  --background-purple: linear-gradient(45deg, #000000, #434343);
+  --background: linear-gradient(45deg, #000000, #434343);
+
+  --baemin: #12fff7;
+  --back: #1d1d1d;
+  --text: #1d1d1d;
+  --white-text: white;
+  --app: white;
+  --red: #ed213a;
+  --background-dark: linear-gradient(45deg, #000000, #434343);
+  --header: linear-gradient(45deg, #0cebeb, #20e3b2, #29ffc6);
+  --gray: #f6f6f6;
+  --dark-gray: #d7d7d7;
+  --deep-gray: #888888;
+  --dark: #222222;
+
+  --baseX: 400px;
+  --base-X: -400px;
+  --baseY: 665px;
+  --base_sY: 555px;
+  --base_ssY: 505px;
+
+  --outerX: 435px;
+  --outerY: 700px;
+
+  --halfX: 300px;
+  --halfY: 450px;
+  --half_Y: -400px;
+  --rotateX: 700px;
+
+  --category-item: 80px;
+  --category-box: 40px;
+  --category-margin: 10px;
+  --input-length: 300px;
+
+  --cardX: 390px;
+  --IPad: none;
+  --Hheight: 50px;
+
+  --slider-header: gray;
+
+  --primary1: #2ac1bc;
+  --primary2: #a0e1e0;
+
+  /* background: var(--background); */
+}
