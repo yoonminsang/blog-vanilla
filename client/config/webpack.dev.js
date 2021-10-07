@@ -15,7 +15,7 @@ module.exports = merge(common, {
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: path.resolve(__dirname, '/dist'),
+    contentBase: path.resolve(__dirname, '../dist'),
     index: 'index.html',
     port: 9000,
     writeToDisk: true,
