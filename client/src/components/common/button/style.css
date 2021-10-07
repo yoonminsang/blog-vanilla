@@ -1,0 +1,10 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--baemin);
+}
+
+.button.full-width {
+  width: 100%;
+}
