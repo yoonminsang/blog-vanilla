@@ -1,24 +1,12 @@
+import { getPathname, getQuery } from './utils';
+
 class RouterContext {
   constructor() {
-    this.state = { pathname: this.pathname(), query: this.searchToQuery(), params: {} };
+    this.state = { pathname: getPathname(), query: getQuery(), params: {} };
   }
 
   setState(nextState) {
     this.state = { ...this.state, ...nextState };
-  }
-
-  pathname() {
-    return window.location.pathname;
-  }
-
-  searchToQuery() {
-    const { search } = window.location;
-    const queries = new URLSearchParams(search);
-    const params = {};
-    queries.forEach((value, key) => {
-      params[key] = value;
-    });
-    return params;
   }
 }
 
