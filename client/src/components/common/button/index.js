@@ -1,4 +1,4 @@
-import Component from '../../../lib/component';
+import { Component } from 'ms-vanilla';
 import './style.css';
 
 class Button extends Component {
