@@ -17,3 +17,7 @@
 .button:disabled {
   background-color: var(--primary-2);
 }
+
+.button ~ .button {
+  margin-top: 10px;
+}

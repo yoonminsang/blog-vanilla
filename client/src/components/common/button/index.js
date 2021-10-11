@@ -4,7 +4,7 @@ import './style.css';
 class Button extends Component {
   markup() {
     return /* html */ `
-    <button class="button">${this.props.text}</button>
+    <button class="button" type="${this.props.type || 'button'}">${this.props.text}</button>
     `;
   }
 }
