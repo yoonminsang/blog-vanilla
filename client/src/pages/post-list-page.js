@@ -8,7 +8,7 @@ class PostListPage extends Component {
 
   markup() {
     return /* html */ `
-      <inside class="header"/></inside>
+      <inside class="header"></inside>
     `;
   }
 
