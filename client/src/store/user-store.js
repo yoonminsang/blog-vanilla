@@ -1,4 +1,4 @@
-import Observable from '../lib/basic-observable.js';
+import { Observable } from 'ms-vanilla';
 
 class UserStore extends Observable {
   constructor() {

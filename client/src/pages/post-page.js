@@ -1,5 +1,4 @@
-import Component from '../lib/component';
-import { useParams } from '../lib/routerHooks';
+import { Component, useParams } from 'ms-vanilla';
 
 const Post = (title, content) => /* html */ `
   <div>제목 ${title}</div>

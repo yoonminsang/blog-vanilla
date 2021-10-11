@@ -1,4 +1,4 @@
-import Router from './lib/router';
+import { Router } from 'ms-vanilla';
 import LoginPage from './pages/login-page';
 import MainPage from './pages/main-page';
 import NotFoundPage from './pages/not-found-page';
