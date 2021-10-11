@@ -25,24 +25,3 @@
 .button.full-width {
   width: 100%;
 }
-
-/* @media all and (max-width: 480px) {
-  .button {
-    height: 50px;
-    font-size: 20px;
-  }
-}
-
-@media all and (min-width: 480px) and (max-width: 1200px) {
-  .button {
-    height: 56px;
-    font-size: 22px;
-  }
-}
-
-@media all and (min-width: 1200px) {
-  .button {
-    height: 64px;
-    font-size: 24px;
-  }
-} */
