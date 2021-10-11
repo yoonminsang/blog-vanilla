@@ -17,11 +17,3 @@
 .button:disabled {
   background-color: var(--primary-2);
 }
-
-.button.almost-full-width {
-  width: 90%;
-}
-
-.button.full-width {
-  width: 100%;
-}

@@ -16,3 +16,9 @@ body {
   background-repeat: no-repeat;
   background-size: contain;
 }
+.almost-full-width {
+  width: 90%;
+}
+.full-width {
+  width: 100%;
+}
