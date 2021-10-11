@@ -3,8 +3,13 @@ import './style.css';
 
 class Button extends Component {
   markup() {
+    const { href, type, text } = this.props;
     return /* html */ `
-    <button class="button" type="${this.props.type || 'button'}">${this.props.text}</button>
+    ${
+      href
+        ? `<a class="button" href="${href}">${text}</a>`
+        : `<button class="button" type="${type || 'button'}">${text}</button>`
+    }
     `;
   }
 }
