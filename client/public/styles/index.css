@@ -16,6 +16,11 @@ body {
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+#root {
+  min-height: 100vh;
+}
+
 .almost-full-width {
   width: 90%;
 }

@@ -54,6 +54,7 @@ a {
 }
 input {
   outline: 0;
+  background-color: inherit;
 }
 button {
   background: transparent;
