@@ -4261,10 +4261,10 @@ mkdirp@^0.5.1, mkdirp@^0.5.5:
   dependencies:
     minimist "^1.2.5"
 
-ms-vanilla@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/ms-vanilla/-/ms-vanilla-1.0.1.tgz#fa0c70d235db16899ef8f3e3358dc6df1c7f2b5d"
-  integrity sha512-85Mn4mReYcGSW1OKSPnZ/d3DhuSh2BYJ+rjJqgpB8l22s+EDSu8UdSNUiH5Hkf8H586ZyGABnpVbeN0tfQ9mMQ==
+ms-vanilla@^1.0.1:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/ms-vanilla/-/ms-vanilla-1.4.0.tgz#cd11767ad9412a79d9d984351a18eb1f967ef5a3"
+  integrity sha512-w/s+gNDPrFzuwfPbZKvsYLNnwBqxC5i1bnFESbLz7DqOXl9S7H6enDsd+Noj3SUI+0OVCIXtDbo/UDEp+1CCkg==
 
 ms@2.0.0:
   version "2.0.0"
