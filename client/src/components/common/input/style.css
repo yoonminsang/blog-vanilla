@@ -1,0 +1,5 @@
+.input {
+  border-bottom: 1px solid var(--primary);
+  text-indent: 5px;
+  padding: 5px 0;
+}
