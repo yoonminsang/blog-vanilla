@@ -1,0 +1,50 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--primary);
+}
+
+.header .empty {
+  opacity: 0;
+}
+
+.header > button,
+.header > a {
+  font-size: 14px;
+}
+
+.header > button:hover,
+.header > a:hover {
+  color: var(--primary-3);
+}
+
+@media all and (max-width: 480px) {
+  .header {
+    margin: 0 20px;
+  }
+
+  .header h1 {
+    font-size: 30px;
+  }
+}
+
+@media all and (min-width: 480px) and (max-width: 1200px) {
+  .header {
+    margin: 0 60px;
+  }
+
+  .header h1 {
+    font-size: 35px;
+  }
+}
+
+@media all and (min-width: 1200px) {
+  .header {
+    margin: 0 100px;
+  }
+
+  .header h1 {
+    font-size: 40px;
+  }
+}
