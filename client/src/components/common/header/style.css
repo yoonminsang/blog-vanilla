@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: space-between;
   color: var(--primary);
+  background-color: var(--off-white);
 }
 
 .header .empty {
@@ -21,7 +22,7 @@
 
 @media all and (max-width: 480px) {
   .header {
-    margin: 0 20px;
+    padding: 10px 20px;
   }
 
   .header h1 {
@@ -31,7 +32,7 @@
 
 @media all and (min-width: 480px) and (max-width: 1200px) {
   .header {
-    margin: 0 60px;
+    padding: 15px 60px;
   }
 
   .header h1 {
@@ -41,7 +42,7 @@
 
 @media all and (min-width: 1200px) {
   .header {
-    margin: 0 100px;
+    padding: 20px 100px;
   }
 
   .header h1 {
