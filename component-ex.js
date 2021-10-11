@@ -1,4 +1,4 @@
-import Component from './lib/component.js';
+import { Component } from 'ms-vanilla';
 import userStore from './store/user-store.js';
 
 const IncreaseBtn = () => `<button class="increase">증가</button>`;
