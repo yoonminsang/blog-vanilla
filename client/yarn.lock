@@ -4262,9 +4262,9 @@ mkdirp@^0.5.1, mkdirp@^0.5.5:
     minimist "^1.2.5"
 
 ms-vanilla@^1.0.1:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/ms-vanilla/-/ms-vanilla-1.4.0.tgz#cd11767ad9412a79d9d984351a18eb1f967ef5a3"
-  integrity sha512-w/s+gNDPrFzuwfPbZKvsYLNnwBqxC5i1bnFESbLz7DqOXl9S7H6enDsd+Noj3SUI+0OVCIXtDbo/UDEp+1CCkg==
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/ms-vanilla/-/ms-vanilla-1.5.0.tgz#03910ad70136587d6a4eb8c77b6d7e4c67290cb1"
+  integrity sha512-qNZhQ3ygy1N6eE4m3kWEyx0wUADBW+dJCrluD2gLleqZ5WE5r5Is95GLq+GZZXEPkqhaKLGQh/wO/a9JLuZVVg==
 
 ms@2.0.0:
   version "2.0.0"
