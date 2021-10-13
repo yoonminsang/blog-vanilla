@@ -1,7 +1,7 @@
-import { Component } from 'ms-vanilla';
+// import { Component } from 'ms-vanilla';
+import Component from '../components/lib/component';
 import Auth from '../components/auth';
 import Header from '../components/common/header';
-import './login-page.css';
 
 class LoginPage extends Component {
   setup() {
@@ -10,15 +10,15 @@ class LoginPage extends Component {
 
   markup() {
     return /* html */ `
-      <inside class="header"></inside>
-      <main class="login"></main>
+      <inside class="header-inside"></inside>
+      <inside class="login-inside"></inside>
     `;
   }
 
   appendComponent(target) {
-    const $header = target.querySelector('.header');
-    const $login = target.querySelector('.login');
-    new Header($header, { user: this.state.user });
+    const $header = target.querySelector('.header-inside');
+    const $login = target.querySelector('.login-inside');
+    new Header($header);
     new Auth($login, { login: true });
   }
 }
