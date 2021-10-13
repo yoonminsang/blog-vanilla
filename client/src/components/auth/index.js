@@ -82,9 +82,11 @@ class Auth extends Component {
         e.preventDefault();
         const { email, password } = this.state;
         try {
-          const { data } = await loginApi({ email, password });
-          userStore.login(data.nickname);
-          localStorage.setItem('user', data.accessToken);
+          const {
+            data: { nickname, accessToken },
+          } = await loginApi({ email, password });
+          userStore.login(nickname);
+          localStorage.setItem('user', accessToken);
         } catch (err) {
           if (axios.isAxiosError(err)) {
             const { errorMessage } = err.response.data;
