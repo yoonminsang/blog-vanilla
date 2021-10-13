@@ -1,14 +1,11 @@
 import jwt, { JwtPayload, VerifyErrors } from 'jsonwebtoken';
-import errorGenerator from 'error/error-generator';
-import { JWT_ERROR_MESSAGE } from 'constants/error-message';
 
 type TokenType = 'access' | 'refresh';
+
 interface ITokenOption {
   id: string;
   nickname: string;
 }
-
-const FROM = 'jwt';
 
 const getExp = (tokenType: TokenType): number => {
   const ACCESS_TOKEN_EXPIRE_DATE = Math.floor(Date.now() / 1000) + 60 * 30; // 30분
@@ -29,18 +26,25 @@ const createToken = (tokenType: TokenType, option: ITokenOption): string => {
   return token;
 };
 
-const decodeToken = (tokenType: TokenType, token: string): JwtPayload => {
-  const secret = getSecret(tokenType);
-  const decoded = jwt.verify(token, secret);
-  if (typeof decoded !== 'object') {
-    throw errorGenerator({
-      status: 403,
-      message: JWT_ERROR_MESSAGE.invalidToken,
-      from: FROM,
+const decodeToken = (tokenType: TokenType, token: string): Promise<JwtPayload> => {
+  return new Promise((resolve, reject) => {
+    const secret = getSecret(tokenType);
+    jwt.verify(token, secret, (err: VerifyErrors | null, decoded) => {
+      if (err) {
+        if (err.name !== 'TokenExpiredError') {
+          // TODO: reject는 winstom으로 바꿀지도??
+          reject(err);
+        }
+        resolve({ jwtError: err.name });
+      }
+      if (typeof decoded !== 'object') {
+        const jwtError = 'token is not a object';
+        reject(jwtError);
+        resolve({ jwtError });
+      }
+      resolve(decoded as JwtPayload);
     });
-  }
-
-  return decoded;
+  });
 };
 
 const getAccessToken = (authorization: string | undefined): string | undefined => {
@@ -51,16 +55,4 @@ const getRefreshToken = (cookies: { refreshtoken: string | undefined }): string 
   return cookies?.refreshtoken;
 };
 
-const checkTokenValid = (tokenType: TokenType, token: string): Promise<boolean> => {
-  return new Promise(resolve => {
-    const secret = getSecret(tokenType);
-    jwt.verify(token, secret, (err: VerifyErrors | null) => {
-      if (!err) {
-        resolve(true);
-      }
-      resolve(false);
-    });
-  });
-};
-
-export { createToken, decodeToken, getAccessToken, getRefreshToken, checkTokenValid };
+export { createToken, decodeToken, getAccessToken, getRefreshToken };
