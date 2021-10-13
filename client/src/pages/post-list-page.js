@@ -1,4 +1,5 @@
-import { Component } from 'ms-vanilla';
+// import { Component } from 'ms-vanilla';
+import Component from '../components/lib/component';
 import Header from '../components/common/header';
 
 class PostListPage extends Component {
@@ -8,13 +9,13 @@ class PostListPage extends Component {
 
   markup() {
     return /* html */ `
-      <inside class="header"></inside>
+      <inside class="header-inside"></inside>
     `;
   }
 
   appendComponent(target) {
-    const $header = target.querySelector('.header');
-    new Header($header, { user: this.state.user });
+    const $header = target.querySelector('.header-inside');
+    new Header($header);
   }
 }
 

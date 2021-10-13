@@ -1,4 +1,5 @@
-import { Component } from 'ms-vanilla';
+// import { Component } from 'ms-vanilla';
+import Component from '../../lib/component';
 import './style.css';
 
 class Fat extends Component {

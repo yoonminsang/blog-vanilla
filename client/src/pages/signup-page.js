@@ -1,4 +1,5 @@
-import { Component } from 'ms-vanilla';
+// import { Component } from 'ms-vanilla';
+import Component from '../components/lib/component';
 
 class SignupPage extends Component {
   markup() {
