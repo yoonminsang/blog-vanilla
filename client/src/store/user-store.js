@@ -16,10 +16,7 @@ class UserStore extends Observable {
       } = await checkAuthApi();
       this.login(user);
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        const { errorMessage } = err.response.data;
-        this.setState({ errorMessage });
-      } else {
+      if (!axios.isAxiosError(err)) {
         console.log('내부 에러');
       }
     }
