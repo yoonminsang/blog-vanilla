@@ -1,30 +1,38 @@
-import { Component } from 'ms-vanilla';
+// import { Component } from 'ms-vanilla';
+import axios from 'axios';
+import { loginApi } from '../../utils/api/auth';
+import Component from '../lib/component';
 import Button from '../common/button';
 import Input from '../common/input';
 import './style.css';
+import userStore from '../../store/user-store';
 
 class Auth extends Component {
   setup() {
-    const state = { email: '', password: '' };
+    const state = { email: '', password: '', errorMessage: '' };
     if (this.props.login) state.passwordConfirm = '';
     this.state = state;
   }
 
   markup() {
-    const authTitle = this.props.login ? '로그인' : '회원가입';
+    const { login } = this.props;
+    const authTitle = login ? '로그인' : '회원가입';
+    const { errorMessage } = this.state;
     return /* html */ `
+    <main class="login">
     <form class="auth-template">
       <h2>${authTitle}</h2>
       <inside class="email"></inside>
       <inside class="password"></inside>
-      <div class="margin"></div>
-      ${this.props.login ? '' : '<inside class="password-confirm"></inside>'}
+      <div class="error-message">${errorMessage}</div>
+      ${login ? '' : '<inside class="password-confirm"></inside>'}
       ${
-        this.props.login
+        login
           ? '<inside class="btn-login">로그인</inside><inside class="go-signup">회원가입</inside>'
           : '<inside class="btn-signup">회원가입</inside><inside class="go-login">로그인</inside>'
       }
     </form>
+    </main>
     `;
   }
 
@@ -69,9 +77,29 @@ class Auth extends Component {
       });
     }
 
-    this.addEvent('submmit', '.auth-template', e => {
-      // TODO
-    });
+    if (this.props.login) {
+      this.addEvent('submit', '.auth-template', async e => {
+        e.preventDefault();
+        // userStore.login('min');
+        const { email, password } = this.state;
+        try {
+          const { data } = await loginApi({ email, password });
+          userStore.login(data.nickname);
+          localStorage.setItem('user', data.accessToken);
+        } catch (err) {
+          if (axios.isAxiosError(err)) {
+            const { errorMessage } = err.response.data;
+            this.setState({ errorMessage });
+          } else {
+            console.log('내부 에러');
+          }
+        }
+      });
+    } else {
+      this.addEvent('submit', '.auth-template', e => {
+        e.preventDefault();
+      });
+    }
   }
 }
 

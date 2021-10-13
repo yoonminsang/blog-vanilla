@@ -1,3 +1,8 @@
+.login {
+  display: flex;
+  justify-content: center;
+}
+
 .auth-template {
   margin-top: 10vh;
   min-height: 100%;
@@ -12,6 +17,9 @@
   margin-bottom: 50px;
 }
 
-.auth-template .margin {
-  height: 10px;
+.auth-template .error-message {
+  color: var(--red);
+  font-size: 14px;
+  padding: 10px 0;
+  height: 36px;
 }
