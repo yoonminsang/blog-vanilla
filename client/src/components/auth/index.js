@@ -80,7 +80,6 @@ class Auth extends Component {
     if (this.props.login) {
       this.addEvent('submit', '.auth-template', async e => {
         e.preventDefault();
-        // userStore.login('min');
         const { email, password } = this.state;
         try {
           const { data } = await loginApi({ email, password });
