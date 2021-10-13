@@ -10,7 +10,7 @@ import userStore from '../../store/user-store';
 class Auth extends Component {
   setup() {
     const state = { email: '', password: '', errorMessage: '' };
-    if (this.props.login) state.passwordConfirm = '';
+    if (!this.props.login) state.passwordConfirm = '';
     this.state = state;
   }
 
@@ -22,14 +22,14 @@ class Auth extends Component {
     <main class="login">
     <form class="auth-template">
       <h2>${authTitle}</h2>
-      <inside class="email"></inside>
-      <inside class="password"></inside>
+      <inside class="email-inside"></inside>
+      <inside class="password-inside"></inside>
+      ${login ? '' : '<inside class="password-confirm-inside"></inside>'}
       <div class="error-message">${errorMessage}</div>
-      ${login ? '' : '<inside class="password-confirm"></inside>'}
       ${
         login
-          ? '<inside class="btn-login">로그인</inside><inside class="go-signup">회원가입</inside>'
-          : '<inside class="btn-signup">회원가입</inside><inside class="go-login">로그인</inside>'
+          ? '<inside class="btn-login-inline">로그인</inside><inside class="go-signup-inline">회원가입</inside>'
+          : '<inside class="btn-signup-inline">회원가입</inside><inside class="go-login-inline">로그인</inside>'
       }
     </form>
     </main>
@@ -38,13 +38,13 @@ class Auth extends Component {
 
   appendComponent(target) {
     const { email, password, passwordConfirm } = this.state;
-    const $email = target.querySelector('.email');
-    const $password = target.querySelector('.password');
-    const $btnLogin = target.querySelector('.btn-login');
-    const $goSignup = target.querySelector('.go-signup');
-    const $passwordConfirm = target.querySelector('.passwordConfirm');
-    const $btnSignup = target.querySelector('.btn-signup');
-    const $goLogin = target.querySelector('.go-login');
+    const $email = target.querySelector('.email-inside');
+    const $password = target.querySelector('.password-inside');
+    const $btnLogin = target.querySelector('.btn-login-inline');
+    const $goSignup = target.querySelector('.go-signup-inline');
+    const $passwordConfirm = target.querySelector('.password-confirm-inside');
+    const $btnSignup = target.querySelector('.btn-signup-inline');
+    const $goLogin = target.querySelector('.go-login-inline');
 
     new Input($email, { class: 'email', type: 'text', value: email, placeholder: '이메일' });
     new Input($password, { class: 'password', type: 'password', value: password, placeholder: '비밀번호' });
@@ -72,7 +72,7 @@ class Auth extends Component {
       this.setState({ password: target.value });
     });
     if (!this.props.login) {
-      this.addEvent('input', '.passwordConfirm', ({ target }) => {
+      this.addEvent('input', '.password-confirm', ({ target }) => {
         this.setState({ passwordConfirm: target.value });
       });
     }
@@ -99,6 +99,7 @@ class Auth extends Component {
     } else {
       this.addEvent('submit', '.auth-template', e => {
         e.preventDefault();
+        const { email, password, passwordConfirm } = this.state;
       });
     }
   }
