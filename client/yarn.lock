@@ -4261,11 +4261,6 @@ mkdirp@^0.5.1, mkdirp@^0.5.5:
   dependencies:
     minimist "^1.2.5"
 
-ms-vanilla@^1.0.1:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/ms-vanilla/-/ms-vanilla-1.5.0.tgz#03910ad70136587d6a4eb8c77b6d7e4c67290cb1"
-  integrity sha512-qNZhQ3ygy1N6eE4m3kWEyx0wUADBW+dJCrluD2gLleqZ5WE5r5Is95GLq+GZZXEPkqhaKLGQh/wO/a9JLuZVVg==
-
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
