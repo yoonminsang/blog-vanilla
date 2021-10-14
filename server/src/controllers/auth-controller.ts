@@ -23,7 +23,7 @@ class AuthController {
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7일
       });
-      res.status(201).json({ nickname, accessToken });
+      res.status(201).json({ accessToken });
     } catch (err) {
       next(err);
     }
@@ -32,12 +32,12 @@ class AuthController {
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password } = req.body;
-      const { nickname, accessToken, refreshToken } = await service.login(email, password);
+      const { accessToken, refreshToken } = await service.login(email, password);
       res.cookie(REFRESHTOKEN, refreshToken, {
         httpOnly: true,
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7일
       });
-      res.status(200).json({ nickname, accessToken });
+      res.status(200).json({ accessToken });
     } catch (err) {
       next(err);
     }

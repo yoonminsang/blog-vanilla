@@ -58,7 +58,7 @@ class AuthService {
 
     const accessToken = createToken('access', { id, nickname });
     const refreshToken = createToken('refresh', { id, nickname });
-    return { nickname, accessToken, refreshToken };
+    return { accessToken, refreshToken };
   }
 }
 
