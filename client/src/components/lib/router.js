@@ -7,9 +7,17 @@ class Router {
     this.routes = routes;
     this.NotFoundPage = NotFoundPage;
     this.routerContext = routerContext;
+    this.push = this.push.bind(this);
+    this.goBack = this.goBack.bind(this);
+    this.set();
     this.route();
     this.addLinkChangeHandler();
     this.addBackChangeHandler();
+  }
+
+  set() {
+    routerContext.setState({ push: url => this.push(url) });
+    routerContext.setState({ goBack: () => this.goBack() });
   }
 
   route() {
@@ -33,9 +41,7 @@ class Router {
       if (!closest || closest.getAttribute('target')) return;
       e.preventDefault();
       const pathname = closest.getAttribute('href');
-      window.history.pushState(null, '', pathname);
-      routerContext.setState({ pathname, query: getQuery() });
-      this.route();
+      this.push(pathname);
     });
   }
 
@@ -44,6 +50,16 @@ class Router {
       routerContext.setState({ pathname: getPathname(), query: getQuery() });
       this.route();
     });
+  }
+
+  push(url) {
+    window.history.pushState(null, '', url);
+    routerContext.setState({ pathname: url, query: getQuery() });
+    this.route();
+  }
+
+  goBack() {
+    window.history.back();
   }
 }
 
