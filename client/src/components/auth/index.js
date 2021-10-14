@@ -1,17 +1,20 @@
 // import { Component } from 'ms-vanilla';
 import axios from 'axios';
-import { loginApi } from '../../utils/api/auth';
+import { loginApi, signupApi } from '../../utils/api/auth';
 import Component from '../lib/component';
 import Button from '../common/button';
 import Input from '../common/input';
 import './style.css';
 import userStore from '../../store/user-store';
+import { useHistory } from '../lib/routerHooks';
+import { loginValidation, signupValidation } from '../../utils/validation/auth-validation';
 
 class Auth extends Component {
   setup() {
-    const state = { email: '', password: '', errorMessage: '' };
-    if (!this.props.login) state.passwordConfirm = '';
-    this.state = state;
+    this.state = this.props.login
+      ? { user: undefined, email: '', password: '', errorMessage: '' }
+      : { user: undefined, email: '', password: '', passwordConfirm: '', nickname: '', errorMessage: '' };
+    this.history = useHistory();
   }
 
   markup() {
@@ -24,7 +27,7 @@ class Auth extends Component {
       <h2>${authTitle}</h2>
       <inside class="email-inside"></inside>
       <inside class="password-inside"></inside>
-      ${login ? '' : '<inside class="password-confirm-inside"></inside>'}
+      ${login ? '' : '<inside class="password-confirm-inside"></inside><inside class="nickname-inside"></inside>'}
       <div class="error-message">${errorMessage}</div>
       ${
         login
@@ -37,12 +40,13 @@ class Auth extends Component {
   }
 
   appendComponent(target) {
-    const { email, password, passwordConfirm } = this.state;
+    const { email, password, passwordConfirm, nickname } = this.state;
     const $email = target.querySelector('.email-inside');
     const $password = target.querySelector('.password-inside');
     const $btnLogin = target.querySelector('.btn-login-inline');
     const $goSignup = target.querySelector('.go-signup-inline');
     const $passwordConfirm = target.querySelector('.password-confirm-inside');
+    const $nickname = target.querySelector('.nickname-inside');
     const $btnSignup = target.querySelector('.btn-signup-inline');
     const $goLogin = target.querySelector('.go-login-inline');
 
@@ -61,6 +65,17 @@ class Auth extends Component {
         value: passwordConfirm,
         placeholder: '비밀번호 확인',
       });
+      new Input($nickname, { class: 'nickname', type: 'text', value: nickname, placeholder: '닉네임' });
+    }
+  }
+
+  componentDidMount() {
+    userStore.subscribe(() => this.setState({ user: userStore.state.user }));
+  }
+
+  componentDidUpdate(prevState, nextState) {
+    if (nextState.user) {
+      this.history.push('/');
     }
   }
 
@@ -75,32 +90,69 @@ class Auth extends Component {
       this.addEvent('input', '.password-confirm', ({ target }) => {
         this.setState({ passwordConfirm: target.value });
       });
+      this.addEvent('input', '.nickname', ({ target }) => {
+        this.setState({ nickname: target.value });
+      });
     }
 
     if (this.props.login) {
       this.addEvent('submit', '.auth-template', async e => {
         e.preventDefault();
         const { email, password } = this.state;
-        try {
-          const {
-            data: { nickname, accessToken },
-          } = await loginApi({ email, password });
-          userStore.login(nickname);
-          localStorage.setItem('user', accessToken);
-        } catch (err) {
-          if (axios.isAxiosError(err)) {
-            const { errorMessage } = err.response.data;
-            this.setState({ errorMessage });
-          } else {
-            console.log('내부 에러');
-          }
+        const validation = loginValidation({ email, password });
+        if (validation !== true) {
+          this.setState({ errorMessage: validation });
+        } else {
+          this.login({ email, password });
         }
       });
     } else {
-      this.addEvent('submit', '.auth-template', e => {
+      this.addEvent('submit', '.auth-template', async e => {
         e.preventDefault();
-        const { email, password, passwordConfirm } = this.state;
+        const { email, password, passwordConfirm, nickname } = this.state;
+        const validation = signupValidation({ email, password, passwordConfirm, nickname });
+        if (validation !== true) {
+          this.setState({ errorMessage: validation });
+        } else {
+          this.signup({ email, password, nickname });
+        }
       });
+    }
+  }
+
+  async login({ email, password }) {
+    try {
+      const {
+        data: { accessToken },
+      } = await loginApi({ email, password });
+      localStorage.setItem('user', accessToken);
+      window.location.href = '/';
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const { errorMessage } = err.response.data;
+        this.setState({ errorMessage });
+      } else {
+        console.log('내부 에러');
+      }
+    }
+  }
+
+  async signup({ email, password, nickname }) {
+    try {
+      const {
+        data: { accessToken },
+      } = await signupApi({ email, password, nickname });
+      localStorage.setItem('user', accessToken);
+      alert(`${nickname}님 가입을 축하합니다`);
+      // TODO: 컴포넌트 만들어서 교체
+      window.location.href = '/';
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const { errorMessage } = err.response.data;
+        this.setState({ errorMessage });
+      } else {
+        console.log('내부 에러');
+      }
     }
   }
 }
