@@ -1,7 +1,9 @@
 // import { Component } from 'ms-vanilla';
+import axios from 'axios';
 import Component from '../../lib/component';
 import userStore from '../../../store/user-store';
 import './style.css';
+import { logoutApi } from '../../../utils/api/auth';
 
 class Header extends Component {
   setup() {
@@ -16,13 +18,34 @@ class Header extends Component {
       <h1>
         <a href="/">M's blog</a>
       </h1>
-      ${user ? '<button>로그아웃</button>' : '<a href="/login">로그인</a>'}
+      ${user ? '<button class="logout">로그아웃</button>' : '<a href="/login">로그인</a>'}
     </header>
     `;
   }
 
   componentDidMount() {
     userStore.subscribe(() => this.setState({ user: userStore.state.user }));
+  }
+
+  setEvent() {
+    this.addEvent('click', '.logout', () => {
+      this.logout();
+    });
+  }
+
+  async logout() {
+    try {
+      await logoutApi();
+      localStorage.removeItem('user');
+      userStore.logout();
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        // TODO: winston으로 기록?
+        console.log(err);
+      } else {
+        console.log('내부 에러');
+      }
+    }
   }
 }
 
