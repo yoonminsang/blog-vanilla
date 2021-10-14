@@ -40,6 +40,8 @@ class Component {
 
   componentDidMount() {}
 
+  componentDidUpdate() {}
+
   markup() {
     return '';
   }
@@ -56,6 +58,7 @@ class Component {
   }
 
   setState(nextState) {
+    this.componentDidUpdate({ ...this.state }, { ...this.state, ...nextState });
     this.state = { ...this.state, ...nextState };
     this.update();
   }
