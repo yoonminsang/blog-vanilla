@@ -9,5 +9,6 @@ const authController = new AuthController();
 authRouter.get('/', authController.checkUser);
 authRouter.post('/signup', signupValidation, authController.signup);
 authRouter.post('/login', authController.login);
+authRouter.delete('/', authController.logout);
 
 export default authRouter;
