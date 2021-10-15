@@ -1,5 +1,5 @@
 import App from './app';
-import '../public/styles/reset.css';
-import '../public/styles/index.css';
+import './styles/reset.css';
+import './styles/index.css';
 
 new App(document.getElementById('root'));
