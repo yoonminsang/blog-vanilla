@@ -38,35 +38,36 @@ body {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
-  src: url('../assets/fonts/noto/noto-sans-kr-v21-korean-regular.eot'); /* IE9 Compat Modes */
-  src: url('../assets/fonts/noto/noto-sans-kr-v21-korean-regular.eot?#iefix') format('embedded-opentype'),
-    /* IE6-IE8 */ url('../assets/fonts/noto/noto-sans-kr-v21-korean-regular.woff2') format('woff2'),
-    /* Super Modern Browsers */ url('../assets/fonts/noto/noto-sans-kr-v21-korean-regular.woff') format('woff'),
-    /* Super Modern Browsers */ url('../assets/fonts/noto/noto-sans-kr-v21-korean-regular.woff') format('woff'),
-    /* Safari, Android, iOS */ url('../assets/fonts/noto/noto-sans-kr-v21-korean-regular.otf') format('opentype'),
-    /* Safari, Android, iOS */ url('../assets/fonts/noto/noto-sans-kr-v21-korean-regular.svg#NotoSansKR') format('svg'); /* Legacy iOS */
+  src: url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.eot'); /* IE9 Compat Modes */
+  src: url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.woff2') format('woff2'),
+    /* Super Modern Browsers */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.woff') format('woff'),
+    /* Super Modern Browsers */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.woff') format('woff'),
+    /* Safari, Android, iOS */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.otf') format('opentype'),
+    /* Safari, Android, iOS */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.svg#NotoSansKR')
+      format('svg'); /* Legacy iOS */
 }
 /* noto-sans-kr-500 - korean */
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 500;
-  src: url('../assets/fonts/noto/noto-sans-kr-v21-korean-500.eot'); /* IE9 Compat Modes */
-  src: url('../assets/fonts/noto/noto-sans-kr-v21-korean-500.eot?#iefix') format('embedded-opentype'),
-    /* IE6-IE8 */ url('../assets/fonts/noto/noto-sans-kr-v21-korean-500.woff2') format('woff2'),
-    /* Super Modern Browsers */ url('../assets/fonts/noto/noto-sans-kr-v21-korean-500.woff') format('woff'),
-    /* Safari, Android, iOS */ url('../assets/fonts/noto/noto-sans-kr-v21-korean-500.otf') format('opentype'),
-    /* Safari, Android, iOS */ url('../assets/fonts/noto/noto-sans-kr-v21-korean-500.svg#NotoSansKR') format('svg'); /* Legacy iOS */
+  src: url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-500.eot'); /* IE9 Compat Modes */
+  src: url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-500.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-500.woff2') format('woff2'),
+    /* Super Modern Browsers */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-500.woff') format('woff'),
+    /* Safari, Android, iOS */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-500.otf') format('opentype'),
+    /* Safari, Android, iOS */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-500.svg#NotoSansKR') format('svg'); /* Legacy iOS */
 }
 /* noto-sans-kr-700 - korean */
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
-  src: url('../assets/fonts/noto/noto-sans-kr-v21-korean-700.eot'); /* IE9 Compat Modes */
-  src: url('../assets/fonts/noto/noto-sans-kr-v21-korean-700.eot?#iefix') format('embedded-opentype'),
-    /* IE6-IE8 */ url('../assets/fonts/noto/noto-sans-kr-v21-korean-700.woff2') format('woff2'),
-    /* Super Modern Browsers */ url('../assets/fonts/noto/noto-sans-kr-v21-korean-700.woff') format('woff'),
-    /* Safari, Android, iOS */ url('../assets/fonts/noto/noto-sans-kr-v21-korean-700.otf') format('opentype'),
-    /* Safari, Android, iOS */ url('../assets/fonts/noto/noto-sans-kr-v21-korean-700.svg#NotoSansKR') format('svg'); /* Legacy iOS */
+  src: url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-700.eot'); /* IE9 Compat Modes */
+  src: url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-700.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-700.woff2') format('woff2'),
+    /* Super Modern Browsers */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-700.woff') format('woff'),
+    /* Safari, Android, iOS */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-700.otf') format('opentype'),
+    /* Safari, Android, iOS */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-700.svg#NotoSansKR') format('svg'); /* Legacy iOS */
 }
