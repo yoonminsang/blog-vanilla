@@ -8,12 +8,22 @@ import './style.css';
 import userStore from '../../store/user-store';
 import { useHistory } from '../lib/routerHooks';
 import { loginValidation, signupValidation } from '../../utils/validation/auth-validation';
+import Modal from '../common/modal';
 
 class Auth extends Component {
   setup() {
     this.state = this.props.login
       ? { user: undefined, email: '', password: '', errorMessage: '' }
-      : { user: undefined, email: '', password: '', passwordConfirm: '', nickname: '', errorMessage: '' };
+      : {
+          user: undefined,
+          email: '',
+          password: '',
+          passwordConfirm: '',
+          nickname: '',
+          errorMessage: '',
+          modalBody: '',
+          modalVisible: false,
+        };
     this.history = useHistory();
   }
 
@@ -23,18 +33,19 @@ class Auth extends Component {
     const { errorMessage } = this.state;
     return /* html */ `
     <main class="login">
-    <form class="auth-template">
-      <h2>${authTitle}</h2>
-      <inside class="email-inside"></inside>
-      <inside class="password-inside"></inside>
-      ${login ? '' : '<inside class="password-confirm-inside"></inside><inside class="nickname-inside"></inside>'}
-      <div class="error-message">${errorMessage}</div>
-      ${
-        login
-          ? '<inside class="btn-login-inline">로그인</inside><inside class="go-signup-inline">회원가입</inside>'
-          : '<inside class="btn-signup-inline">회원가입</inside><inside class="go-login-inline">로그인</inside>'
-      }
-    </form>
+      <form class="auth-template">
+        <h2>${authTitle}</h2>
+        <inside class="email-inside"></inside>
+        <inside class="password-inside"></inside>
+        ${login ? '' : '<inside class="password-confirm-inside"></inside><inside class="nickname-inside"></inside>'}
+        <div class="error-message">${errorMessage}</div>
+        ${
+          login
+            ? '<inside class="btn-login-inline">로그인</inside><inside class="go-signup-inline">회원가입</inside>'
+            : '<inside class="btn-signup-inline">회원가입</inside><inside class="go-login-inline">로그인</inside>'
+        }
+      </form>
+      <inside class="modal-inside"></inside>
     </main>
     `;
   }
@@ -49,6 +60,7 @@ class Auth extends Component {
     const $nickname = target.querySelector('.nickname-inside');
     const $btnSignup = target.querySelector('.btn-signup-inline');
     const $goLogin = target.querySelector('.go-login-inline');
+    const $modal = target.querySelector('.modal-inside');
 
     new Input($email, { class: 'email', type: 'text', value: email, placeholder: '이메일' });
     new Input($password, { class: 'password', type: 'password', value: password, placeholder: '비밀번호' });
@@ -66,6 +78,11 @@ class Auth extends Component {
         placeholder: '비밀번호 확인',
       });
       new Input($nickname, { class: 'nickname', type: 'text', value: nickname, placeholder: '닉네임' });
+      new Modal($modal, {
+        img: 'congratulations',
+        visible: this.state.modalVisible,
+        body: this.state.modalBody,
+      });
     }
   }
 
@@ -143,9 +160,10 @@ class Auth extends Component {
         data: { accessToken },
       } = await signupApi({ email, password, nickname });
       localStorage.setItem('user', accessToken);
-      alert(`${nickname}님 가입을 축하합니다`);
-      // TODO: 컴포넌트 만들어서 교체
-      window.location.href = '/';
+      this.setState({ modalVisible: true, modalBody: `${nickname}님 환영합니다` });
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 2000);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const { errorMessage } = err.response.data;
