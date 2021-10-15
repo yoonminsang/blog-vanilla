@@ -10,6 +10,10 @@
   opacity: 0;
 }
 
+.header h1 {
+  font-weight: 700;
+}
+
 .header > button,
 .header > a {
   font-size: 14px;
