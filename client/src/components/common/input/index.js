@@ -1,5 +1,5 @@
 // import { Component } from 'ms-vanilla';
-import Component from '../../lib/component';
+import Component from '../../../lib/component';
 import './style.css';
 
 class Input extends Component {

@@ -1,5 +1,5 @@
 // import { Component } from 'ms-vanilla';
-import Component from '../components/lib/component';
+import Component from '../lib/component';
 import Header from '../components/common/header';
 
 class PostListPage extends Component {

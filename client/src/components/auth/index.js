@@ -1,12 +1,12 @@
 // import { Component } from 'ms-vanilla';
 import axios from 'axios';
 import { loginApi, signupApi } from '../../utils/api/auth';
-import Component from '../lib/component';
+import Component from '../../lib/component';
 import Button from '../common/button';
 import Input from '../common/input';
 import './style.css';
 import userStore from '../../store/user-store';
-import { useHistory } from '../lib/routerHooks';
+import { useHistory } from '../../lib/routerHooks';
 import { loginValidation, signupValidation } from '../../utils/validation/auth-validation';
 import Modal from '../common/modal';
 

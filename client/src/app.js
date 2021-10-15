@@ -1,5 +1,5 @@
 // import { Router } from 'ms-vanilla';
-import Router from './components/lib/router';
+import Router from './lib/router';
 import LoginPage from './pages/login-page';
 import NotFoundPage from './pages/not-found-page';
 import PostListPage from './pages/post-list-page';

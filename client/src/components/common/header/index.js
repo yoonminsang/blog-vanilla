@@ -1,6 +1,6 @@
 // import { Component } from 'ms-vanilla';
 import axios from 'axios';
-import Component from '../../lib/component';
+import Component from '../../../lib/component';
 import userStore from '../../../store/user-store';
 import './style.css';
 import { logoutApi } from '../../../utils/api/auth';

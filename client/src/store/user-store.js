@@ -1,6 +1,6 @@
 // import { Observable } from 'ms-vanilla';
 import axios from 'axios';
-import Observable from '../components/lib/basic-observable';
+import Observable from '../lib/basic-observable';
 import { checkAuthApi } from '../utils/api/auth';
 
 class UserStore extends Observable {
