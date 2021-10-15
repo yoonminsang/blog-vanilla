@@ -1,0 +1,64 @@
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modal-show 0.3s ease;
+}
+
+.modal-content {
+  background: white;
+  text-align: center;
+  border-radius: 10px;
+  width: 50vw;
+  height: 50vh;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.modal-body {
+}
+
+.modal-btn {
+}
+
+@media all and (max-width: 480px) {
+  .modal-content {
+    padding: 10px;
+  }
+}
+
+@media all and (min-width: 480px) and (max-width: 1200px) {
+  .modal-content {
+    padding: 25px;
+  }
+}
+
+@media all and (min-width: 1200px) {
+  .modal-content {
+    padding: 40px;
+  }
+}
+
+@keyframes modal-show {
+  from {
+    opacity: 0;
+    margin-top: -10vh;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0vh;
+  }
+}
+
+.congratulations {
+  background-image: url('../../../assets/icons/congratulations.gif');
+  width: 100%;
+  height: 80%;
+  margin-bottom: 20px;
+}
