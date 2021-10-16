@@ -8,7 +8,7 @@
   "scripts": {
     "start": "ts-node --files -r tsconfig-paths/register dist/app.js",
     "build": "tsc",
-    "dev": "cross-env NODE_ENV=development tsc-watch --onSuccess \"yarn start\" ",
+    "dev": "cross-env NODE_ENV=development tsc-watch --onSuccess \"yarn start\"",
     "deploy": "cross-env NODE_ENV=production \"yarn build && yarn start\"",
     "lint": "eslint src --ext .ts --parser-options=project:'tsconfig.json'",
     "lint:fix": "eslint src --ext .ts --parser-options=project:'tsconfig.json' --fix"
@@ -24,6 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.0",
+    "pm2": "^5.1.2",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.37",
     "typeorm-naming-strategies": "^2.0.0"
