@@ -51,7 +51,7 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: upload to S3
-        run: aws s3 cp --region ap-northeast-2 ./blog-vanilla.zip s3://blog-vanilla/public/
+        run: aws s3 cp --region ap-northeast-2 ./blog-vanilla.zip s3://blog-vanilla-bucket/public/
 
       - name: deploy with AWS codeDeploy
         run: aws deploy create-deployment
