@@ -6,10 +6,8 @@
   "author": "yoonminsang <apdlyooapdl@naver.com>",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node --files -r tsconfig-paths/register dist/app.js",
-    "build": "tsc",
-    "dev": "cross-env NODE_ENV=development tsc-watch --onSuccess \"yarn start\"",
-    "deploy": "cross-env NODE_ENV=production \"yarn build && yarn start\"",
+    "dev": "cross-env NODE_ENV=development tsc-watch --onSuccess \"ts-node --files -r tsconfig-paths/register dist/app.js\" ",
+    "deploy": "tsc && cross-env NODE_ENV=production pm2 start --name api ts-node -- --files -r tsconfig-paths/register dist/app.js - i max",
     "lint": "eslint src --ext .ts --parser-options=project:'tsconfig.json'",
     "lint:fix": "eslint src --ext .ts --parser-options=project:'tsconfig.json' --fix"
   },
