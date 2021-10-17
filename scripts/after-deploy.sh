@@ -8,4 +8,5 @@ sudo service nginx restart
 
 cd ../server
 yarn install --frozen-lockfile
+yarn build
 sudo pm2 reload api
