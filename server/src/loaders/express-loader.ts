@@ -8,6 +8,6 @@ export default (app: Application): void => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
-  app.use(cors(corsConfig));
+  app.use(cors(corsConfig()));
   app.use(morgan(process.env.NODE_ENV === 'development' ? 'dev' : 'combined'));
 };
