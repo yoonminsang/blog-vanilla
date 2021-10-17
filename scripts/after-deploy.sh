@@ -6,7 +6,8 @@ cd client
 sudo cp -r dist/* /var/www/html/
 sudo service nginx restart
 
-cd ../server
+cd $REPOSITORY
+cd server
 yarn install --frozen-lockfile
 yarn build
 sudo pm2 reload api
