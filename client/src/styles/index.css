@@ -42,7 +42,6 @@ body {
   src: url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.eot?#iefix') format('embedded-opentype'),
     /* IE6-IE8 */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.woff2') format('woff2'),
     /* Super Modern Browsers */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.woff') format('woff'),
-    /* Super Modern Browsers */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.woff') format('woff'),
     /* Safari, Android, iOS */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.otf') format('opentype'),
     /* Safari, Android, iOS */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.svg#NotoSansKR')
       format('svg'); /* Legacy iOS */
