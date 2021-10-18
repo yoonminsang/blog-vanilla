@@ -1,0 +1,25 @@
+.login {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-template {
+  margin-top: 10vh;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-template h2 {
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 50px;
+}
+
+.auth-template .error-message {
+  color: var(--red);
+  font-size: 14px;
+  padding: 10px 0;
+  height: 36px;
+}

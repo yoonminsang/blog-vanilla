@@ -1,0 +1,27 @@
+.fat {
+  background-color: var(--primary);
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+}
+
+.fat:hover {
+  background-color: var(--primary-3);
+  transform: translateY(-2px);
+}
+
+.fat:disabled {
+  background-color: var(--primary-2);
+}
+
+.fat .add {
+  background-image: url('../../../assets/icons/add.svg');
+  filter: invert(99%) sepia(1%) saturate(1962%) hue-rotate(323deg) brightness(117%) contrast(100%);
+  width: 20px;
+  height: 20px;
+}

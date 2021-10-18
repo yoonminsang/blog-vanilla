@@ -1,0 +1,55 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--primary);
+  border-bottom: 1px solid var(--grey-3);
+}
+
+.header .empty {
+  opacity: 0;
+}
+
+.header h1 {
+  font-weight: 700;
+}
+
+.header > button,
+.header > a {
+  font-size: 14px;
+}
+
+.header > button:hover,
+.header > a:hover {
+  color: var(--primary-3);
+}
+
+@media all and (max-width: 480px) {
+  .header {
+    padding: 10px 20px;
+  }
+
+  .header h1 {
+    font-size: 30px;
+  }
+}
+
+@media all and (min-width: 480px) and (max-width: 1200px) {
+  .header {
+    padding: 15px 60px;
+  }
+
+  .header h1 {
+    font-size: 35px;
+  }
+}
+
+@media all and (min-width: 1200px) {
+  .header {
+    padding: 20px 100px;
+  }
+
+  .header h1 {
+    font-size: 40px;
+  }
+}
