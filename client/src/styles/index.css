@@ -22,6 +22,17 @@ body {
   min-height: 100vh;
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px;
+}
+
+.right {
+  margin-left: auto;
+}
+
 .almost-full-width {
   width: 90%;
 }
