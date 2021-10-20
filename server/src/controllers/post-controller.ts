@@ -50,7 +50,7 @@ class PostController {
     }
   }
 
-  async deletePosst(req: Request, res: Response, next: NextFunction) {
+  async deletePost(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
     try {
       await service.deletePost(+id, req.user.id);

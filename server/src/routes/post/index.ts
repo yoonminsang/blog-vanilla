@@ -13,6 +13,6 @@ postRouter.post('/', isLoggedInMiddleware, createPostValidation, postController.
 postRouter.get('/:id', idParamsValidation, postController.readPost);
 postRouter.get('/', readPostListValidation, postController.readPostList);
 postRouter.put('/:id', isLoggedInMiddleware, idParamsValidation, createPostValidation, postController.updatePost);
-postRouter.delete('/:id', isLoggedInMiddleware, idParamsValidation, postController.deletePosst);
+postRouter.delete('/:id', isLoggedInMiddleware, idParamsValidation, postController.deletePost);
 
 export default postRouter;
