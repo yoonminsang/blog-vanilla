@@ -1,0 +1,16 @@
+.post-create-template {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post-create-template > :not(:first-child) {
+  margin-top: 10px;
+}
+
+@media all and (min-width: 1200px) {
+  .post-create-template {
+    width: 1120px;
+  }
+}
