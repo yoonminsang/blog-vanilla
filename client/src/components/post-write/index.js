@@ -71,7 +71,7 @@ class PostWrite extends Component {
       const {
         data: { postId },
       } = await createPostApi({ title, content });
-      this.history.push(`/item/${postId}`);
+      this.history.push(`/post/${postId}`);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         // TODO: winston으로 기록?
