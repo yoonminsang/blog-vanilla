@@ -25,8 +25,20 @@ class PostService {
     return post;
   }
 
-  async readPostList(lastId: number) {
-    const postList = await getCustomRepository(PostRepository).readPostList(lastId);
+  async readPostList() {
+    const postList = await getCustomRepository(PostRepository).readPostList();
+    if (!postList) {
+      throw errorGenerator({
+        status: 400,
+        message: POST_ERROR_MESSAGE.notFoundPostId,
+        from: FROM,
+      });
+    }
+    return postList;
+  }
+
+  async readPostListByLastId(lastId: number) {
+    const postList = await getCustomRepository(PostRepository).readPostListByLastId(lastId);
     if (!postList) {
       throw errorGenerator({
         status: 400,

@@ -19,7 +19,17 @@ class PostRepository extends Repository<Post> {
     return post;
   }
 
-  async readPostList(lastId: number): Promise<Post[] | undefined> {
+  async readPostList(): Promise<Post[] | undefined> {
+    const post = await this.createQueryBuilder('post')
+      .select(['post.id', 'post.title', 'post.content', 'post.createdAt', 'user.nickname'])
+      .take(LIMIT)
+      .innerJoin('post.user', 'user')
+      .orderBy('post.id', 'DESC')
+      .getMany();
+    return post;
+  }
+
+  async readPostListByLastId(lastId: number): Promise<Post[] | undefined> {
     const post = await this.createQueryBuilder('post')
       .select(['post.id', 'post.title', 'post.content', 'post.createdAt', 'user.nickname'])
       .take(LIMIT)
