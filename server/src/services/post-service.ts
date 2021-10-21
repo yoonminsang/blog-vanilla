@@ -2,6 +2,7 @@ import { getCustomRepository } from 'typeorm';
 import errorGenerator from 'error/error-generator';
 import { POST_ERROR_MESSAGE } from 'constants/error-message';
 import PostRepository from 'repositories/post-repository';
+import { sliceText } from 'utils/query';
 
 const FROM = 'post';
 
@@ -34,7 +35,7 @@ class PostService {
         from: FROM,
       });
     }
-    return postList;
+    return postList.map(post => sliceText(post, 'content', 200));
   }
 
   async readPostListByLastId(lastId: number) {
@@ -46,7 +47,7 @@ class PostService {
         from: FROM,
       });
     }
-    return postList;
+    return postList.map(post => sliceText(post, 'content', 200));
   }
 
   async updatePost(id: number, title: string, content: string, userId: string) {
