@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, RelationId } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { COMMENT_ENTITY } from 'constants/entity';
 import { BaseTimeEntity } from './base-time-entity';
 import User from './user';
@@ -12,17 +12,30 @@ class Comment extends BaseTimeEntity {
   @Column({ length: COMMENT_ENTITY.contentMaxLength })
   content!: string;
 
-  @ManyToOne(() => User, user => user, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @ManyToOne(() => User, user => user.posts, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user!: User;
 
-  @RelationId((comment: Comment) => comment.user)
+  @Column()
   userId!: string;
 
-  @ManyToOne(() => Post, post => post, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-  post!: User;
+  @ManyToOne(() => Post, post => post.comments, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @JoinColumn({ name: 'post_id', referencedColumnName: 'id' })
+  post!: Post;
 
-  @RelationId((comment: Comment) => comment.post)
+  @Column()
   postId!: number;
+  // @ManyToOne(() => User, user => user, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  // user!: User;
+
+  // @RelationId((comment: Comment) => comment.user)
+  // userId!: string;
+
+  // @ManyToOne(() => Post, post => post.comments, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  // post!: User;
+
+  // @RelationId((comment: Comment) => comment.post)
+  // postId!: number;
 }
 
 export default Comment;
