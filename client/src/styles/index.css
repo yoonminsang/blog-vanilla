@@ -18,6 +18,18 @@ body {
   background-size: contain;
 }
 
+.add {
+  background-image: url('../assets/icons/add.svg');
+}
+
+.congratulations {
+  background-image: url('../assets/icons/congratulations.gif');
+}
+
+.image-ready {
+  background-image: url('../assets/icons/image-ready.png');
+}
+
 #root {
   min-height: 100vh;
 }
@@ -27,6 +39,10 @@ main.content {
   flex-direction: column;
   align-items: center;
   margin: 40px;
+}
+
+.flex {
+  display: flex;
 }
 
 .right {

@@ -20,7 +20,6 @@
 }
 
 .fat .add {
-  background-image: url('../../../assets/icons/add.svg');
   filter: invert(99%) sepia(1%) saturate(1962%) hue-rotate(323deg) brightness(117%) contrast(100%);
   width: 20px;
   height: 20px;
