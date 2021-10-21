@@ -28,7 +28,9 @@ class App {
   }
 
   init() {
-    if (localStorage.getItem('user')) userStore.autoLogin();
+    if (localStorage.getItem('user')) {
+      userStore.autoLogin();
+    }
   }
 }
 
