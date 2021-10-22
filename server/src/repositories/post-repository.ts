@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import Post from 'entity/post';
 
-const LIMIT = 10;
+const LIMIT = 20;
 
 @EntityRepository(Post)
 class PostRepository extends Repository<Post> {
