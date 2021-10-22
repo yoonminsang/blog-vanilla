@@ -10,6 +10,8 @@ import './style.css';
 class PostList extends Component {
   setup() {
     this.state = { user: undefined, postList: undefined };
+    this.existPost = true;
+    this.getDataForScroll = this.getDataForScroll.bind(this);
   }
 
   markup() {
@@ -22,7 +24,7 @@ class PostList extends Component {
           ? postList
               .map(({ id, title, content, createdAt, user: { nickname } }) => {
                 return /* html */ `
-              <div class="post-list-item">
+              <li class="post-list-item">
                 <a href="/post/${id}">
                   <div class="icon image-ready"></div>
                   <div class="title">${title}</div>
@@ -32,7 +34,7 @@ class PostList extends Component {
                     <div class="nickname">${nickname}</div>
                   </div>
                 </a>
-              </div>
+              </li>
               `;
               })
               .join('')
@@ -49,10 +51,10 @@ class PostList extends Component {
     }
   }
 
-  componentDidMount() {
-    console.log('didmount', this.state);
-    this.getPostList();
-    userStore.subscribe(() => this.setState({ user: userStore.state.user }));
+  async componentDidMount() {
+    userStore.subscribe(() => this.setState({ user: userStore.state.user }, true));
+    await this.getPostList();
+    this.infiniteScroll();
   }
 
   async getPostList() {
@@ -60,8 +62,7 @@ class PostList extends Component {
       const {
         data: { postList },
       } = await readPostListApi();
-      console.log('getPostList', postList);
-      this.setState({ postList });
+      this.setState({ postList }, true);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         // TODO: winston으로 기록?
@@ -72,12 +73,40 @@ class PostList extends Component {
     }
   }
 
+  infiniteScroll() {
+    let [$li, lastId] = this.getDataForScroll();
+
+    const io = new IntersectionObserver(
+      async entries => {
+        if (entries[0].isIntersecting) {
+          io.unobserve($li);
+          await this.getPostListByLastId(lastId);
+          [$li, lastId] = this.getDataForScroll();
+          io.observe($li);
+
+          if (!this.existPost) {
+            io.disconnect();
+          }
+        }
+      },
+      {
+        threshold: 0.5,
+      },
+    );
+
+    io.observe($li);
+  }
+
   async getPostListByLastId(lastId) {
     try {
       const {
         data: { postList: nextPostList },
       } = await readPostListByLastIdApi({ lastId });
-      this.setState({ postList: [...this.state.postList, nextPostList] });
+      if (nextPostList.length === 0) {
+        this.existPost = false;
+      } else {
+        this.setState({ postList: [...this.state.postList, ...nextPostList] });
+      }
     } catch (err) {
       if (axios.isAxiosError(err)) {
         // TODO: winston으로 기록?
@@ -86,6 +115,13 @@ class PostList extends Component {
         console.log('내부 에러');
       }
     }
+  }
+
+  getDataForScroll() {
+    const $li = this.target.querySelector('.post-list-item:last-child');
+    const hrefSplit = $li.firstElementChild.href.split('/');
+    const lastId = hrefSplit[hrefSplit.length - 1];
+    return [$li, lastId];
   }
 }
 
