@@ -29,6 +29,7 @@
 .post-list-item .title {
   font-size: 20px;
   font-weight: 500;
+  color: var(--title-active);
 }
 
 .post-list-item .content {
@@ -40,16 +41,13 @@
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  color: var(--grey-1);
 }
 
 .post-list-item .flex {
   justify-content: space-around;
-  font-size: 13px;
-}
-
-.post-list-item .time {
-}
-.post-list-item .nickname {
+  font-size: 12px;
+  color: var(--grey-2);
 }
 
 .image-ready {
