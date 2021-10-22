@@ -19,8 +19,8 @@ class App {
       { path: '/post/:id', component: PostPage },
     ];
     this.NotFoundPage = NotFoundPage;
-    this.render();
     this.init();
+    this.render();
   }
 
   render() {
