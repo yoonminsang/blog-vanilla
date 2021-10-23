@@ -6,8 +6,12 @@ import PostList from '../components/post-list';
 class PostListPage extends Component {
   markup() {
     return /* html */ `
+    <div class="wrapper">
       <inside class="header-inside"></inside>
-      <main class="content"></main>
+      <div class="content-wrapper">
+        <main class="content"></main>
+      </div>
+    </div>
     `;
   }
 

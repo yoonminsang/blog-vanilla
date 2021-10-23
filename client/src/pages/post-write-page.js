@@ -6,16 +6,16 @@ import Component from '../lib/component';
 class PostWritePage extends Component {
   markup() {
     return /* html */ `
-    <inside class="header-inside"></inside>
-    <main class="content">
-      <inside class="post-write-inside"></inside>
-    </main>
+    <div class="wrapper">
+      <inside class="header-inside"></inside>
+      <main class="content"></main>
+    </div>
     `;
   }
 
   appendComponent(target) {
     const $header = target.querySelector('.header-inside');
-    const $postWrite = target.querySelector('.post-write-inside');
+    const $postWrite = target.querySelector('.content');
     new Header($header);
     new PostWrite($postWrite);
   }

@@ -24,18 +24,18 @@ class PostList extends Component {
           ? postList
               .map(({ id, title, content, createdAt, user: { nickname } }) => {
                 return /* html */ `
-              <li class="post-list-item">
-                <a href="/post/${id}">
-                  <div class="icon image-ready"></div>
-                  <div class="title">${title}</div>
-                  <div class="content">${content}</div>
-                  <div class="flex">
-                    <div class="time">${parseTime(createdAt)}</div>
-                    <div class="nickname">${nickname}</div>
-                  </div>
-                </a>
-              </li>
-              `;
+                <li class="post-list-item">
+                  <a href="/post/${id}">
+                    <div class="icon image-ready"></div>
+                    <div class="title">${title}</div>
+                    <div class="content">${content}</div>
+                    <div class="flex">
+                      <div class="time">${parseTime(createdAt)}</div>
+                      <div class="nickname">${nickname}</div>
+                    </div>
+                  </a>
+                </li>
+                `;
               })
               .join('')
           : ''

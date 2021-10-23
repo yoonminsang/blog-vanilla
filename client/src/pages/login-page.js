@@ -10,8 +10,10 @@ class LoginPage extends Component {
 
   markup() {
     return /* html */ `
+    <div class="wrapper">
       <inside class="header-inside"></inside>
       <inside class="login-inside"></inside>
+    </div>
     `;
   }
 
