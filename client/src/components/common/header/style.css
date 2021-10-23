@@ -4,6 +4,7 @@
   justify-content: space-between;
   color: var(--primary);
   border-bottom: 1px solid var(--grey-3);
+  width: 100%;
 }
 
 .header .empty {
@@ -27,6 +28,7 @@
 @media all and (max-width: 480px) {
   .header {
     padding: 10px 20px;
+    margin-bottom: 20px;
   }
 
   .header h1 {
@@ -37,6 +39,7 @@
 @media all and (min-width: 480px) and (max-width: 1200px) {
   .header {
     padding: 15px 60px;
+    margin-bottom: 30px;
   }
 
   .header h1 {
@@ -47,6 +50,7 @@
 @media all and (min-width: 1200px) {
   .header {
     padding: 20px 100px;
+    margin-bottom: 40px;
   }
 
   .header h1 {
