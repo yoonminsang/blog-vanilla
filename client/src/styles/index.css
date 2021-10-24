@@ -18,16 +18,20 @@ body {
   background-size: contain;
 }
 
-.add {
+.icon.add {
   background-image: url('../assets/icons/add.svg');
 }
 
-.congratulations {
+.icon.congratulations {
   background-image: url('../assets/icons/congratulations.gif');
 }
 
-.image-ready {
+.icon.image-ready {
   background-image: url('../assets/icons/image-ready.png');
+}
+
+.icon.delete {
+  background-image: url('../assets/icons/delete.svg');
 }
 
 #root {
