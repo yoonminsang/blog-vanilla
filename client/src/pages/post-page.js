@@ -1,5 +1,6 @@
 // import { Component, useParams } from 'ms-vanilla';
 import Header from '../components/common/header';
+import PostDetail from '../components/post-detail';
 import Component from '../lib/component';
 
 class PostPage extends Component {
@@ -8,7 +9,9 @@ class PostPage extends Component {
     <div class="wrapper">
       <inside class="header-inside"></inside>
       <div class="content-wrapper">
-        <main class="content"></main>
+        <main class="content">
+          <inside class="post-detail-inside"></inside>
+        </main>
       </div>
     </div>
     `;
@@ -16,9 +19,9 @@ class PostPage extends Component {
 
   appendComponent(target) {
     const $header = target.querySelector('.header-inside');
-    // const $content = target.querySelector('.content');
+    const $postDetail = target.querySelector('.post-detail-inside');
     new Header($header);
-    // new PostList($content);
+    new PostDetail($postDetail);
   }
 }
 
