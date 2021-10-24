@@ -153,8 +153,13 @@ class Auth extends Component {
       window.location.href = '/';
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const { errorMessage } = err.response.data;
-        this.setState({ errorMessage });
+        const { errorMessage } = err.response?.data;
+        if (errorMessage) {
+          this.setState({ errorMessage });
+        } else {
+          // TODO: winston
+          console.log(err);
+        }
       } else {
         console.log('내부 에러');
       }
@@ -173,8 +178,13 @@ class Auth extends Component {
       }, 2000);
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const { errorMessage } = err.response.data;
-        this.setState({ errorMessage });
+        const { errorMessage } = err.response?.data;
+        if (errorMessage) {
+          this.setState({ errorMessage });
+        } else {
+          // TODO: winston
+          console.log(err);
+        }
       } else {
         console.log('내부 에러');
       }

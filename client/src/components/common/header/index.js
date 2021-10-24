@@ -40,8 +40,13 @@ class Header extends Component {
       userStore.logout();
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // TODO: winston으로 기록?
-        console.log(err);
+        const { errorMessage } = err.response?.data;
+        if (errorMessage) {
+          this.setState({ errorMessage });
+        } else {
+          // TODO: winston
+          console.log(err);
+        }
       } else {
         console.log('내부 에러');
       }

@@ -74,8 +74,13 @@ class PostWrite extends Component {
       this.history.push(`/post/${postId}`);
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // TODO: winston으로 기록?
-        console.log(err);
+        // TODO: winston
+        const { errorMessage } = err.response?.data;
+        if (errorMessage) {
+          console.log(errorMessage);
+        } else {
+          console.log(err);
+        }
       } else {
         console.log('내부 에러');
       }

@@ -52,7 +52,7 @@ class PostList extends Component {
   }
 
   async componentDidMount() {
-    userStore.subscribe(() => this.setState({ user: userStore.state.user }, true));
+    userStore.subscribe(() => this.setState({ user: userStore.state.user }));
     await this.getPostList();
     this.infiniteScroll();
   }
@@ -62,11 +62,16 @@ class PostList extends Component {
       const {
         data: { postList },
       } = await readPostListApi();
-      this.setState({ postList }, true);
+      this.setState({ postList });
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // TODO: winston으로 기록?
-        console.log(err);
+        // TODO: winston
+        const { errorMessage } = err.response?.data;
+        if (errorMessage) {
+          console.log(errorMessage);
+        } else {
+          console.log(err);
+        }
       } else {
         console.log('내부 에러');
       }
@@ -109,8 +114,13 @@ class PostList extends Component {
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // TODO: winston으로 기록?
-        console.log(err);
+        // TODO: winston
+        const { errorMessage } = err.response?.data;
+        if (errorMessage) {
+          console.log(errorMessage);
+        } else {
+          console.log(err);
+        }
       } else {
         console.log('내부 에러');
       }
