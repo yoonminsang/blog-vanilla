@@ -21,7 +21,7 @@ class PostService {
         from: FROM,
       });
     }
-    const isUpdated = postData.createdAt !== postData.updatedAt;
+    const isUpdated = String(postData.createdAt) !== String(postData.updatedAt);
     const post = { ...postData, isUpdated };
     return post;
   }
