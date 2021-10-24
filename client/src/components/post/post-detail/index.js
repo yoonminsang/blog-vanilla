@@ -1,11 +1,11 @@
 // import { Component } from 'ms-vanilla';
 import axios from 'axios';
-import Component from '../../lib/component';
-import { useHistory } from '../../lib/routerHooks';
-import userStore from '../../store/user-store';
-import { parseTime } from '../../utils';
-import { deletePostApi, readPostApi } from '../../utils/api/post';
-import Modal from '../common/modal';
+import Component from '../../../lib/component';
+import { useHistory } from '../../../lib/routerHooks';
+import userStore from '../../../store/user-store';
+import { parseTime } from '../../../utils';
+import { deletePostApi, readPostApi } from '../../../utils/api/post';
+import Modal from '../../common/modal';
 import './style.css';
 
 class PostDetail extends Component {
@@ -32,7 +32,7 @@ class PostDetail extends Component {
       const updateTag = isUpdated ? /* html */ `<div class="txt-bar"></div><div class="update">수정됨</div>` : '';
       const editTag =
         user?.nickname === nickname
-          ? /* html */ `<div class="txt-bar"></div><a href="/modify/${this.id}">수정</a><div class="txt-bar"></div><button class="post-remove">삭제</button>`
+          ? /* html */ `<div class="txt-bar"></div><a href="/post/modify/${this.id}">수정</a><div class="txt-bar"></div><button class="post-remove">삭제</button>`
           : '';
       inner = /* html */ `
       <div class="title">${title}</div>

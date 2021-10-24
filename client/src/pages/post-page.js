@@ -1,6 +1,6 @@
 // import { Component, useParams } from 'ms-vanilla';
 import Header from '../components/common/header';
-import PostDetail from '../components/post-detail';
+import PostDetail from '../components/post/post-detail';
 import Component from '../lib/component';
 
 class PostPage extends Component {
