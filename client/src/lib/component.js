@@ -57,20 +57,14 @@ class Component {
     });
   }
 
-  setState(nextState, forceUpdate) {
+  setState(nextState) {
     this.componentDidUpdate({ ...this.state }, { ...this.state, ...nextState });
     this.state = { ...this.state, ...nextState };
-    this.update(forceUpdate);
+    this.update();
   }
 
-  update(forceUpdate) {
+  update() {
     const newMarkup = this.markup();
-
-    if (forceUpdate) {
-      this.target.innerHTML = newMarkup;
-      this.appendComponent(this.target);
-      return;
-    }
 
     const newDom = document.createRange().createContextualFragment(newMarkup);
 
