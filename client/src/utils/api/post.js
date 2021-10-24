@@ -8,6 +8,6 @@ export const readPostListApi = () => request('GET', `/api/post`);
 
 export const readPostListByLastIdApi = ({ lastId }) => request('GET', `/api/post?lastId=${lastId}`);
 
-export const updatePostApi = ({ id, title, content }) => request('PUT', `/api/auth/${id}`, { title, content });
+export const updatePostApi = ({ id, title, content }) => request('PUT', `/api/post/${id}`, { title, content });
 
-export const deletePostApi = () => request('GET', '/api/auth');
+export const deletePostApi = ({ id }) => request('DELETE', `/api/post/${id}`);
