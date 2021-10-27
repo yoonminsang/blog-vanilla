@@ -11,6 +11,7 @@ const commentRouter = Router();
 const commentController = new CommentController();
 
 commentRouter.post('/', isLoggedInMiddleware, createCommentValidation, commentController.createComment);
+commentRouter.get('/last', commentController.readLastCommentList);
 commentRouter.get('/:id', idParamsValidation, commentController.readComment);
 commentRouter.get('/', readCommentListValidation, commentController.readCommentList);
 commentRouter.put(
