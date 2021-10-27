@@ -33,8 +33,18 @@ class CommentController {
     const postId = req.query.postId as string;
     const pageId = req.query.pageId as string;
     try {
-      const commentList = await service.readCommentList(+postId, +pageId);
-      res.status(200).json({ commentList });
+      const { commentList, lastPageId } = await service.readCommentList(+postId, +pageId);
+      res.status(200).json({ commentList, lastPageId });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async readLastCommentList(req: Request, res: Response, next: NextFunction) {
+    const postId = req.query.postId as string;
+    try {
+      const { commentList, lastPageId } = await service.readLastCommentList(+postId);
+      res.status(200).json({ commentList, lastPageId });
     } catch (err) {
       next(err);
     }
