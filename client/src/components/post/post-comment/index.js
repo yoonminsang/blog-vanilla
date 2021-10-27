@@ -4,14 +4,14 @@ import Component from '../../../lib/component';
 import { useHistory } from '../../../lib/routerHooks';
 import userStore from '../../../store/user-store';
 import { parseTime } from '../../../utils';
-import { readCommentListApi } from '../../../utils/api/comment';
+import { createCommentApi, readCommentListApi, readLastCommentListApi } from '../../../utils/api/comment';
 import Button from '../../common/button';
 import TextArea from '../../common/textarea';
 import './style.css';
 
 class PostComment extends Component {
   setup() {
-    this.state = { user: undefined, commentList: undefined, content: '' };
+    this.state = { user: undefined, commentList: undefined, lastPageId: undefined, content: '' };
     this.history = useHistory();
     this.postId = this.history.params.postId;
   }
@@ -21,6 +21,9 @@ class PostComment extends Component {
     <div class="comment">
       <ul class="comment-list">
         
+      </ul>
+      <ul class="comment-paging">
+
       </ul>
       <form class="comment-create-template">
         <inside class="comment-content-inside"></inside>
@@ -48,11 +51,11 @@ class PostComment extends Component {
 
   componentDidMount() {
     userStore.subscribe(() => this.setState({ user: userStore.state.user }));
-    this.getCommentList(1);
+    this.getLastCommentList();
   }
 
   setEvent() {
-    this.addEvent('click', '.comment-content', ({ target }) => {
+    this.addEvent('input', '.comment-content', ({ target }) => {
       this.setState({ content: target.value });
     });
     this.addEvent('submit', '.comment-create-template', e => {
@@ -62,13 +65,12 @@ class PostComment extends Component {
     });
   }
 
-  async getCommentList(pageId) {
+  async getLastCommentList() {
     try {
       const {
-        data: { commentList },
-      } = await readCommentListApi({ postId: this.postId, pageId });
-      this.setState({ commentList });
-      console.log(commentList);
+        data: { commentList, lastPageId },
+      } = await readLastCommentListApi({ postId: this.postId });
+      this.setState({ commentList, lastPageId });
     } catch (err) {
       if (axios.isAxiosError(err)) {
         // TODO: winston
@@ -84,7 +86,45 @@ class PostComment extends Component {
     }
   }
 
-  async createComment(content) {}
+  async getCommentList(pageId) {
+    try {
+      const {
+        data: { commentList, lastPageId },
+      } = await readCommentListApi({ postId: this.postId, pageId });
+      this.setState({ commentList, lastPageId });
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        // TODO: winston
+        const { errorMessage } = err.response?.data;
+        if (errorMessage) {
+          console.log(errorMessage);
+        } else {
+          console.log(err);
+        }
+      } else {
+        console.log('내부 에러');
+      }
+    }
+  }
+
+  async createComment(content) {
+    try {
+      await createCommentApi({ content, postId: this.postId });
+      this.getLastCommentList();
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        // TODO: winston
+        const { errorMessage } = err.response?.data;
+        if (errorMessage) {
+          console.log(errorMessage);
+        } else {
+          console.log(err);
+        }
+      } else {
+        console.log('내부 에러');
+      }
+    }
+  }
 }
 
 export default PostComment;
