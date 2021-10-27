@@ -30,6 +30,12 @@ class CommentRepository extends Repository<Comment> {
     return comment;
   }
 
+  async getLastCommentListPageId() {
+    const count = await this.createQueryBuilder('comment').getCount();
+    const lastPageId = Math.ceil(count / LIMIT);
+    return lastPageId;
+  }
+
   async getCommentForUserId(id: number): Promise<Comment | undefined> {
     const comment = await this.createQueryBuilder('comment')
       .select(['comment.id', 'comment.user.id'])
