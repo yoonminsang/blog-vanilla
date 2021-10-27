@@ -10,6 +10,7 @@ body {
   --white: #ffffff;
   --red: #f45452;
   font-family: 'Noto Sans KR';
+  line-height: 1.5;
 }
 
 .icon {
@@ -52,6 +53,13 @@ body {
   width: 100%;
 }
 
+main.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+}
+
 @media all and (max-width: 480px) {
   .content-wrapper {
     padding: 0px 12px;
@@ -62,12 +70,9 @@ body {
   .content-wrapper {
     width: 1000px;
   }
-}
-
-main.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  main.content {
+    width: 1120px;
+  }
 }
 
 .flex {
