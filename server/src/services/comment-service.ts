@@ -32,6 +32,7 @@ class CommentService {
   }
 
   async readCommentList(postId: number, pageId: number) {
+    const lastPageId = await getCustomRepository(CommentRepository).getLastCommentListPageId();
     const commentList = await getCustomRepository(CommentRepository).readCommentList(postId, pageId);
     if (!commentList) {
       throw errorGenerator({
@@ -40,7 +41,20 @@ class CommentService {
         from: FROM,
       });
     }
-    return commentList;
+    return { commentList, lastPageId };
+  }
+
+  async readLastCommentList(postId: number) {
+    const lastPageId = await getCustomRepository(CommentRepository).getLastCommentListPageId();
+    const commentList = await getCustomRepository(CommentRepository).readCommentList(postId, lastPageId);
+    if (!commentList) {
+      throw errorGenerator({
+        status: 400,
+        message: COMMENT_ERROR_MESSAGE.notFoundCommentList,
+        from: FROM,
+      });
+    }
+    return { commentList, lastPageId };
   }
 
   async updateComment(id: number, content: string, userId: string) {
