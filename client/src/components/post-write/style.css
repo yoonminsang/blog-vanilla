@@ -8,9 +8,3 @@
 .post-create-template > :not(:first-child) {
   margin-top: 10px;
 }
-
-@media all and (min-width: 1200px) {
-  .post-create-template {
-    width: 1120px;
-  }
-}

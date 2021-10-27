@@ -41,9 +41,9 @@ class PostWrite extends Component {
     });
     new TextArea($postContent, {
       class: 'post-content full-width',
-      type: 'text',
       value: content,
       placeholder: '내용',
+      option: true,
     });
     new Button($btnCreate, {
       class: 'right',
@@ -56,7 +56,7 @@ class PostWrite extends Component {
     this.addEvent('submit', '.post-create-template', async e => {
       e.preventDefault();
       const { title, content } = this.state;
-      this.create({ title, content });
+      this.create(title, content);
     });
     this.addEvent('input', '.post-title', ({ target }) => {
       this.setState({ title: target.value });
@@ -66,7 +66,7 @@ class PostWrite extends Component {
     });
   }
 
-  async create({ title, content }) {
+  async create(title, content) {
     try {
       const {
         data: { postId },
