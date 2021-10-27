@@ -12,7 +12,7 @@ class PostDetail extends Component {
   setup() {
     this.state = { user: undefined, post: undefined, errorMessage: undefined, modalVisible: false };
     this.history = useHistory();
-    this.id = this.history.params.id;
+    this.postId = this.history.params.postId;
   }
 
   markup() {
@@ -32,7 +32,7 @@ class PostDetail extends Component {
       const updateTag = isUpdated ? /* html */ `<div class="txt-bar"></div><div class="update">수정됨</div>` : '';
       const editTag =
         user?.nickname === nickname
-          ? /* html */ `<div class="txt-bar"></div><a href="/post/modify/${this.id}">수정</a><div class="txt-bar"></div><button class="post-remove">삭제</button>`
+          ? /* html */ `<div class="txt-bar"></div><a href="/post/modify/${this.postId}">수정</a><div class="txt-bar"></div><button class="post-remove">삭제</button>`
           : '';
       inner = /* html */ `
       <div class="title">${title}</div>
@@ -47,14 +47,16 @@ class PostDetail extends Component {
       `;
     }
     return /* html */ `
-    <div class="post-detail">${inner}</div>
-    <inside class="modal-inside"></inside>
+    <div class="post-detail">
+      ${inner}
+      <inside class="modal-inside"></inside>
+    </div>
+    
     `;
   }
 
   appendComponent(target) {
     const $modal = target.querySelector('.modal-inside');
-
     new Modal($modal, {
       img: 'delete',
       visible: this.state.modalVisible,
@@ -80,7 +82,7 @@ class PostDetail extends Component {
     try {
       const {
         data: { post },
-      } = await readPostApi({ id: this.id });
+      } = await readPostApi({ id: this.postId });
       this.setState({ post });
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -99,7 +101,7 @@ class PostDetail extends Component {
 
   async removePost() {
     try {
-      await deletePostApi({ id: this.id });
+      await deletePostApi({ id: this.postId });
       this.history.goBack();
     } catch (err) {
       if (axios.isAxiosError(err)) {
