@@ -4,11 +4,11 @@ import './style.css';
 
 class TextArea extends Component {
   markup() {
-    const { type, value, placeholder, maxlength } = this.props;
+    const { value, placeholder, maxlength, option } = this.props;
     return /* html */ `
-    <textarea class="textarea" type="${type}" placeholder="${placeholder || ''}" maxlength="${
-      maxlength || ''
-    }">${value}</textarea>
+    <textarea class="textarea" placeholder="${placeholder || ''}" maxlength="${maxlength || ''}" ${
+      option ? '' : 'required'
+    }>${value}</textarea>
     `;
   }
 }
