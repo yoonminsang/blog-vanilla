@@ -70,12 +70,15 @@ class Component {
 
     this.appendComponent(newDom);
 
-    const newElements = this.inside ? [...newDom.querySelectorAll('*')].slice(1) : [...newDom.querySelectorAll('*')];
+    const newElements = this.inside
+      ? [...newDom.firstElementChild.querySelectorAll('*')]
+      : [...newDom.querySelectorAll('*')];
     const currentElements = [...this.target.querySelectorAll('*')];
 
     if (newElements.length !== currentElements.length) {
-      this.target.innerHTML = newMarkup;
-      this.appendComponent(this.target);
+      this.target.innerHTML = this.inside
+        ? [...newDom.firstElementChild.children].map(el => el.outerHTML).join('')
+        : newMarkup;
       return;
     }
 
@@ -83,8 +86,9 @@ class Component {
       const newEl = newElements[i];
       const curEl = currentElements[i];
       if (newEl.childElementCount !== curEl.childElementCount) {
-        this.target.innerHTML = newMarkup;
-        this.appendComponent(this.target);
+        this.target.innerHTML = this.inside
+          ? [...newDom.firstElementChild.children].map(el => el.outerHTML).join('')
+          : newMarkup;
         return;
       }
       if (!newEl.isEqualNode(curEl)) {
