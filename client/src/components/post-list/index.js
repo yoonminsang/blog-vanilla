@@ -54,7 +54,9 @@ class PostList extends Component {
   async componentDidMount() {
     userStore.subscribe(() => this.setState({ user: userStore.state.user }));
     await this.getPostList();
-    this.infiniteScroll();
+    if (this.state.postList.length) {
+      this.infiniteScroll();
+    }
   }
 
   async getPostList() {
