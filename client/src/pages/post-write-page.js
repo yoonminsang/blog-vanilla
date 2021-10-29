@@ -8,7 +8,9 @@ class PostWritePage extends Component {
     return /* html */ `
     <div class="wrapper">
       <inside class="header-inside"></inside>
-      <main class="content"></main>
+      <div class="content-wrapper">
+        <main class="content"></main>
+      </div>
     </div>
     `;
   }
