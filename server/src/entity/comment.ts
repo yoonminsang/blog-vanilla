@@ -16,7 +16,7 @@ class Comment extends BaseTimeEntity {
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user!: User;
 
-  @Column()
+  @Column({ type: 'char', length: 36 })
   userId!: string;
 
   @ManyToOne(() => Post, post => post.comments, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })

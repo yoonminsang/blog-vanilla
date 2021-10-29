@@ -19,7 +19,7 @@ class Post extends BaseTimeEntity {
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user!: User;
 
-  @Column()
+  @Column({ type: 'char', length: 36 })
   userId!: string;
 
   @OneToMany(() => Comment, comment => comment.post, { cascade: ['insert', 'update'] })
