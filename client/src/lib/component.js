@@ -81,7 +81,7 @@ class Component {
     if (newElements.length !== currentElements.length) {
       this.target.innerHTML = this.inside
         ? [...newDom.firstElementChild.children].map(el => el.outerHTML).join('')
-        : newMarkup;
+        : newDom.firstElementChild.outerHTML;
       return;
     }
 
@@ -91,7 +91,7 @@ class Component {
       if (newEl.childElementCount !== curEl.childElementCount) {
         this.target.innerHTML = this.inside
           ? [...newDom.firstElementChild.children].map(el => el.outerHTML).join('')
-          : newMarkup;
+          : newDom.firstElementChild.outerHTML;
         return;
       }
       if (!newEl.isEqualNode(curEl)) {
