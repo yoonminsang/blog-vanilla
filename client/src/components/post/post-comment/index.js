@@ -160,8 +160,8 @@ class PostComment extends Component {
   async createComment(content) {
     try {
       await createCommentApi({ content, postId: this.postId });
-      // this.setState({ content: '' });
-      // this.getLastCommentList();
+      this.setState({ content: '' });
+      this.getLastCommentList();
     } catch (err) {
       if (axios.isAxiosError(err)) {
         // TODO: winston
