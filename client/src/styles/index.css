@@ -68,10 +68,10 @@ main.content {
 
 @media all and (min-width: 1200px) {
   .content-wrapper {
-    width: 1000px;
+    width: 1120px;
   }
   main.content {
-    width: 1120px;
+    width: 100%;
   }
 }
 
