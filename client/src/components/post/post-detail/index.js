@@ -62,8 +62,6 @@ class PostDetail extends Component {
       visible: this.state.modalVisible,
       body: '글을 삭제하시겠습니까?',
       confirm: true,
-      setVisible: tf => this.setState({ modalVisible: tf }),
-      onConfirm: () => this.removePost(),
     });
   }
 
@@ -75,6 +73,13 @@ class PostDetail extends Component {
   setEvent() {
     this.addEvent('click', '.post-remove', () => {
       this.setState({ modalVisible: true });
+    });
+    this.addEvent('click', '.modal-confirm', () => {
+      this.removePost();
+      this.setState({ modalVisible: false });
+    });
+    this.addEvent('click', '.modal-cancel', () => {
+      this.setState({ modalVisible: false });
     });
   }
 
