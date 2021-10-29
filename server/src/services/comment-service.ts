@@ -36,7 +36,7 @@ class CommentService {
   }
 
   async readCommentList(postId: number, pageId: number) {
-    const count = await getCustomRepository(CommentRepository).getCommentCount();
+    const count = await getCustomRepository(CommentRepository).getCommentCount(postId);
     const lastPageId = Math.ceil(count / LIMIT);
     const commentListData = await getCustomRepository(CommentRepository).readCommentList(postId, pageId);
     if (!commentListData) {
@@ -54,8 +54,8 @@ class CommentService {
   }
 
   async readLastCommentList(postId: number) {
-    const count = await getCustomRepository(CommentRepository).getCommentCount();
-    const lastPageId = Math.ceil(count / LIMIT);
+    const count = await getCustomRepository(CommentRepository).getCommentCount(postId);
+    const lastPageId = count === 0 ? 1 : Math.ceil(count / LIMIT);
     const commentListData = await getCustomRepository(CommentRepository).readCommentList(postId, lastPageId);
     if (!commentListData) {
       throw errorGenerator({

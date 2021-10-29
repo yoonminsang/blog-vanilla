@@ -30,8 +30,8 @@ class CommentRepository extends Repository<Comment> {
     return comment;
   }
 
-  async getCommentCount() {
-    const count = await this.createQueryBuilder('comment').getCount();
+  async getCommentCount(postId: number) {
+    const count = await this.createQueryBuilder('comment').where('comment.post.id = :postId', { postId }).getCount();
     return count;
   }
 
