@@ -13,27 +13,27 @@ class Component {
   render() {
     this.target.innerHTML = this.markup();
     if (this.props?.class) {
-      this.addClass(this.target);
+      this.addClass();
     }
     this.appendComponent(this.target);
     if (this.target.nodeName === 'INSIDE') {
       this.inside = true;
-      this.target = this.changeInside(this.target);
+      this.changeInside();
     }
   }
 
-  addClass(target) {
-    const el = target.firstElementChild;
+  addClass() {
+    const el = this.target.firstElementChild;
     const classArr = this.props.class.split(' ');
     classArr.forEach(className => {
       el.classList.add(className);
     });
   }
 
-  changeInside(target) {
-    const temp = target.firstElementChild;
-    target.replaceWith(...target.childNodes);
-    return temp;
+  changeInside() {
+    const temp = this.target.firstElementChild;
+    this.target.replaceWith(...this.target.childNodes);
+    this.target = temp;
   }
 
   appendComponent() {}
@@ -57,10 +57,13 @@ class Component {
     });
   }
 
-  setState(nextState) {
+  setState(nextState, cb) {
     this.componentDidUpdate({ ...this.state }, { ...this.state, ...nextState });
     this.state = { ...this.state, ...nextState };
     this.update();
+    if (cb) {
+      cb();
+    }
   }
 
   update() {
