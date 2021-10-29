@@ -17,35 +17,37 @@ class PostList extends Component {
   markup() {
     const { user, postList } = this.state;
     return /* html */ `
-    ${user ? '<inside class="btn-wrtie-inline"></inside>' : ''}
-    <ul class="post-list">
-      ${
-        postList
-          ? postList
-              .map(({ id, title, content, createdAt, user: { nickname } }) => {
-                return /* html */ `
-                <li class="post-list-item">
-                  <a href="/post/${id}">
-                    <div class="icon image-ready"></div>
-                    <div class="title">${title}</div>
-                    <div class="content">${content}</div>
-                    <div class="flex">
-                      <div class="time">${parseTime(createdAt)}</div>
-                      <div class="nickname">${nickname}</div>
-                    </div>
-                  </a>
-                </li>
-                `;
-              })
-              .join('')
-          : ''
-      }
-    </ul>
+    <div class="post-list-wrapper">
+      ${user ? '<inside class="btn-wrtie-inside"></inside>' : ''}
+      <ul class="post-list">
+        ${
+          postList
+            ? postList
+                .map(({ id, title, content, createdAt, user: { nickname } }) => {
+                  return /* html */ `
+                  <li class="post-list-item">
+                    <a href="/post/${id}">
+                      <div class="icon image-ready"></div>
+                      <div class="title">${title}</div>
+                      <div class="content">${content}</div>
+                      <div class="flex">
+                        <div class="time">${parseTime(createdAt)}</div>
+                        <div class="nickname">${nickname}</div>
+                      </div>
+                    </a>
+                  </li>
+                  `;
+                })
+                .join('')
+            : ''
+        }
+      </ul>
+    </div>
     `;
   }
 
   appendComponent(target) {
-    const $btnWrite = target.querySelector('.btn-wrtie-inline');
+    const $btnWrite = target.querySelector('.btn-wrtie-inside');
     if (this.state.user) {
       new Button($btnWrite, { class: 'small right', href: '/write', text: '글쓰기' });
     }
