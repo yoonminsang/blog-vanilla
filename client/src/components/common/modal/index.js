@@ -19,19 +19,6 @@ class Modal extends Component {
     </div>
     `;
   }
-
-  setEvent() {
-    const { setVisible, onConfirm } = this.props;
-    if (setVisible && onConfirm) {
-      this.addEvent('click', '.modal-confirm', () => {
-        onConfirm();
-        setVisible(false);
-      });
-      this.addEvent('click', '.modal-cancel', () => {
-        setVisible(false);
-      });
-    }
-  }
 }
 
 export default Modal;
