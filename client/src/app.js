@@ -16,7 +16,8 @@ class App {
       { path: '/login', component: LoginPage },
       { path: '/signup', component: SignupPage },
       { path: '/write', component: PostWritePage },
-      { path: '/post/:id', component: PostPage },
+      { path: '/post/:postId', component: PostPage },
+      // TODO: { path: '/post/modify/:id', component: ModifyPage },
     ];
     this.NotFoundPage = NotFoundPage;
     this.init();
