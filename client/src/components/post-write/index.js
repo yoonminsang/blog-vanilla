@@ -24,6 +24,7 @@ class PostWrite extends Component {
           content: '',
         };
     this.history = useHistory();
+    this.postId = this.history.params.postId;
   }
 
   markup() {
@@ -84,7 +85,7 @@ class PostWrite extends Component {
             user: { nickname },
           },
         },
-      } = await readPostApi({ id: this.history.params.postId });
+      } = await readPostApi({ id: this.postId });
       this.setState({ title, content, nickname });
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -123,7 +124,7 @@ class PostWrite extends Component {
     try {
       const {
         data: { postId },
-      } = await updatePostApi({ id: this.history.params.postId, title, content });
+      } = await updatePostApi({ id: this.postId, title, content });
       this.history.push(`/post/${postId}`);
     } catch (err) {
       if (axios.isAxiosError(err)) {
