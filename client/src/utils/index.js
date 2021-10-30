@@ -19,7 +19,6 @@ const getTimeObject = date => ({
 const parseTime = time => {
   const dbTime = getTimeObject(new Date(time));
   const nowTime = getTimeObject(new Date());
-  console.log(time, new Date(time), dbTime, nowTime);
   const diff = (nowTime.time - dbTime.time) / 1000;
   let gap = diff;
   let suffix = '';
