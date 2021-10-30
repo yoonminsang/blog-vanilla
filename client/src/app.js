@@ -1,6 +1,7 @@
 // import { Router } from 'ms-vanilla';
 import Router from './lib/router';
 import LoginPage from './pages/login-page';
+import ModifyPage from './pages/modify-page';
 import NotFoundPage from './pages/not-found-page';
 import PostListPage from './pages/post-list-page';
 import PostPage from './pages/post-page';
@@ -17,7 +18,7 @@ class App {
       { path: '/signup', component: SignupPage },
       { path: '/write', component: PostWritePage },
       { path: '/post/:postId', component: PostPage },
-      // TODO: { path: '/post/modify/:id', component: ModifyPage },
+      { path: '/post/modify/:postId', component: ModifyPage },
     ];
     this.NotFoundPage = NotFoundPage;
     this.init();
