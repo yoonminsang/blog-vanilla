@@ -1,7 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import Post from 'entity/post';
 
-const LIMIT = 10;
+const LIMIT = 20;
 
 @EntityRepository(Post)
 class PostRepository extends Repository<Post> {
@@ -19,7 +19,17 @@ class PostRepository extends Repository<Post> {
     return post;
   }
 
-  async readPostList(lastId: number): Promise<Post[] | undefined> {
+  async readPostList(): Promise<Post[] | undefined> {
+    const post = await this.createQueryBuilder('post')
+      .select(['post.id', 'post.title', 'post.content', 'post.createdAt', 'user.nickname'])
+      .take(LIMIT)
+      .innerJoin('post.user', 'user')
+      .orderBy('post.id', 'DESC')
+      .getMany();
+    return post;
+  }
+
+  async readPostListByLastId(lastId: number): Promise<Post[] | undefined> {
     const post = await this.createQueryBuilder('post')
       .select(['post.id', 'post.title', 'post.content', 'post.createdAt', 'user.nickname'])
       .take(LIMIT)
@@ -32,7 +42,7 @@ class PostRepository extends Repository<Post> {
 
   async getPostForUserId(id: number): Promise<Post | undefined> {
     const post = await this.createQueryBuilder('post')
-      .select(['post.id', 'post.user.id'])
+      .select(['post.id', 'post.userId'])
       .where('post.id = :id', { id })
       .getOne();
     return post;

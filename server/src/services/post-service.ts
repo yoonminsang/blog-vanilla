@@ -2,6 +2,7 @@ import { getCustomRepository } from 'typeorm';
 import errorGenerator from 'error/error-generator';
 import { POST_ERROR_MESSAGE } from 'constants/error-message';
 import PostRepository from 'repositories/post-repository';
+import { sliceText } from 'utils/query';
 
 const FROM = 'post';
 
@@ -20,13 +21,13 @@ class PostService {
         from: FROM,
       });
     }
-    const isUpdated = postData.createdAt !== postData.updatedAt;
+    const isUpdated = String(postData.createdAt) !== String(postData.updatedAt);
     const post = { ...postData, isUpdated };
     return post;
   }
 
-  async readPostList(lastId: number) {
-    const postList = await getCustomRepository(PostRepository).readPostList(lastId);
+  async readPostList() {
+    const postList = await getCustomRepository(PostRepository).readPostList();
     if (!postList) {
       throw errorGenerator({
         status: 400,
@@ -34,7 +35,19 @@ class PostService {
         from: FROM,
       });
     }
-    return postList;
+    return postList.map(post => sliceText(post, 'content', 200));
+  }
+
+  async readPostListByLastId(lastId: number) {
+    const postList = await getCustomRepository(PostRepository).readPostListByLastId(lastId);
+    if (!postList) {
+      throw errorGenerator({
+        status: 400,
+        message: POST_ERROR_MESSAGE.notFoundPostId,
+        from: FROM,
+      });
+    }
+    return postList.map(post => sliceText(post, 'content', 200));
   }
 
   async updatePost(id: number, title: string, content: string, userId: string) {

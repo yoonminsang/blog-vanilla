@@ -5,8 +5,9 @@
   background-color: var(--primary);
   color: var(--background);
   font-weight: 500;
-  padding: 10px;
+  padding: 5px 0;
   border-radius: 10px;
+  width: 80px;
 }
 
 .button:hover {
@@ -20,4 +21,8 @@
 
 .button ~ .button {
   margin-top: 10px;
+}
+
+.button.small {
+  width: 100px;
 }

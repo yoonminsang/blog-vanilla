@@ -10,6 +10,7 @@ body {
   --white: #ffffff;
   --red: #f45452;
   font-family: 'Noto Sans KR';
+  line-height: 1.5;
 }
 
 .icon {
@@ -18,8 +19,68 @@ body {
   background-size: contain;
 }
 
+.icon.add {
+  background-image: url('../assets/icons/add.svg');
+}
+
+.icon.congratulations {
+  background-image: url('../assets/icons/congratulations.gif');
+}
+
+.icon.image-ready {
+  background-image: url('../assets/icons/image-ready.png');
+}
+
+.icon.delete {
+  background-image: url('../assets/icons/delete.svg');
+}
+
 #root {
   min-height: 100vh;
+}
+
+.wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  width: 100%;
+}
+
+main.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+}
+
+@media all and (max-width: 480px) {
+  .content-wrapper {
+    padding: 0px 12px;
+  }
+}
+
+@media all and (min-width: 1200px) {
+  .content-wrapper {
+    width: 1120px;
+  }
+  main.content {
+    width: 100%;
+  }
+}
+
+.flex {
+  display: flex;
+}
+
+.right {
+  margin-left: auto;
 }
 
 .almost-full-width {
@@ -41,7 +102,6 @@ body {
   src: url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.eot'); /* IE9 Compat Modes */
   src: url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.eot?#iefix') format('embedded-opentype'),
     /* IE6-IE8 */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.woff2') format('woff2'),
-    /* Super Modern Browsers */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.woff') format('woff'),
     /* Super Modern Browsers */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.woff') format('woff'),
     /* Safari, Android, iOS */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.otf') format('opentype'),
     /* Safari, Android, iOS */ url('../assets/fonts/noto-sans/noto-sans-kr-v21-korean-regular.svg#NotoSansKR')

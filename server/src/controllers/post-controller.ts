@@ -30,9 +30,9 @@ class PostController {
   }
 
   async readPostList(req: Request, res: Response, next: NextFunction) {
-    const lastId = req.query.lastId as string;
     try {
-      const postList = await service.readPostList(+lastId);
+      const lastId = req.query.lastId as string;
+      const postList = lastId ? await service.readPostListByLastId(+lastId) : await service.readPostList();
       res.status(200).json({ postList });
     } catch (err) {
       next(err);
@@ -50,7 +50,7 @@ class PostController {
     }
   }
 
-  async deletePosst(req: Request, res: Response, next: NextFunction) {
+  async deletePost(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
     try {
       await service.deletePost(+id, req.user.id);

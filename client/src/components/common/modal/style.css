@@ -19,29 +19,33 @@
   height: 50vh;
   text-overflow: ellipsis;
   overflow: hidden;
+  padding: 10px;
 }
 
 .modal-body {
+  margin-bottom: 20px;
+  font-size: 14px;
 }
 
 .modal-btn {
+  font-size: 14px;
 }
 
 @media all and (max-width: 480px) {
-  .modal-content {
-    padding: 10px;
+  .modal-btn.modal-cancel {
+    margin-left: 20px;
   }
 }
 
 @media all and (min-width: 480px) and (max-width: 1200px) {
-  .modal-content {
-    padding: 25px;
+  .modal-btn.modal-cancel {
+    margin-left: 30px;
   }
 }
 
 @media all and (min-width: 1200px) {
-  .modal-content {
-    padding: 40px;
+  .modal-btn.modal-cancel {
+    margin-left: 40px;
   }
 }
 
@@ -56,9 +60,8 @@
   }
 }
 
-.congratulations {
-  background-image: url('../../../assets/icons/congratulations.gif');
+.modal-content .icon {
   width: 100%;
-  height: 80%;
+  height: 70%;
   margin-bottom: 20px;
 }

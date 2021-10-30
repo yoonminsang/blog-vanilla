@@ -1,5 +1,5 @@
 import { POST_ENTITY } from 'constants/entity';
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, RelationId } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { BaseTimeEntity } from './base-time-entity';
 import Comment from './comment';
 import User from './user';
@@ -12,17 +12,18 @@ class Post extends BaseTimeEntity {
   @Column({ type: 'varchar', length: POST_ENTITY.titleMaxLength })
   title!: string;
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   content!: string;
 
-  @ManyToOne(() => User, user => user, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @ManyToOne(() => User, user => user.posts, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user!: User;
 
-  @RelationId((post: Post) => post.user)
+  @Column({ type: 'char', length: 36 })
   userId!: string;
 
-  @OneToMany(() => Comment, comment => comment.post, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-  posts!: Post[];
+  @OneToMany(() => Comment, comment => comment.post, { cascade: ['insert', 'update'] })
+  comments!: Post[];
 }
 
 export default Post;

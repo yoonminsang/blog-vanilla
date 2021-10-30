@@ -13,27 +13,27 @@ class Component {
   render() {
     this.target.innerHTML = this.markup();
     if (this.props?.class) {
-      this.addClass(this.target);
+      this.addClass();
     }
     this.appendComponent(this.target);
     if (this.target.nodeName === 'INSIDE') {
       this.inside = true;
-      this.target = this.changeInside(this.target);
+      this.changeInside();
     }
   }
 
-  addClass(target) {
-    const el = target.firstElementChild;
+  addClass() {
+    const el = this.target.firstElementChild;
     const classArr = this.props.class.split(' ');
     classArr.forEach(className => {
       el.classList.add(className);
     });
   }
 
-  changeInside(target) {
-    const temp = target.firstElementChild;
-    target.replaceWith(...target.childNodes);
-    return temp;
+  changeInside() {
+    const temp = this.target.firstElementChild;
+    this.target.replaceWith(...this.target.childNodes);
+    this.target = temp;
   }
 
   appendComponent() {}
@@ -57,10 +57,13 @@ class Component {
     });
   }
 
-  setState(nextState) {
+  setState(nextState, cb) {
     this.componentDidUpdate({ ...this.state }, { ...this.state, ...nextState });
     this.state = { ...this.state, ...nextState };
     this.update();
+    if (cb) {
+      cb();
+    }
   }
 
   update() {
@@ -70,12 +73,15 @@ class Component {
 
     this.appendComponent(newDom);
 
-    const newElements = this.inside ? [...newDom.querySelectorAll('*')].slice(1) : [...newDom.querySelectorAll('*')];
+    const newElements = this.inside
+      ? [...newDom.firstElementChild.querySelectorAll('*')]
+      : [...newDom.querySelectorAll('*')];
     const currentElements = [...this.target.querySelectorAll('*')];
 
     if (newElements.length !== currentElements.length) {
-      this.target.innerHTML = newMarkup;
-      this.appendComponent(this.target);
+      this.target.innerHTML = this.inside
+        ? [...newDom.firstElementChild.children].map(el => el.outerHTML).join('')
+        : newDom.firstElementChild.outerHTML;
       return;
     }
 
@@ -83,8 +89,9 @@ class Component {
       const newEl = newElements[i];
       const curEl = currentElements[i];
       if (newEl.childElementCount !== curEl.childElementCount) {
-        this.target.innerHTML = newMarkup;
-        this.appendComponent(this.target);
+        this.target.innerHTML = this.inside
+          ? [...newDom.firstElementChild.children].map(el => el.outerHTML).join('')
+          : newDom.firstElementChild.outerHTML;
         return;
       }
       if (!newEl.isEqualNode(curEl)) {

@@ -17,15 +17,7 @@ module.exports = merge(common, {
   },
   devtool: 'source-map',
   optimization: {
-    minimizer: [
-      new CssMinimizerPlugin(),
-      new TerserPlugin({
-        terserOptions: {
-          compress: {
-            drop_console: true,
-          },
-        },
-      }),
-    ],
+    minimize: true,
+    minimizer: [new CssMinimizerPlugin(), new TerserPlugin()],
   },
 });

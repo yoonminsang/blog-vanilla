@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, RelationId } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseTimeEntity } from './base-time-entity';
 import User from './user';
 
@@ -10,11 +10,17 @@ class Chatting extends BaseTimeEntity {
   @Column({ length: 45 })
   chatting!: string;
 
-  @ManyToOne(() => User, user => user, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @ManyToOne(() => User, user => user.chattings, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user!: User;
 
-  @RelationId((chatting: Chatting) => chatting.user)
+  @Column()
   userId!: string;
+  // @ManyToOne(() => User, user => user, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  // user!: User;
+
+  // @RelationId((chatting: Chatting) => chatting.user)
+  // userId!: string;
 }
 
 export default Chatting;

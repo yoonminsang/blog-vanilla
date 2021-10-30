@@ -45,7 +45,7 @@ class Auth extends Component {
             : '<inside class="btn-signup-inline">회원가입</inside><inside class="go-login-inline">로그인</inside>'
         }
       </form>
-      <inside class="modal-inside"></inside>
+      ${login ? '' : '<inside class="modal-inside"></inside>'}
     </main>
     `;
   }
@@ -62,8 +62,14 @@ class Auth extends Component {
     const $goLogin = target.querySelector('.go-login-inline');
     const $modal = target.querySelector('.modal-inside');
 
-    new Input($email, { class: 'email', type: 'text', value: email, placeholder: '이메일' });
-    new Input($password, { class: 'password', type: 'password', value: password, placeholder: '비밀번호' });
+    new Input($email, { class: 'email', type: 'text', value: email, placeholder: '이메일', maxlength: 45 });
+    new Input($password, {
+      class: 'password',
+      type: 'password',
+      value: password,
+      placeholder: '비밀번호',
+      maxlength: 20,
+    });
 
     if (this.props.login) {
       new Button($btnLogin, { class: 'full-width', type: 'submit', text: '로그인' });
@@ -76,8 +82,9 @@ class Auth extends Component {
         type: 'password',
         value: passwordConfirm,
         placeholder: '비밀번호 확인',
+        maxlength: 20,
       });
-      new Input($nickname, { class: 'nickname', type: 'text', value: nickname, placeholder: '닉네임' });
+      new Input($nickname, { class: 'nickname', type: 'text', value: nickname, placeholder: '닉네임', maxlength: 15 });
       new Modal($modal, {
         img: 'congratulations',
         visible: this.state.modalVisible,
@@ -146,8 +153,13 @@ class Auth extends Component {
       window.location.href = '/';
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const { errorMessage } = err.response.data;
-        this.setState({ errorMessage });
+        const { errorMessage } = err.response?.data;
+        if (errorMessage) {
+          this.setState({ errorMessage });
+        } else {
+          // TODO: winston
+          console.log(err);
+        }
       } else {
         console.log('내부 에러');
       }
@@ -166,8 +178,13 @@ class Auth extends Component {
       }, 2000);
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const { errorMessage } = err.response.data;
-        this.setState({ errorMessage });
+        const { errorMessage } = err.response?.data;
+        if (errorMessage) {
+          this.setState({ errorMessage });
+        } else {
+          // TODO: winston
+          console.log(err);
+        }
       } else {
         console.log('내부 에러');
       }
