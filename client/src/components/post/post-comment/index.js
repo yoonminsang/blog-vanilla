@@ -54,7 +54,6 @@ class PostComment extends Component {
             ? Array(lastPageId)
                 .fill()
                 .map((_, index) => {
-                  console.log(index + 1, pageId);
                   const classList = index + 1 === pageId ? 'class="selected"' : '';
                   return `<button ${classList}>${index + 1}</button>`;
                 })
