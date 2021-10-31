@@ -48,12 +48,13 @@ class PostWrite extends Component {
       value: title,
       placeholder: '제목',
       maxlength: 40,
+      required: true,
     });
     new TextArea($postContent, {
       class: 'post-content full-width',
       value: content,
       placeholder: '내용',
-      option: true,
+      required: true,
     });
     new Button($btnCreate, {
       class: 'right',
