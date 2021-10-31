@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { ConnectionOptions, createConnection } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
-export default async (): Promise<void> => {
+const dbLoader = async (): Promise<void> => {
   try {
     const connectionOption: ConnectionOptions = {
       type: 'mysql',
@@ -28,3 +28,5 @@ export default async (): Promise<void> => {
     console.log('db connection error \n', err);
   }
 };
+
+export default dbLoader;

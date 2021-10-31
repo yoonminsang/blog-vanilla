@@ -3,7 +3,7 @@ import dotenvConfig from 'utils/dotenv-config';
 import expressLoader from './express-loader';
 import dbLoader from './db-loader';
 
-export default async (app: Application): Promise<void> => {
+const loaders = async (app: Application): Promise<void> => {
   dotenvConfig();
   console.log(`NODE_ENV=${process.env.NODE_ENV}, dotenv success`);
   expressLoader(app);
@@ -11,3 +11,5 @@ export default async (app: Application): Promise<void> => {
   dbLoader();
   console.log('db load');
 };
+
+export default loaders;
