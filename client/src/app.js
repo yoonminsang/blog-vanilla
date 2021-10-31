@@ -8,6 +8,7 @@ import PostPage from './pages/post-page';
 import PostWritePage from './pages/post-write-page';
 import SignupPage from './pages/signup-page';
 import userStore from './store/user-store';
+import { addLoader } from './utils/loader';
 
 class App {
   constructor(target) {
@@ -30,6 +31,7 @@ class App {
   }
 
   init() {
+    addLoader();
     if (localStorage.getItem('user')) {
       userStore.autoLogin();
     }
