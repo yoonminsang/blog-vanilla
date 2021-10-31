@@ -1,5 +1,5 @@
 import { USER_ENTITY } from 'constants/entity';
-import { Column, Entity, PrimaryColumn, Generated, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { UUIdEntity } from './abstract-class/uuid-entity';
 import Chatting from './chatting';
 import Comment from './comment';
@@ -7,10 +7,6 @@ import Post from './post';
 
 @Entity({ name: 'user' })
 class User extends UUIdEntity {
-  @PrimaryColumn({ type: 'char', length: 36 })
-  @Generated('uuid')
-  id!: string;
-
   @Column({ type: 'varchar', unique: true, length: USER_ENTITY.emailMaxLength })
   email!: string;
 
