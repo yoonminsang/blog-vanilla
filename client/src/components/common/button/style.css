@@ -12,7 +12,6 @@
 
 .button:hover {
   background-color: var(--primary-3);
-  transform: translateY(-2px);
 }
 
 .button:disabled {
