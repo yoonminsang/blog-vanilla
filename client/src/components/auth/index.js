@@ -157,7 +157,6 @@ class Auth extends Component {
         if (errorMessage) {
           this.setState({ errorMessage });
         } else {
-          // TODO: winston
           console.log(err);
         }
       } else {
@@ -182,7 +181,6 @@ class Auth extends Component {
         if (errorMessage) {
           this.setState({ errorMessage });
         } else {
-          // TODO: winston
           console.log(err);
         }
       } else {

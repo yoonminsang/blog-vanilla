@@ -69,7 +69,6 @@ class PostList extends Component {
       this.setState({ postList });
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // TODO: winston
         const { errorMessage } = err.response?.data;
         if (errorMessage) {
           console.log(errorMessage);
@@ -118,7 +117,6 @@ class PostList extends Component {
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // TODO: winston
         const { errorMessage } = err.response?.data;
         if (errorMessage) {
           console.log(errorMessage);

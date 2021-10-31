@@ -90,7 +90,6 @@ class PostWrite extends Component {
       this.setState({ title, content, nickname });
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // TODO: winston
         const { errorMessage } = err.response?.data;
         if (errorMessage) {
           console.log(errorMessage);
@@ -129,7 +128,6 @@ class PostWrite extends Component {
       this.history.push(`/post/${postId}`);
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // TODO: winston
         const { errorMessage } = err.response?.data;
         if (errorMessage) {
           console.log(errorMessage);
@@ -150,7 +148,6 @@ class PostWrite extends Component {
       this.history.push(`/post/${postId}`);
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // TODO: winston
         const { errorMessage } = err.response?.data;
         if (errorMessage) {
           console.log(errorMessage);

@@ -91,7 +91,6 @@ class PostDetail extends Component {
       this.setState({ post });
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // TODO: winston
         const { errorMessage } = err.response?.data;
         if (errorMessage) {
           this.setState({ errorMessage });
@@ -110,7 +109,6 @@ class PostDetail extends Component {
       this.history.goBack();
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // TODO: winston
         const { errorMessage } = err.response?.data;
         if (errorMessage) {
           console.log(errorMessage);
