@@ -1,11 +1,11 @@
 import { POST_ENTITY } from 'constants/entity';
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
-import { BaseTimeEntity } from './base-time-entity';
+import { AutoIdEntity } from './abstract-class/auto-id-entity';
 import Comment from './comment';
 import User from './user';
 
 @Entity({ name: 'post' })
-class Post extends BaseTimeEntity {
+class Post extends AutoIdEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 

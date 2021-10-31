@@ -1,11 +1,11 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { COMMENT_ENTITY } from 'constants/entity';
-import { BaseTimeEntity } from './base-time-entity';
 import User from './user';
 import Post from './post';
+import { AutoIdEntity } from './abstract-class/auto-id-entity';
 
 @Entity({ name: 'comment' })
-class Comment extends BaseTimeEntity {
+class Comment extends AutoIdEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -25,17 +25,6 @@ class Comment extends BaseTimeEntity {
 
   @Column()
   postId!: number;
-  // @ManyToOne(() => User, user => user, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-  // user!: User;
-
-  // @RelationId((comment: Comment) => comment.user)
-  // userId!: string;
-
-  // @ManyToOne(() => Post, post => post.comments, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-  // post!: User;
-
-  // @RelationId((comment: Comment) => comment.post)
-  // postId!: number;
 }
 
 export default Comment;

@@ -1,12 +1,12 @@
 import { USER_ENTITY } from 'constants/entity';
 import { Column, Entity, PrimaryColumn, Generated, OneToMany } from 'typeorm';
-import { BaseTimeEntity } from './base-time-entity';
+import { UUIdEntity } from './abstract-class/uuid-entity';
 import Chatting from './chatting';
 import Comment from './comment';
 import Post from './post';
 
 @Entity({ name: 'user' })
-class User extends BaseTimeEntity {
+class User extends UUIdEntity {
   @PrimaryColumn({ type: 'char', length: 36 })
   @Generated('uuid')
   id!: string;
