@@ -20,4 +20,5 @@ module.exports = merge(common, {
     minimize: true,
     minimizer: [new CssMinimizerPlugin(), new TerserPlugin()],
   },
+  plugins: [new MiniCssExtractPlugin()],
 });
