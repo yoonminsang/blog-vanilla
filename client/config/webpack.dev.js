@@ -21,11 +21,9 @@ module.exports = merge(common, {
     port: 9000,
     writeToDisk: true,
     hot: true,
-    historyApiFallback: true,
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
-        changeOrigin: true,
       },
     },
   },
