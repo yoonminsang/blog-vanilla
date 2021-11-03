@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import isLoggedInMiddleware from '@/middlewares/isLoggedInMiddleware';
+import isLoggedInMiddleware from '@/middlewares/is-logged-in-middleware';
 import CommentController from '@/controllers/comment-controller';
 import createCommentValidation from '@/validation/comment/create-comment-validation';
 import idParamsValidation from '@/validation/common/id-params-validation';

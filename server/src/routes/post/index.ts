@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import PostController from '@/controllers/post-controller';
 import createPostValidation from '@/validation/post/create-post-validation';
-import isLoggedInMiddleware from '@/middlewares/isLoggedInMiddleware';
+import isLoggedInMiddleware from '@/middlewares/is-logged-in-middleware';
 import readPostListValidation from '@/validation/post/read-post-list-validation';
 import idParamsValidation from '@/validation/common/id-params-validation';
 
