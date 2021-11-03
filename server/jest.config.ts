@@ -11,4 +11,5 @@ export default {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  globalSetup: '<rootDir>/src/config/dot-env-config.ts',
 };
