@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { createToken, decodeToken, getAccessToken, getRefreshToken } from 'utils/jwt';
+import { createToken, decodeToken, getAccessToken, getRefreshToken } from '@/utils/jwt';
 
 const jwtMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const accessToken = getAccessToken(req.headers.authorization);

@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
-import Post from 'entity/post';
+import Post from '@/entity/post';
 
 const LIMIT = 20;
 

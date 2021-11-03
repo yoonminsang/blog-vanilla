@@ -1,5 +1,5 @@
 import { Application } from 'express';
-import envConfig from 'config/env-config';
+import envConfig from '@/config/env-config';
 import expressLoader from './express-loader';
 import dbLoader from './db-loader';
 

@@ -1,4 +1,4 @@
-import { POST_ENTITY } from 'constants/entity';
+import { POST_ENTITY } from '@/constants/entity';
 import { Column, Entity, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { AutoIdEntity } from './abstract-class/auto-id-entity';
 import Comment from './comment';

@@ -1,6 +1,6 @@
-import { JOI_ERROR_MESSAGE } from 'constants/error-message';
-import CustomError from 'error/custom-error';
-import { IError } from 'types/error';
+import { JOI_ERROR_MESSAGE } from '@/constants/error-message';
+import CustomError from '@/error/custom-error';
+import { IError } from '@/types/error';
 
 const errorJoi = (err: CustomError): IError => {
   const { status, message, customMessage } = err;

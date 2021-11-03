@@ -1,6 +1,6 @@
-import { POST_ERROR_MESSAGE } from 'constants/error-message';
-import CustomError from 'error/custom-error';
-import { IError } from 'types/error';
+import { POST_ERROR_MESSAGE } from '@/constants/error-message';
+import CustomError from '@/error/custom-error';
+import { IError } from '@/types/error';
 
 const errorPost = (err: CustomError): IError => {
   const { status, message } = err;

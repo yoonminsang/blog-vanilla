@@ -1,8 +1,8 @@
 import { getCustomRepository } from 'typeorm';
-import CommentRepository from 'repositories/comment-repository';
-import PostRepository from 'repositories/post-repository';
-import { COMMENT_ERROR_MESSAGE } from 'constants/error-message';
-import errorGenerator from 'error/error-generator';
+import CommentRepository from '@/repositories/comment-repository';
+import PostRepository from '@/repositories/post-repository';
+import { COMMENT_ERROR_MESSAGE } from '@/constants/error-message';
+import errorGenerator from '@/error/error-generator';
 
 const FROM = 'comment';
 const LIMIT = 50;

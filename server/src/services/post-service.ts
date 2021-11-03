@@ -1,8 +1,8 @@
 import { getCustomRepository } from 'typeorm';
-import errorGenerator from 'error/error-generator';
-import { POST_ERROR_MESSAGE } from 'constants/error-message';
-import PostRepository from 'repositories/post-repository';
-import { sliceText } from 'utils/query';
+import errorGenerator from '@/error/error-generator';
+import { POST_ERROR_MESSAGE } from '@/constants/error-message';
+import PostRepository from '@/repositories/post-repository';
+import { sliceText } from '@/utils/query';
 
 const FROM = 'post';
 

@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
-import errorGenerator from 'error/error-generator';
-import { USER_ENTITY } from 'constants/entity';
-import CustomError from 'error/custom-error';
-import errorProcess from 'error/error-process';
-import { JOI_ERROR_MESSAGE } from 'constants/error-message';
+import errorGenerator from '@/error/error-generator';
+import { USER_ENTITY } from '@/constants/entity';
+import CustomError from '@/error/custom-error';
+import errorProcess from '@/error/error-process';
+import { JOI_ERROR_MESSAGE } from '@/constants/error-message';
 
 const FROM = 'joi';
 

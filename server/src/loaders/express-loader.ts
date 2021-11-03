@@ -2,7 +2,7 @@ import express, { Application } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import morgan from 'morgan';
-import corsConfig from 'config/cors-config';
+import corsConfig from '@/config/cors-config';
 
 const expressLoader = (app: Application): void => {
   app.use(express.json());

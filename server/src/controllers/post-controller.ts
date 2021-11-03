@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import PostService from 'services/post-service';
+import PostService from '@/services/post-service';
 
 interface IPost {
   title: string;

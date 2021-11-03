@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
+// TODO: 고쳐야지
 const objectSpread = (obj: any, type: string) => {
   const spreadObject: any = {};
   const objType: any = obj[type];

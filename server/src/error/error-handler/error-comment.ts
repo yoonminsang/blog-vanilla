@@ -1,6 +1,6 @@
-import { COMMENT_ERROR_MESSAGE } from 'constants/error-message';
-import CustomError from 'error/custom-error';
-import { IError } from 'types/error';
+import { COMMENT_ERROR_MESSAGE } from '@/constants/error-message';
+import CustomError from '@/error/custom-error';
+import { IError } from '@/types/error';
 
 const errorComment = (err: CustomError): IError => {
   const { status, message } = err;

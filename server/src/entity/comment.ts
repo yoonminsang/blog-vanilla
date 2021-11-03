@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
-import { COMMENT_ENTITY } from 'constants/entity';
+import { COMMENT_ENTITY } from '@/constants/entity';
 import User from './user';
 import Post from './post';
 import { AutoIdEntity } from './abstract-class/auto-id-entity';

@@ -1,9 +1,9 @@
 import { getCustomRepository } from 'typeorm';
-import UserRepository from 'repositories/user-repository';
-import errorGenerator from 'error/error-generator';
-import { comparePassword, hashPassword } from 'utils/crypto';
-import { AUTH_ERROR_MESSAGE } from 'constants/error-message';
-import { createToken } from 'utils/jwt';
+import UserRepository from '@/repositories/user-repository';
+import errorGenerator from '@/error/error-generator';
+import { comparePassword, hashPassword } from '@/utils/crypto';
+import { AUTH_ERROR_MESSAGE } from '@/constants/error-message';
+import { createToken } from '@/utils/jwt';
 
 const FROM = 'auth';
 

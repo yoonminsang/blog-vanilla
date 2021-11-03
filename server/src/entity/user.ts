@@ -1,4 +1,4 @@
-import { USER_ENTITY } from 'constants/entity';
+import { USER_ENTITY } from '@/constants/entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { UUIdEntity } from './abstract-class/uuid-entity';
 import Chatting from './chatting';
