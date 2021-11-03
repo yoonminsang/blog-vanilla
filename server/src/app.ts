@@ -1,6 +1,6 @@
 import express, { Application } from 'express';
 import errorMiddleware from '@/middlewares/error-middleware';
-import jwtMiddleware from '@/middlewares/jwtMiddleware';
+import jwtMiddleware from '@/middlewares/jwt-middleware';
 import loaders from './loaders';
 import router from './routes';
 
