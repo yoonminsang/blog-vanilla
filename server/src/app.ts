@@ -4,19 +4,27 @@ import jwtMiddleware from 'middlewares/jwtMiddleware';
 import loaders from './loaders';
 import router from './routes';
 
-const startServer = async () => {
-  const app: Application = express();
-  await loaders(app);
+class App {
+  app: Application;
 
-  const port = process.env.PORT;
+  constructor() {
+    this.app = express();
+    this.setLoaders();
+    this.setRouter();
+    this.setErrorMiddleware();
+  }
 
-  app.use('/api', jwtMiddleware, router);
+  async setLoaders() {
+    await loaders(this.app);
+  }
 
-  app.use(errorMiddleware);
+  setRouter() {
+    this.app.use('/api', jwtMiddleware, router);
+  }
 
-  app.listen(port, () => {
-    console.log(`Server running on ${port}`);
-  });
-};
+  setErrorMiddleware() {
+    this.app.use(errorMiddleware);
+  }
+}
 
-startServer();
+export default App;
