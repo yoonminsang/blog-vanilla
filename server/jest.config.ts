@@ -8,4 +8,7 @@ export default {
   },
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
   modulePathIgnorePatterns: ['<rootDir>/dist/'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+  },
 };
