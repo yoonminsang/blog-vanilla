@@ -11,7 +11,7 @@
     "prod": "tsc && cross-env NODE_ENV=production pm2 start --name api ts-node -- --files -r tsconfig-paths/register dist/server.js - i max",
     "lint": "eslint src --ext .ts --parser-options=project:'tsconfig.json'",
     "lint:fix": "eslint src --ext .ts --parser-options=project:'tsconfig.json' --fix",
-    "test": "jest --config ./jest.config.ts",
+    "test": "jest --config ./jest.config.ts --detectOpenHandles --forceExit",
     "coverage": "jest --config ./jest.config.ts --coverage"
   },
   "dependencies": {
