@@ -1,3 +1,5 @@
+import App from '@/app';
+import request from 'supertest';
 import testConnection from './test-connection';
 
 describe('auth', () => {
@@ -13,8 +15,10 @@ describe('auth', () => {
     await testConnection.clear();
   });
 
-  test('creates a user', () => {
-    // TODO
-    expect(1 + 1).toBe(2);
+  test('checkUser', async () => {
+    const { app } = new App();
+    const res = await request(app).get('/api/auth');
+    expect(res.body).toEqual({ user: null });
+    expect(res.status).toBe(200);
   });
 });
