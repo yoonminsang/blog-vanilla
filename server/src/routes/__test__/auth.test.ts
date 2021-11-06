@@ -26,6 +26,19 @@ describe('auth', () => {
     expect(res.status).toBe(201);
   });
 
+  test('login success', async () => {
+    const signupData = {
+      email: 'email@naver.com',
+      nickname: 'nickname',
+      password: '12341234',
+    };
+    await request(app).post('/api/auth/signup').send(signupData);
+
+    const loginData = { email: 'email@naver.com', password: '12341234' };
+    const res = await request(app).post('/api/auth/login').send(loginData);
+    expect(res.status).toBe(200);
+  });
+
   test('logout success', async () => {
     const res = await request(app).delete('/api/auth');
     expect(res.status).toBe(200);
