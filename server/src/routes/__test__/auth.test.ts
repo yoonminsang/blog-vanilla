@@ -1,8 +1,11 @@
 import App from '@/app';
-import request from 'supertest';
+import supertest from 'supertest';
 import testConnection from './test-connection';
 
 const { app } = new App();
+const request = supertest(app);
+const agent = supertest.agent(app);
+
 describe('auth', () => {
   beforeAll(async () => {
     await testConnection.create();
@@ -22,7 +25,7 @@ describe('auth', () => {
       nickname: 'nickname',
       password: '12341234',
     };
-    const res = await request(app).post('/api/auth/signup').send(signupData);
+    const res = await request.post('/api/auth/signup').send(signupData);
     expect(res.status).toBe(201);
   });
 
@@ -32,20 +35,20 @@ describe('auth', () => {
       nickname: 'nickname',
       password: '12341234',
     };
-    await request(app).post('/api/auth/signup').send(signupData);
+    await request.post('/api/auth/signup').send(signupData);
 
     const loginData = { email: 'email@naver.com', password: '12341234' };
-    const res = await request(app).post('/api/auth/login').send(loginData);
+    const res = await request.post('/api/auth/login').send(loginData);
     expect(res.status).toBe(200);
   });
 
   test('logout success', async () => {
-    const res = await request(app).delete('/api/auth');
+    const res = await request.delete('/api/auth');
     expect(res.status).toBe(200);
   });
 
   test('checkUser null', async () => {
-    const res = await request(app).get('/api/auth');
+    const res = await request.get('/api/auth');
     expect(res.body).toEqual({ user: null });
     expect(res.status).toBe(200);
   });
@@ -56,13 +59,26 @@ describe('auth', () => {
       nickname: 'nickname',
       password: '12341234',
     };
-    const signupRes = await request(app).post('/api/auth/signup').send(signupData);
+    const signupRes = await request.post('/api/auth/signup').send(signupData);
     const refreskToken = signupRes.headers['set-cookie'][0].split(';')[0].split('=')[1];
     const { accessToken } = signupRes.body;
-    const checkUserRes = await request(app)
+    const checkUserRes = await request
       .get('/api/auth')
       .set('Authorization', `Bearer ${accessToken}`)
       .set('Cookie', [`refreshtoken=${refreskToken}`]);
+    expect(checkUserRes.body.user.nickname).toBe(signupData.nickname);
+    expect(checkUserRes.status).toBe(200);
+  });
+
+  test('checkUser success agent version', async () => {
+    const signupData = {
+      email: 'email@naver.com',
+      nickname: 'nickname',
+      password: '12341234',
+    };
+    const signupRes = await agent.post('/api/auth/signup').send(signupData);
+    const { accessToken } = signupRes.body;
+    const checkUserRes = await agent.get('/api/auth').set('Authorization', `Bearer ${accessToken}`);
     expect(checkUserRes.body.user.nickname).toBe(signupData.nickname);
     expect(checkUserRes.status).toBe(200);
   });
@@ -74,7 +90,7 @@ describe('auth', () => {
         nickname: 'nickname',
         password: '12341234',
       };
-      const res = await request(app).post('/api/auth/signup').send(signupData);
+      const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(400);
     });
 
@@ -84,7 +100,7 @@ describe('auth', () => {
         nickname: 'nickname',
         password: '12341234',
       };
-      const res = await request(app).post('/api/auth/signup').send(signupData);
+      const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(400);
     });
 
@@ -94,7 +110,7 @@ describe('auth', () => {
         nickname: 'a',
         password: '12341234',
       };
-      const res = await request(app).post('/api/auth/signup').send(signupData);
+      const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(400);
     });
 
@@ -104,7 +120,7 @@ describe('auth', () => {
         nickname: 'nicknamenicknamenicknamenicknamenicknamenicknamenicknamenicknamenickname',
         password: '12341234',
       };
-      const res = await request(app).post('/api/auth/signup').send(signupData);
+      const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(400);
     });
 
@@ -114,7 +130,7 @@ describe('auth', () => {
         nickname: 'nickname',
         password: '1',
       };
-      const res = await request(app).post('/api/auth/signup').send(signupData);
+      const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(400);
     });
 
@@ -124,7 +140,7 @@ describe('auth', () => {
         nickname: 'nickname',
         password: '1234123412341234123412341234123412341234123412341234123412341234',
       };
-      const res = await request(app).post('/api/auth/signup').send(signupData);
+      const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(400);
     });
   });
