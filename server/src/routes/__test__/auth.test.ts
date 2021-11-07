@@ -9,6 +9,7 @@ const request = supertest(app);
 const agent = supertest.agent(app);
 
 // TODO: 한번할때마다 초기화 하고 다시 해야될까?? 묶어서 VALIDATION 확인을 할 수 있지 않을까?
+// TODO: 파일이 너무 커졌다. 하나하나의 경로마다 파일을 나눠야 할까?
 describe('auth', () => {
   beforeAll(async () => {
     await testConnection.create();
