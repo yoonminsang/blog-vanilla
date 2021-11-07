@@ -1,9 +1,7 @@
-// 각각의 객체안의 value는 [개발자를 위한 에러 메세지, 유저를 위한 에러 메세지] 배열로 구성
-
-const JWT_ERROR_MESSAGE = {
-  invalidToken: 'invalid token',
-  expiredToken: 'expired token',
-};
+/*
+  각각의 객체안의 value는 [개발자를 위한 에러 메세지, 유저를 위한 에러 메세지] 배열로 구성
+  joi는 에러 처리 방식이 customMessage를 사용하기 때문에 형태가 다름
+*/
 
 const JOI_ERROR_MESSAGE = {
   invalidRequestBody: 'invalid request body',
@@ -33,4 +31,4 @@ const COMMENT_ERROR_MESSAGE = {
   diffrentUserId: 'diffrent user id',
 };
 
-export { JWT_ERROR_MESSAGE, JOI_ERROR_MESSAGE, AUTH_ERROR_MESSAGE, POST_ERROR_MESSAGE, COMMENT_ERROR_MESSAGE };
+export { JOI_ERROR_MESSAGE, AUTH_ERROR_MESSAGE, POST_ERROR_MESSAGE, COMMENT_ERROR_MESSAGE };
