@@ -1,4 +1,5 @@
 import App from '@/app';
+import ERROR_JOI_MESSAGE from '@/constants/error-joi-message.ts';
 import supertest from 'supertest';
 import testConnection from './test-connection';
 
@@ -6,6 +7,7 @@ const { app } = new App();
 const request = supertest(app);
 const agent = supertest.agent(app);
 
+// TODO: 한번할때마다 초기화 하고 다시 해야될까?? 묶어서 VALIDATION 확인을 할 수 있지 않을까?
 describe('auth', () => {
   beforeAll(async () => {
     await testConnection.create();
@@ -83,7 +85,7 @@ describe('auth', () => {
     expect(checkUserRes.status).toBe(200);
   });
 
-  describe('signup fail', () => {
+  describe('signup validation fail', () => {
     test('signup email fail', async () => {
       const signupData = {
         email: 'email',
@@ -92,16 +94,29 @@ describe('auth', () => {
       };
       const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.invalidEmail);
     });
 
     test('signup email max length fail', async () => {
       const signupData = {
-        email: 'emailemailemailemailemailemailemailemailemailemailemailemailemailemailemail@naver.com',
+        email: 'emailemailemailemaiilemailemail1231231sdfsdf1e12sdf123@naver.com',
         nickname: 'nickname',
         password: '12341234',
       };
       const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.exceedMaxLengthEmail);
+    });
+
+    test('signup email fill fail', async () => {
+      const signupData = {
+        email: '',
+        nickname: 'nickname',
+        password: '12341234',
+      };
+      const res = await request.post('/api/auth/signup').send(signupData);
+      expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.fillEmail);
     });
 
     test('signup nickname min length fail', async () => {
@@ -112,6 +127,7 @@ describe('auth', () => {
       };
       const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.underMinLengthNickname);
     });
 
     test('signup nickname max length fail', async () => {
@@ -122,6 +138,18 @@ describe('auth', () => {
       };
       const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.exceedMaxLengthNickname);
+    });
+
+    test('signup nickname fill fail', async () => {
+      const signupData = {
+        email: 'email@naver.com',
+        nickname: '',
+        password: '12341234',
+      };
+      const res = await request.post('/api/auth/signup').send(signupData);
+      expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.fillNickname);
     });
 
     test('signup password min length fail', async () => {
@@ -132,6 +160,7 @@ describe('auth', () => {
       };
       const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.underMinLengthPassword);
     });
 
     test('signup password max length fail', async () => {
@@ -142,6 +171,54 @@ describe('auth', () => {
       };
       const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.exceedMaxLengthPassword);
+    });
+
+    test('signup password fill fail', async () => {
+      const signupData = {
+        email: 'email@naver.com',
+        nickname: 'nickname',
+        password: '',
+      };
+      const res = await request.post('/api/auth/signup').send(signupData);
+      expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.fillPassword);
+    });
+  });
+
+  describe('login validation fail', () => {
+    test('login email fill fail', async () => {
+      const signupData = {
+        email: 'email@naver.com',
+        nickname: 'nickname',
+        password: '12341234',
+      };
+      await request.post('/api/auth/signup').send(signupData);
+
+      const loginData = {
+        email: '',
+        password: '12341234',
+      };
+      const res = await request.post('/api/auth/login').send(loginData);
+      expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.fillEmail);
+    });
+
+    test('login password fill fail', async () => {
+      const signupData = {
+        email: 'email@naver.com',
+        nickname: 'nickname',
+        password: '12341234',
+      };
+      await request.post('/api/auth/signup').send(signupData);
+
+      const loginData = {
+        email: 'email@naver.com',
+        password: '',
+      };
+      const res = await request.post('/api/auth/login').send(loginData);
+      expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.fillPassword);
     });
   });
 });
