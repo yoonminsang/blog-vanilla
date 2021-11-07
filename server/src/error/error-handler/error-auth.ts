@@ -7,7 +7,7 @@ const errorAuth = (err: CustomError): IError => {
   const { status, message } = err;
   let errorMessage: string;
 
-  const [forEeveloperError, forUserError] = Object.values(AUTH_ERROR_MESSAGE).reduce(
+  const [forDeveloperError, forUserError] = Object.values(AUTH_ERROR_MESSAGE).reduce(
     (acc, cur) => {
       acc[0].push(cur[0]);
       acc[1].push(cur[1]);
@@ -16,11 +16,12 @@ const errorAuth = (err: CustomError): IError => {
     [[], []] as string[][],
   );
 
-  const idx = forEeveloperError.indexOf(message);
+  const idx = forDeveloperError.indexOf(message);
   if (idx !== -1) {
     errorMessage = forUserError[idx];
   } else {
-    errorMessage = '다시 시도해주세요';
+    // TODO: winston
+    errorMessage = 'auth의 에러 핸들러에 문제가 있습니다';
   }
 
   return { status, errorMessage };
