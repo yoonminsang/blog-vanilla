@@ -23,7 +23,8 @@
     "class-methods-use-this": "off",
     "no-else-return": "off",
     "consistent-return": "off",
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    "no-plusplus": "off"
   },
   "ignorePatterns": ["jest.config.ts"]
 }
