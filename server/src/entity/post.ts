@@ -16,6 +16,7 @@ class Post extends AutoIdEntity {
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user!: User;
 
+  // TODO: 외래키 이게 최선인지 찾아보기
   @Column({ type: 'char', length: 36 })
   userId!: string;
 
