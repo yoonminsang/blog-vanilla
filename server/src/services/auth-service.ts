@@ -13,7 +13,7 @@ class AuthService {
     if (existEmail) {
       throw errorGenerator({
         status: 400,
-        message: AUTH_ERROR_MESSAGE.duplicateEmail,
+        message: AUTH_ERROR_MESSAGE.duplicateEmail[0],
         from: FROM,
       });
     }
@@ -22,7 +22,7 @@ class AuthService {
     if (existNickname) {
       throw errorGenerator({
         status: 400,
-        message: AUTH_ERROR_MESSAGE.duplicateNickname,
+        message: AUTH_ERROR_MESSAGE.duplicateNickname[0],
         from: FROM,
       });
     }
@@ -41,7 +41,7 @@ class AuthService {
     if (!user) {
       throw errorGenerator({
         status: 409,
-        message: AUTH_ERROR_MESSAGE.notFoundEmail,
+        message: AUTH_ERROR_MESSAGE.notFoundEmail[0],
         from: FROM,
       });
     }
@@ -51,7 +51,7 @@ class AuthService {
     if (!compare) {
       throw errorGenerator({
         status: 409,
-        message: AUTH_ERROR_MESSAGE.notFoundPassword,
+        message: AUTH_ERROR_MESSAGE.notCorrectPassword[0],
         from: FROM,
       });
     }
