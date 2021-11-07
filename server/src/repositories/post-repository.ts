@@ -1,7 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import Post from '@/entity/post';
-
-const LIMIT = 20;
+import { LIMIT } from '@/constants/repository';
 
 @EntityRepository(Post)
 class PostRepository extends Repository<Post> {
@@ -28,7 +27,7 @@ class PostRepository extends Repository<Post> {
         'post.createdAt as createdAt',
         'user.nickname as nickname',
       ])
-      .limit(LIMIT)
+      .limit(LIMIT.post)
       .innerJoin('post.user', 'user')
       .orderBy('post.id', 'DESC')
       .getRawMany();
@@ -38,7 +37,7 @@ class PostRepository extends Repository<Post> {
   async readPostListByLastId(lastId: number): Promise<Post[] | undefined> {
     const postList = await this.createQueryBuilder('post')
       .select(['post.id', 'post.title', 'post.content', 'post.createdAt', 'user.nickname'])
-      .limit(LIMIT)
+      .limit(LIMIT.post)
       .innerJoin('post.user', 'user')
       .where('post.id < :id', { id: lastId })
       .orderBy('post.id', 'DESC')
