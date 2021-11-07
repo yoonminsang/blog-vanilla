@@ -2,7 +2,6 @@ import { getCustomRepository } from 'typeorm';
 import errorGenerator from '@/error/error-generator';
 import { POST_ERROR_MESSAGE } from '@/constants/error-message';
 import PostRepository from '@/repositories/post-repository';
-import { sliceText } from '@/utils/query';
 
 const FROM = 'post';
 
@@ -35,7 +34,10 @@ class PostService {
         from: FROM,
       });
     }
-    return postList.map(post => sliceText(post, 'content', 200));
+    // raw query 예외처리
+    return postList.map(list => {
+      return { ...list, user: { nickname: list.nickname } };
+    });
   }
 
   async readPostListByLastId(lastId: number) {
@@ -47,7 +49,7 @@ class PostService {
         from: FROM,
       });
     }
-    return postList.map(post => sliceText(post, 'content', 200));
+    return postList;
   }
 
   async updatePost(id: number, title: string, content: string, userId: string) {
