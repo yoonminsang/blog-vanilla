@@ -5,31 +5,28 @@ import { USER_ENTITY } from '@/constants/entity';
 import CustomError from '@/error/custom-error';
 import errorProcess from '@/error/error-process';
 import { JOI_ERROR_MESSAGE } from '@/constants/error-message';
+import ERROR_JOI_MESSAGE from '@/constants/error-joi-message.ts';
 
 const FROM = 'joi';
 
+// TODO: 특수문자 대소문자를 포함한 validation + front
 const signupValidation = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const schema = Joi.object({
-      email: Joi.string()
-        .email()
-        .max(USER_ENTITY.emailMaxLength)
-        .required()
-        .empty('')
-        .messages({
-          'string.email': `올바르지 않은 이메일 형식입니다`,
-          'string.max': `이메일은 ${USER_ENTITY.emailMaxLength}자를 넘길 수 없습니다`,
-          'any.required': `이메일을 입력해주세요`,
-        }),
+      email: Joi.string().email().max(USER_ENTITY.emailMaxLength).required().empty('').messages({
+        'string.email': ERROR_JOI_MESSAGE.invalidEmail,
+        'string.max': ERROR_JOI_MESSAGE.exceedMaxLengthEmail,
+        'any.required': ERROR_JOI_MESSAGE.fillEmail,
+      }),
       nickname: Joi.string()
         .min(USER_ENTITY.nicknameMinLength)
         .max(USER_ENTITY.nicknameMaxLength)
         .required()
         .empty('')
         .messages({
-          'string.min': `닉네임은 ${USER_ENTITY.nicknameMinLength}자 이상 입력해야 합니다`,
-          'string.max': `닉네임은 ${USER_ENTITY.nicknameMaxLength}자를 넘길 수 없습니다`,
-          'any.required': `닉네임을 입력해주세요`,
+          'string.min': ERROR_JOI_MESSAGE.underMinLengthNickname,
+          'string.max': ERROR_JOI_MESSAGE.exceedMaxLengthNickname,
+          'any.required': ERROR_JOI_MESSAGE.fillNickname,
         }),
       password: Joi.string()
         .min(USER_ENTITY.passwordMinLength)
@@ -37,9 +34,9 @@ const signupValidation = (req: Request, res: Response, next: NextFunction): void
         .required()
         .empty('')
         .messages({
-          'string.min': `비밀번호는 ${USER_ENTITY.passwordMinLength}자 이상 입력해야 합니다`,
-          'string.max': `비밀번호는 ${USER_ENTITY.passwordMaxLength}자를 넘길 수 없습니다`,
-          'any.required': `비밀번호를 입력해주세요`,
+          'string.min': ERROR_JOI_MESSAGE.underMinLengthPassword,
+          'string.max': ERROR_JOI_MESSAGE.exceedMaxLengthPassword,
+          'any.required': ERROR_JOI_MESSAGE.fillPassword,
         }),
     });
 
