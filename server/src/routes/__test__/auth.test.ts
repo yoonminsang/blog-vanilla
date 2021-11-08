@@ -26,7 +26,7 @@ describe('auth', () => {
       const signupData = {
         email: 'email@naver.com',
         nickname: 'nickname',
-        password: '12341234',
+        password: 'qwer1234!Q',
       };
       const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(201);
@@ -36,11 +36,11 @@ describe('auth', () => {
       const signupData = {
         email: 'email@naver.com',
         nickname: 'nickname',
-        password: '12341234',
+        password: 'qwer1234!Q',
       };
       await request.post('/api/auth/signup').send(signupData);
 
-      const loginData = { email: 'email@naver.com', password: '12341234' };
+      const loginData = { email: 'email@naver.com', password: 'qwer1234!Q' };
       const res = await request.post('/api/auth/login').send(loginData);
       expect(res.status).toBe(200);
     });
@@ -60,7 +60,7 @@ describe('auth', () => {
       const signupData = {
         email: 'email@naver.com',
         nickname: 'nickname',
-        password: '12341234',
+        password: 'qwer1234!Q',
       };
       const signupRes = await request.post('/api/auth/signup').send(signupData);
       const refreskToken = signupRes.headers['set-cookie'][0].split(';')[0].split('=')[1];
@@ -77,7 +77,7 @@ describe('auth', () => {
       const signupData = {
         email: 'email@naver.com',
         nickname: 'nickname',
-        password: '12341234',
+        password: 'qwer1234!Q',
       };
       const signupRes = await agent.post('/api/auth/signup').send(signupData);
       const { accessToken } = signupRes.body;
@@ -92,13 +92,13 @@ describe('auth', () => {
       const signupData = {
         email: 'email@naver.com',
         nickname: 'nickname',
-        password: '12341234',
+        password: 'qwer1234!Q',
       };
       await request.post('/api/auth/signup').send(signupData);
       const signupData2 = {
         email: 'email@naver.com',
         nickname: 'nickname2',
-        password: '12341234',
+        password: 'qwer1234!Q',
       };
       const res = await request.post('/api/auth/signup').send(signupData2);
       expect(res.status).toBe(400);
@@ -109,14 +109,14 @@ describe('auth', () => {
       const signupData = {
         email: 'email@naver.com',
         nickname: 'nickname',
-        password: '12341234',
+        password: 'qwer1234!Q',
       };
       await request.post('/api/auth/signup').send(signupData);
 
       const signupData2 = {
         email: 'email2@naver.com',
         nickname: 'nickname',
-        password: '12341234',
+        password: 'qwer1234!Q',
       };
       const res = await request.post('/api/auth/signup').send(signupData2);
       expect(res.status).toBe(400);
@@ -126,7 +126,7 @@ describe('auth', () => {
     test('login no exist user', async () => {
       const loginData = {
         email: 'email@naver.com',
-        password: '12341234',
+        password: 'qwer1234!Q',
       };
       const res = await request.post('/api/auth/login').send(loginData);
 
@@ -138,7 +138,7 @@ describe('auth', () => {
       const signupData = {
         email: 'email@naver.com',
         nickname: 'nickname',
-        password: '12341234',
+        password: 'qwer1234!Q',
       };
       await request.post('/api/auth/signup').send(signupData);
 
@@ -159,7 +159,7 @@ describe('auth', () => {
         const signupData = {
           email: 'email',
           nickname: 'nickname',
-          password: '12341234',
+          password: 'qwer1234!Q',
         };
         const res = await request.post('/api/auth/signup').send(signupData);
         expect(res.status).toBe(400);
@@ -170,7 +170,7 @@ describe('auth', () => {
         const signupData = {
           email: 'emailemailemailemaiilemailemail1231231sdfsdf1e12sdf123@naver.com',
           nickname: 'nickname',
-          password: '12341234',
+          password: 'qwer1234!Q',
         };
         const res = await request.post('/api/auth/signup').send(signupData);
         expect(res.status).toBe(400);
@@ -181,7 +181,7 @@ describe('auth', () => {
         const signupData = {
           email: '',
           nickname: 'nickname',
-          password: '12341234',
+          password: 'qwer1234!Q',
         };
         const res = await request.post('/api/auth/signup').send(signupData);
         expect(res.status).toBe(400);
@@ -192,7 +192,7 @@ describe('auth', () => {
         const signupData = {
           email: 'email@naver.com',
           nickname: 'a',
-          password: '12341234',
+          password: 'qwer1234!Q',
         };
         const res = await request.post('/api/auth/signup').send(signupData);
         expect(res.status).toBe(400);
@@ -203,7 +203,7 @@ describe('auth', () => {
         const signupData = {
           email: 'email@naver.com',
           nickname: 'nicknamenicknamenicknamenicknamenicknamenicknamenicknamenicknamenickname',
-          password: '12341234',
+          password: 'qwer1234!Q',
         };
         const res = await request.post('/api/auth/signup').send(signupData);
         expect(res.status).toBe(400);
@@ -214,7 +214,7 @@ describe('auth', () => {
         const signupData = {
           email: 'email@naver.com',
           nickname: '',
-          password: '12341234',
+          password: 'qwer1234!Q',
         };
         const res = await request.post('/api/auth/signup').send(signupData);
         expect(res.status).toBe(400);
@@ -236,11 +236,22 @@ describe('auth', () => {
         const signupData = {
           email: 'email@naver.com',
           nickname: 'nickname',
-          password: '1234123412341234123412341234123412341234123412341234123412341234',
+          password: 'qwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Q',
         };
         const res = await request.post('/api/auth/signup').send(signupData);
         expect(res.status).toBe(400);
         expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.exceedMaxLengthPassword);
+      });
+
+      test('signup password regexp fail', async () => {
+        const signupData = {
+          email: 'email@naver.com',
+          nickname: 'nickname',
+          password: '1234',
+        };
+        const res = await request.post('/api/auth/signup').send(signupData);
+        expect(res.status).toBe(400);
+        expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.invalidRegexPassword);
       });
 
       test('signup password fill fail', async () => {
@@ -259,13 +270,13 @@ describe('auth', () => {
       const signupData = {
         email: 'email@naver.com',
         nickname: 'nickname',
-        password: '12341234',
+        password: 'qwer1234!Q',
       };
       await request.post('/api/auth/signup').send(signupData);
 
       const loginData = {
         email: '',
-        password: '12341234',
+        password: 'qwer1234!Q',
       };
       const res = await request.post('/api/auth/login').send(loginData);
       expect(res.status).toBe(400);

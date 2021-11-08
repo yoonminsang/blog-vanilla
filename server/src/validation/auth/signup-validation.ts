@@ -9,7 +9,6 @@ import ERROR_JOI_MESSAGE from '@/constants/error-joi-message.ts';
 
 const FROM = 'joi';
 
-// TODO: 특수문자 대소문자를 포함한 validation + front
 const signupValidation = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const schema = Joi.object({
