@@ -31,11 +31,13 @@ const signupValidation = (req: Request, res: Response, next: NextFunction): void
       password: Joi.string()
         .min(USER_ENTITY.passwordMinLength)
         .max(USER_ENTITY.passwordMaxLength)
+        .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).*$/)
         .required()
         .empty('')
         .messages({
           'string.min': ERROR_JOI_MESSAGE.underMinLengthPassword,
           'string.max': ERROR_JOI_MESSAGE.exceedMaxLengthPassword,
+          'string.pattern.base': ERROR_JOI_MESSAGE.invalidRegexPassword,
           'any.required': ERROR_JOI_MESSAGE.fillPassword,
         }),
     });

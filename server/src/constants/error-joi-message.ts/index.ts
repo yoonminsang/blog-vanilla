@@ -9,6 +9,7 @@ const ERROR_JOI_MESSAGE = {
   fillNickname: `닉네임을 입력해주세요`,
   underMinLengthPassword: `비밀번호는 ${USER_ENTITY.passwordMinLength}자 이상 입력해야 합니다`,
   exceedMaxLengthPassword: `비밀번호는 ${USER_ENTITY.passwordMaxLength}자를 넘길 수 없습니다`,
+  invalidRegexPassword: `비밀번호는 대소문자, 숫자, 특수문자를 포함해야합니다`,
   fillPassword: `비밀번호를 입력해주세요`,
 };
 
