@@ -108,7 +108,6 @@ class PostComment extends Component {
     });
     this.addEvent('click', '.comment-paging', ({ target }) => {
       if (target.nodeName === 'BUTTON') {
-        // TODO: textContent 효율성, + pareint 생각
         const pageId = +target.textContent;
         this.setState({ pageId });
       }

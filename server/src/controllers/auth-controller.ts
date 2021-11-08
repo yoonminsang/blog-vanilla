@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import AuthService from '@/services/auth-service';
 
-// TODO : 클래스 인스턴스 바인딩하기!!
 const service = new AuthService();
 const REFRESHTOKEN = 'refreshtoken';
 
