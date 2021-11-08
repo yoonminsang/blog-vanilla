@@ -29,7 +29,9 @@
     "reflect-metadata": "^0.1.13",
     "ts-node": "^10.4.0",
     "typeorm": "^0.2.37",
-    "typeorm-naming-strategies": "^2.0.0"
+    "typeorm-naming-strategies": "^2.0.0",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.5"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
