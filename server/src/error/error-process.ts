@@ -1,3 +1,4 @@
+import logger from '@/config/logger';
 import { Response } from 'express';
 import CustomError from './custom-error';
 import errorAuth from './error-handler/error-auth';
@@ -17,7 +18,7 @@ const errorHandler = (err: CustomError) => {
     case 'comment':
       return errorComment(err);
     default:
-      // TODO: winston
+      logger.error('not found error handler, err:', err);
       return { status: 500, errorMessage: '에러 핸들러가 존재하지 않습니다' };
   }
 };
@@ -30,7 +31,7 @@ const errorProcess = (res: Response, err: CustomError | Error) => {
     const { status, errorMessage } = errorHandler(err);
     res.status(status).json({ errorMessage });
   } else {
-    // TODO: winston으로 err + 시간 기록
+    logger.error('server error, error:', err);
     res.status(500).json({ errorMessage: '서버 에러' });
   }
 };
