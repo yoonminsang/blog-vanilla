@@ -12,4 +12,7 @@ dist
 # yarn
 yarn-error.log
 
+# loggs
+logs
+
 .DS_Store
