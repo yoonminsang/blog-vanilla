@@ -62,8 +62,7 @@ class PostRepository extends Repository<Post> {
   }
 
   async checkPost(id: number): Promise<boolean> {
-    // TODO: select * 성능 확인
-    const post = await this.createQueryBuilder('post').where('post.id = :id', { id }).getOne();
+    const post = await this.createQueryBuilder('post').select('post.id').where('post.id = :id', { id }).getOne();
     return !!post;
   }
 }
