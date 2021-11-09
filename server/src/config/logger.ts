@@ -5,6 +5,9 @@ const myFormat = format.printf(({ level, message, timestamp }) => {
   return `${timestamp} ${level}: ${message}`;
 });
 
+const errorDir = process.env.NODE_ENV === 'production' ? '../../logs/error' : 'logs/error';
+const infoDir = process.env.NODE_ENV === 'production' ? '../../logs' : 'logs';
+
 const logger = createLogger({
   level: 'info',
   format: format.combine(
@@ -19,7 +22,7 @@ const logger = createLogger({
     new WinstonDaily({
       level: 'error',
       datePattern: 'YYYY-MM-DD',
-      dirname: 'logs/error',
+      dirname: errorDir,
       filename: `%DATE%.error.log`,
       maxFiles: '30d',
       zippedArchive: true,
@@ -27,7 +30,7 @@ const logger = createLogger({
     new WinstonDaily({
       level: 'info',
       datePattern: 'YYYY-MM-DD',
-      dirname: 'logs',
+      dirname: infoDir,
       filename: `%DATE%.debug.log`,
       maxFiles: '30d',
       zippedArchive: true,
