@@ -37,7 +37,7 @@ jobs:
       - name: build client files
         working-directory: ./client
         run: |
-          yarn install --frozen-lockfile
+          yarn install
           yarn build
 
       - name: zip distributions
