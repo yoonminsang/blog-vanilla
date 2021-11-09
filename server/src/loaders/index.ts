@@ -8,7 +8,7 @@ const loaders = async (app: Application): Promise<void> => {
   console.log(`NODE_ENV=${process.env.NODE_ENV}, dotenv success`);
   expressLoader(app);
   console.log('express load');
-  dbLoader();
+  await dbLoader();
   console.log('db load');
 };
 
