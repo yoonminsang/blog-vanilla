@@ -31,7 +31,7 @@ const signupValidation = ({ email, password, passwordConfirm, nickname }) => {
   if (!nickname) return NICKNAME_EMPTY;
   if (nickname.length < USER_ENTITY.nicknameMinLength) return NICKNAME_MIN_LENGTH;
   if (nickname.length > USER_ENTITY.nicknameMaxLength) return NICKNAME_MAX_LENGTH;
-  if ((/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).*$/, password)) return PASSWORD_INVALID_REGEX;
+  if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).*$/.test(password)) return PASSWORD_INVALID_REGEX;
   return true;
 };
 
