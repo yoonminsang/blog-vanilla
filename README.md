@@ -70,6 +70,7 @@ server
 │ ├─middlewares
 │ ├─repositories
 │ ├─routes
+│ ├─seeds
 │ ├─services
 │ ├─types
 │ ├─utils
