@@ -1,4 +1,5 @@
 import logger from '@/config/logger';
+import { TOKENEXPIREDERROR } from '@/constants';
 import jwt, { JwtPayload, VerifyErrors } from 'jsonwebtoken';
 
 type TokenType = 'access' | 'refresh';
@@ -32,7 +33,7 @@ const decodeToken = (tokenType: TokenType, token: string): Promise<JwtPayload> =
     const secret = getSecret(tokenType);
     jwt.verify(token, secret, (err: VerifyErrors | null, decoded) => {
       if (err) {
-        if (err.name !== 'TokenExpiredError') {
+        if (err.name !== TOKENEXPIREDERROR) {
           logger.info(err);
         }
         resolve({ jwtError: err.name });

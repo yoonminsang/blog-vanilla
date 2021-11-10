@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { createToken, decodeToken, getAccessToken, getRefreshToken } from '@/utils/jwt';
-import { RefreshTokenCookieOptions } from '@/constants';
-
-const REFRESHTOKEN = 'refreshtoken';
+import { REFRESHTOKEN, refreshTokenCookieOptions, TOKENEXPIREDERROR } from '@/constants';
 
 const jwtMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const accessToken = getAccessToken(req.headers.authorization);
@@ -21,11 +19,12 @@ const jwtMiddleware = async (req: Request, res: Response, next: NextFunction) =>
   } = await decodeToken('refresh', refreshToken as string);
 
   if (aError || rError) {
-    if (aError === 'TokenExpiredError' && !rError) {
+    if (aError === TOKENEXPIREDERROR && !rError) {
       const newAccessToken = createToken('access', { id: rId, nickname: rNickname });
       return res.status(200).json({ requestAgain: true, newAccessToken });
     }
-    if (rError === 'TokenExpiredError') {
+    if (rError === TOKENEXPIREDERROR) {
+      res.clearCookie(REFRESHTOKEN);
       return res.status(200).json({ expiredRefreshToken: true });
     }
     return next();
@@ -43,7 +42,7 @@ const jwtMiddleware = async (req: Request, res: Response, next: NextFunction) =>
   if ((rExp as number) - now < 60 * 60 * 24 * 3.5) {
     // 3.5일
     const newRefreshToken = createToken('refresh', { id, nickname });
-    res.cookie(REFRESHTOKEN, newRefreshToken, RefreshTokenCookieOptions);
+    res.cookie(REFRESHTOKEN, newRefreshToken, refreshTokenCookieOptions);
   }
   next();
 };
