@@ -69,7 +69,7 @@ class PostList extends Component {
       this.setState({ postList });
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const { errorMessage } = err.response?.data;
+        const errorMessage = err.response?.data?.errorMessage;
         if (errorMessage) {
           console.log(errorMessage);
         } else {
@@ -117,7 +117,7 @@ class PostList extends Component {
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const { errorMessage } = err.response?.data;
+        const errorMessage = err.response?.data?.errorMessage;
         if (errorMessage) {
           console.log(errorMessage);
         } else {

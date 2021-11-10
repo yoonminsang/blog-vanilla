@@ -122,7 +122,7 @@ class PostComment extends Component {
       this.setState({ commentList, lastPageId, count, pageId: lastPageId });
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const { errorMessage } = err.response?.data;
+        const errorMessage = err.response?.data?.errorMessage;
         if (errorMessage) {
           console.log(errorMessage);
         } else {
@@ -142,7 +142,7 @@ class PostComment extends Component {
       this.setState({ commentList, lastPageId, count }, () => this.target.scrollIntoView({ behavior: 'smooth' }));
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const { errorMessage } = err.response?.data;
+        const errorMessage = err.response?.data?.errorMessage;
         if (errorMessage) {
           console.log(errorMessage);
         } else {
@@ -161,7 +161,7 @@ class PostComment extends Component {
       this.getLastCommentList();
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const { errorMessage } = err.response?.data;
+        const errorMessage = err.response?.data?.errorMessage;
         if (errorMessage) {
           console.log(errorMessage);
         } else {

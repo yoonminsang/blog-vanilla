@@ -40,7 +40,7 @@ class Header extends Component {
       userStore.logout();
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const { errorMessage } = err.response?.data;
+        const errorMessage = err.response?.data?.errorMessage;
         if (errorMessage) {
           this.setState({ errorMessage });
         } else {
