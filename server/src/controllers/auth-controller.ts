@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import AuthService from '@/services/auth-service';
+import { RefreshTokenCookieOptions } from '@/constants';
 
 const service = new AuthService();
 const REFRESHTOKEN = 'refreshtoken';
@@ -18,10 +19,7 @@ class AuthController {
     try {
       const { email, nickname, password } = req.body;
       const { accessToken, refreshToken } = await service.signup(email, nickname, password);
-      res.cookie(REFRESHTOKEN, refreshToken, {
-        httpOnly: true,
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7일
-      });
+      res.cookie(REFRESHTOKEN, refreshToken, RefreshTokenCookieOptions);
       res.status(201).json({ accessToken });
     } catch (err) {
       next(err);
@@ -32,10 +30,7 @@ class AuthController {
     try {
       const { email, password } = req.body;
       const { accessToken, refreshToken } = await service.login(email, password);
-      res.cookie(REFRESHTOKEN, refreshToken, {
-        httpOnly: true,
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7일
-      });
+      res.cookie(REFRESHTOKEN, refreshToken, RefreshTokenCookieOptions);
       res.status(200).json({ accessToken });
     } catch (err) {
       next(err);

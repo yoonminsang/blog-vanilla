@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { createToken, decodeToken, getAccessToken, getRefreshToken } from '@/utils/jwt';
+import { RefreshTokenCookieOptions } from '@/constants';
+
+const REFRESHTOKEN = 'refreshtoken';
 
 const jwtMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const accessToken = getAccessToken(req.headers.authorization);
@@ -40,10 +43,7 @@ const jwtMiddleware = async (req: Request, res: Response, next: NextFunction) =>
   if ((rExp as number) - now < 60 * 60 * 24 * 3.5) {
     // 3.5일
     const newRefreshToken = createToken('refresh', { id, nickname });
-    res.cookie('refreshtoken', newRefreshToken, {
-      httpOnly: true,
-      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 7일
-    });
+    res.cookie(REFRESHTOKEN, newRefreshToken, RefreshTokenCookieOptions);
   }
   next();
 };
