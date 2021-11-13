@@ -8,6 +8,7 @@ const PASSWORD_MIN_LENGTH = `비밀번호는 ${USER_ENTITY.passwordMinLength}자
 const PASSWORD_MAX_LENGTH = `비밀번호는 ${USER_ENTITY.passwordMaxLength}자를 넘길 수 없습니다`;
 const PASSWORD_CONFIRM_EMPTY = `비밀번호 확인을 입력하세요`;
 const PASSWORD_IS_NOT_SAME = `비밀번호와 비밀번호확인이 일치하지 않습니다`;
+const PASSWORD_INVALID_REGEX = `비밀번호는 대소문자, 숫자, 특수문자를 포함해야합니다`;
 const NICKNAME_EMPTY = `닉네임을 입력해주세요`;
 const NICKNAME_MIN_LENGTH = `닉네임은 ${USER_ENTITY.nicknameMinLength}자 이상 입력해야 합니다`;
 const NICKNAME_MAX_LENGTH = `닉네임은 ${USER_ENTITY.nicknameMaxLength}자를 넘길 수 없습니다`;
@@ -30,6 +31,7 @@ const signupValidation = ({ email, password, passwordConfirm, nickname }) => {
   if (!nickname) return NICKNAME_EMPTY;
   if (nickname.length < USER_ENTITY.nicknameMinLength) return NICKNAME_MIN_LENGTH;
   if (nickname.length > USER_ENTITY.nicknameMaxLength) return NICKNAME_MAX_LENGTH;
+  if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).*$/.test(password)) return PASSWORD_INVALID_REGEX;
   return true;
 };
 

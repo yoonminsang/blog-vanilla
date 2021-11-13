@@ -17,10 +17,12 @@
 .post-list-item {
   width: 230px;
   padding: 10px;
+  transition: 0.5s ease;
 }
 
 .post-list-item:hover {
   transform: translateY(-5px);
+  transition: 0.5s ease;
 }
 
 .post-list-item:hover .title {

@@ -1,14 +1,11 @@
-import { POST_ENTITY } from 'constants/entity';
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
-import { BaseTimeEntity } from './base-time-entity';
+import { POST_ENTITY } from '@/constants/entity';
+import { Column, Entity, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
+import { AutoIdEntity } from './abstract-class/auto-id-entity';
 import Comment from './comment';
 import User from './user';
 
 @Entity({ name: 'post' })
-class Post extends BaseTimeEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
+class Post extends AutoIdEntity {
   @Column({ type: 'varchar', length: POST_ENTITY.titleMaxLength })
   title!: string;
 
@@ -22,7 +19,7 @@ class Post extends BaseTimeEntity {
   @Column({ type: 'char', length: 36 })
   userId!: string;
 
-  @OneToMany(() => Comment, comment => comment.post, { cascade: ['insert', 'update'] })
+  @OneToMany(() => Comment, comment => comment.post, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
   comments!: Post[];
 }
 

@@ -1,12 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { BaseTimeEntity } from './base-time-entity';
+import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
+import { AutoIdEntity } from './abstract-class/auto-id-entity';
 import User from './user';
 
 @Entity({ name: 'chatting' })
-class Chatting extends BaseTimeEntity {
-  @PrimaryGeneratedColumn()
-  id!: number;
-
+class Chatting extends AutoIdEntity {
   @Column({ length: 45 })
   chatting!: string;
 
@@ -16,11 +13,6 @@ class Chatting extends BaseTimeEntity {
 
   @Column()
   userId!: string;
-  // @ManyToOne(() => User, user => user, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-  // user!: User;
-
-  // @RelationId((chatting: Chatting) => chatting.user)
-  // userId!: string;
 }
 
 export default Chatting;

@@ -13,6 +13,7 @@
   display: flex;
   flex-direction: column;
   border-top: 2px solid var(--grey-2);
+  margin-top: 5px;
 }
 
 .comment .comment-list .comment-list-item {

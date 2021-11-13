@@ -1,10 +1,13 @@
 import { EntityRepository, Repository } from 'typeorm';
-import User from 'entity/user';
+import User from '@/entity/user';
 
 @EntityRepository(User)
 class UserRepository extends Repository<User> {
   async checkEmail(email: string): Promise<boolean> {
-    const user = await this.createQueryBuilder('user').where('user.email = :email', { email }).getOne();
+    const user = await this.createQueryBuilder('user')
+      .select('user.id')
+      .where('user.email = :email', { email })
+      .getOne();
     return !!user;
   }
 

@@ -1,28 +1,27 @@
-import { AUTH_ERROR_MESSAGE } from 'constants/error-message';
-import CustomError from 'error/custom-error';
-import { IError } from 'types/error';
+import logger from '@/config/logger';
+import { AUTH_ERROR_MESSAGE } from '@/constants/error-message';
+import CustomError from '@/error/custom-error';
+import { IError } from '@/types/error';
 
 const errorAuth = (err: CustomError): IError => {
   const { status, message } = err;
-  let errorMessage;
+  let errorMessage: string;
 
-  switch (message) {
-    case AUTH_ERROR_MESSAGE.duplicateEmail:
-      errorMessage = '이메일이 존재합니다';
-      break;
-    case AUTH_ERROR_MESSAGE.duplicateNickname:
-      errorMessage = '닉네임이 존재합니다';
-      break;
-    case AUTH_ERROR_MESSAGE.notFoundUser:
-      errorMessage = '유저가 존재하지 않습니다';
-      break;
-    case AUTH_ERROR_MESSAGE.notFoundEmail:
-    case AUTH_ERROR_MESSAGE.notFoundPassword:
-      errorMessage = '이메일 또는 비밀번호가 일치하지 않습니다';
-      break;
-    default:
-      errorMessage = '다시 시도해주세요';
-      break;
+  const [forDeveloperError, forUserError] = Object.values(AUTH_ERROR_MESSAGE).reduce(
+    (acc, cur) => {
+      acc[0].push(cur[0]);
+      acc[1].push(cur[1]);
+      return acc;
+    },
+    [[], []] as string[][],
+  );
+
+  const idx = forDeveloperError.indexOf(message);
+  if (idx !== -1) {
+    errorMessage = forUserError[idx];
+  } else {
+    errorMessage = 'auth의 에러 핸들러에 문제가 있습니다';
+    logger.error('auth error handler error, error:', err);
   }
 
   return { status, errorMessage };

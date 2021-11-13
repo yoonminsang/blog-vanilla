@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import CommentService from 'services/comment-service';
+import CommentService from '@/services/comment-service';
 
 interface IComment {
   content: string;

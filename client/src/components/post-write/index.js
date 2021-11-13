@@ -2,7 +2,8 @@
 import axios from 'axios';
 import Component from '../../lib/component';
 import { useHistory } from '../../lib/routerHooks';
-import { createPostApi } from '../../utils/api/post';
+import userStore from '../../store/user-store';
+import { createPostApi, readPostApi, updatePostApi } from '../../utils/api/post';
 import Button from '../common/button';
 import Input from '../common/input';
 import TextArea from '../common/textarea';
@@ -10,11 +11,20 @@ import './style.css';
 
 class PostWrite extends Component {
   setup() {
-    this.state = {
-      title: '',
-      content: '',
-    };
+    this.state = this.props.modify
+      ? {
+          user: undefined,
+          title: '',
+          content: '',
+          nickname: undefined,
+        }
+      : {
+          user: undefined,
+          title: '',
+          content: '',
+        };
     this.history = useHistory();
+    this.postId = this.history.params.postId;
   }
 
   markup() {
@@ -38,12 +48,13 @@ class PostWrite extends Component {
       value: title,
       placeholder: '제목',
       maxlength: 40,
+      required: true,
     });
     new TextArea($postContent, {
       class: 'post-content full-width',
       value: content,
       placeholder: '내용',
-      option: true,
+      required: true,
     });
     new Button($btnCreate, {
       class: 'right',
@@ -52,11 +63,54 @@ class PostWrite extends Component {
     });
   }
 
+  async componentDidMount() {
+    if (this.props.modify) {
+      await this.getPost();
+    }
+    userStore.subscribe(() =>
+      this.setState({ user: userStore.state.user }, () => {
+        if (!this.state.user || (this.props.modify && this.state.user.nickname !== this.state.nickname)) {
+          this.history.goBack();
+        }
+      }),
+    );
+  }
+
+  async getPost() {
+    try {
+      const {
+        data: {
+          post: {
+            title,
+            content,
+            user: { nickname },
+          },
+        },
+      } = await readPostApi({ id: this.postId });
+      this.setState({ title, content, nickname });
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const errorMessage = err.response?.data?.errorMessage;
+        if (errorMessage) {
+          console.log(errorMessage);
+        } else {
+          console.log(err);
+        }
+      } else {
+        console.log('내부 에러');
+      }
+    }
+  }
+
   setEvent() {
     this.addEvent('submit', '.post-create-template', async e => {
       e.preventDefault();
       const { title, content } = this.state;
-      this.create(title, content);
+      if (this.props.modify) {
+        this.updatePost(title, content);
+      } else {
+        this.createPost(title, content);
+      }
     });
     this.addEvent('input', '.post-title', ({ target }) => {
       this.setState({ title: target.value });
@@ -66,7 +120,27 @@ class PostWrite extends Component {
     });
   }
 
-  async create(title, content) {
+  async updatePost(title, content) {
+    try {
+      const {
+        data: { postId },
+      } = await updatePostApi({ id: this.postId, title, content });
+      this.history.push(`/post/${postId}`);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const errorMessage = err.response?.data?.errorMessage;
+        if (errorMessage) {
+          console.log(errorMessage);
+        } else {
+          console.log(err);
+        }
+      } else {
+        console.log('내부 에러');
+      }
+    }
+  }
+
+  async createPost(title, content) {
     try {
       const {
         data: { postId },
@@ -74,8 +148,7 @@ class PostWrite extends Component {
       this.history.push(`/post/${postId}`);
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // TODO: winston
-        const { errorMessage } = err.response?.data;
+        const errorMessage = err.response?.data?.errorMessage;
         if (errorMessage) {
           console.log(errorMessage);
         } else {

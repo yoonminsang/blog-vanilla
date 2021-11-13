@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
-import Comment from 'entity/comment';
+import Comment from '@/entity/comment';
 
 const LIMIT = 50;
 

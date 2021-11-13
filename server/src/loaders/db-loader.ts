@@ -1,30 +1,27 @@
+import dbConfig from '@/config/db-config';
+import logger from '@/config/logger';
+import User from '@/entity/user';
+import commentSeed from '@/seeds/comment.seed';
+import postSeed from '@/seeds/post.seed';
+import userSeed from '@/seeds/user.seed';
 import 'reflect-metadata';
-import { ConnectionOptions, createConnection } from 'typeorm';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { createConnection, getRepository } from 'typeorm';
 
-export default async (): Promise<void> => {
+const dbLoader = async (): Promise<void> => {
   try {
-    const connectionOption: ConnectionOptions = {
-      type: 'mysql',
-      host: process.env.DB_HOST,
-      port: Number(process.env.DB_PORT) || 3306,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-      synchronize: true,
-      logging: false,
-      entities: ['src/entity/**/*.ts'],
-      migrations: ['src/migration/**/*.ts'],
-      subscribers: ['src/subscriber/**/*.ts'],
-      cli: {
-        entitiesDir: 'src/entity',
-        migrationsDir: 'src/migration',
-        subscribersDir: 'src/subscriber',
-      },
-      namingStrategy: new SnakeNamingStrategy(),
-    };
-    await createConnection(connectionOption);
+    await createConnection(dbConfig());
+    const userRepository = getRepository(User);
+    const user = await userRepository.findOne();
+    if (process.env.NODE_ENV !== 'test' && !user) {
+      console.time('data seed');
+      await userSeed();
+      await postSeed();
+      await commentSeed();
+      console.timeEnd('data seed');
+    }
   } catch (err) {
-    console.log('db connection error \n', err);
+    logger.error('db connection error \n', err);
   }
 };
+
+export default dbLoader;

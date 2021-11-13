@@ -1,3 +1,5 @@
+import logger from '@/config/logger';
+import { TOKENEXPIREDERROR } from '@/constants';
 import jwt, { JwtPayload, VerifyErrors } from 'jsonwebtoken';
 
 type TokenType = 'access' | 'refresh';
@@ -27,19 +29,18 @@ const createToken = (tokenType: TokenType, option: ITokenOption): string => {
 };
 
 const decodeToken = (tokenType: TokenType, token: string): Promise<JwtPayload> => {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     const secret = getSecret(tokenType);
     jwt.verify(token, secret, (err: VerifyErrors | null, decoded) => {
       if (err) {
-        if (err.name !== 'TokenExpiredError') {
-          // TODO: reject는 winstom으로 바꿀지도??
-          reject(err);
+        if (err.name !== TOKENEXPIREDERROR) {
+          logger.info(err);
         }
         resolve({ jwtError: err.name });
       }
       if (typeof decoded !== 'object') {
         const jwtError = 'token is not a object';
-        reject(jwtError);
+        logger.info(jwtError);
         resolve({ jwtError });
       }
       resolve(decoded as JwtPayload);

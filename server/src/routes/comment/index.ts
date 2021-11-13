@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import isLoggedInMiddleware from 'middlewares/isLoggedInMiddleware';
-import CommentController from 'controllers/comment-controller';
-import createCommentValidation from 'validation/comment/create-comment-validation';
-import idParamsValidation from 'validation/common/id-params-validation';
-import readCommentListValidation from 'validation/comment/read-comment-list-validation';
-import updateCommentValidation from 'validation/comment/update-comment-validation';
+import isLoggedInMiddleware from '@/middlewares/is-logged-in-middleware';
+import CommentController from '@/controllers/comment-controller';
+import createCommentValidation from '@/validation/comment/create-comment-validation';
+import idParamsValidation from '@/validation/common/id-params-validation';
+import readCommentListValidation from '@/validation/comment/read-comment-list-validation';
+import updateCommentValidation from '@/validation/comment/update-comment-validation';
 
 const commentRouter = Router();
 

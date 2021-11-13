@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
-import errorGenerator from 'error/error-generator';
-import CustomError from 'error/custom-error';
-import errorProcess from 'error/error-process';
-import { JOI_ERROR_MESSAGE } from 'constants/error-message';
+import errorGenerator from '@/error/error-generator';
+import CustomError from '@/error/custom-error';
+import errorProcess from '@/error/error-process';
+import { JOI_ERROR_MESSAGE } from '@/constants/error-message';
+import ERROR_JOI_MESSAGE from '@/constants/error-joi-message.ts';
 
 const FROM = 'joi';
 
@@ -11,10 +12,10 @@ const loginValidation = (req: Request, res: Response, next: NextFunction): void 
   try {
     const schema = Joi.object({
       email: Joi.string().required().empty('').messages({
-        'any.required': `이메일을 입력해주세요`,
+        'any.required': ERROR_JOI_MESSAGE.fillEmail,
       }),
       password: Joi.string().required().empty('').messages({
-        'any.required': `비밀번호를 입력해주세요`,
+        'any.required': ERROR_JOI_MESSAGE.fillPassword,
       }),
     });
 

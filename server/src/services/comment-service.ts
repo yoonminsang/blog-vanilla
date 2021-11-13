@@ -1,12 +1,11 @@
 import { getCustomRepository } from 'typeorm';
-import CommentRepository from 'repositories/comment-repository';
-import PostRepository from 'repositories/post-repository';
-import { COMMENT_ERROR_MESSAGE } from 'constants/error-message';
-import errorGenerator from 'error/error-generator';
+import CommentRepository from '@/repositories/comment-repository';
+import PostRepository from '@/repositories/post-repository';
+import { COMMENT_ERROR_MESSAGE } from '@/constants/error-message';
+import errorGenerator from '@/error/error-generator';
+import { LIMIT } from '@/constants/repository';
 
 const FROM = 'comment';
-const LIMIT = 50;
-// TODO: LIMIT를 서비스,레포 두곳에서 사용??
 
 class CommentService {
   async createComment(content: string, postId: number, userId: string) {
@@ -37,7 +36,7 @@ class CommentService {
 
   async readCommentList(postId: number, pageId: number) {
     const count = await getCustomRepository(CommentRepository).getCommentCount(postId);
-    const lastPageId = Math.ceil(count / LIMIT);
+    const lastPageId = Math.ceil(count / LIMIT.comment);
     const commentListData = await getCustomRepository(CommentRepository).readCommentList(postId, pageId);
     if (!commentListData) {
       throw errorGenerator({
@@ -55,7 +54,7 @@ class CommentService {
 
   async readLastCommentList(postId: number) {
     const count = await getCustomRepository(CommentRepository).getCommentCount(postId);
-    const lastPageId = count === 0 ? 1 : Math.ceil(count / LIMIT);
+    const lastPageId = count === 0 ? 1 : Math.ceil(count / LIMIT.comment);
     const commentListData = await getCustomRepository(CommentRepository).readCommentList(postId, lastPageId);
     if (!commentListData) {
       throw errorGenerator({

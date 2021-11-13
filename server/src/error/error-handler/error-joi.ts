@@ -1,22 +1,16 @@
-import { JOI_ERROR_MESSAGE } from 'constants/error-message';
-import CustomError from 'error/custom-error';
-import { IError } from 'types/error';
+import logger from '@/config/logger';
+import CustomError from '@/error/custom-error';
+import { IError } from '@/types/error';
 
 const errorJoi = (err: CustomError): IError => {
-  const { status, message, customMessage } = err;
+  const { status, customMessage } = err;
   let errorMessage;
-
-  switch (message) {
-    case JOI_ERROR_MESSAGE.invalidRequestBody:
-      errorMessage = '잘못된 요청입니다';
-      break;
-    default:
-      errorMessage = '다시 시도해주세요';
-      break;
-  }
 
   if (customMessage) {
     errorMessage = customMessage;
+  } else {
+    errorMessage = 'joi의 customMessage를 설정하지 않았습니다';
+    logger.error('joi error handler error maybe becauseof customMessage, error:', err);
   }
 
   return { status, errorMessage };

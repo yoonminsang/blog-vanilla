@@ -38,3 +38,11 @@
   height: 9px;
   background-color: #ebebeb;
 }
+
+.post-detail .modify:hover {
+  color: black;
+}
+
+.post-detail .post-remove:hover {
+  color: black;
+}

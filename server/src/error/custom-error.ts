@@ -1,3 +1,12 @@
+/**
+ * custom error
+ * @param {number} status - http status code
+ * @param {string} message - error message for developer
+ * @param {string} from - error from where
+ * @param {strinig} customMessage - custom error message for joi and so on
+ * @return {CustomError} - custom error object
+ */
+
 class CustomError extends Error {
   status: number;
 

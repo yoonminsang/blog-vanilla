@@ -153,11 +153,10 @@ class Auth extends Component {
       window.location.href = '/';
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const { errorMessage } = err.response?.data;
+        const errorMessage = err.response?.data?.errorMessage;
         if (errorMessage) {
           this.setState({ errorMessage });
         } else {
-          // TODO: winston
           console.log(err);
         }
       } else {
@@ -178,11 +177,10 @@ class Auth extends Component {
       }, 2000);
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        const { errorMessage } = err.response?.data;
+        const errorMessage = err.response?.data?.errorMessage;
         if (errorMessage) {
           this.setState({ errorMessage });
         } else {
-          // TODO: winston
           console.log(err);
         }
       } else {

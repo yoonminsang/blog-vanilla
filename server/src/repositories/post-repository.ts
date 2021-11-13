@@ -1,7 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
-import Post from 'entity/post';
-
-const LIMIT = 20;
+import Post from '@/entity/post';
+import { LIMIT } from '@/constants/repository';
 
 @EntityRepository(Post)
 class PostRepository extends Repository<Post> {
@@ -19,25 +18,31 @@ class PostRepository extends Repository<Post> {
     return post;
   }
 
-  async readPostList(): Promise<Post[] | undefined> {
-    const post = await this.createQueryBuilder('post')
-      .select(['post.id', 'post.title', 'post.content', 'post.createdAt', 'user.nickname'])
-      .take(LIMIT)
+  async readPostList(): Promise<any[] | undefined> {
+    const postList = await this.createQueryBuilder('post')
+      .select([
+        'post.id as id',
+        'post.title as title',
+        'left(post.content,200) as content',
+        'post.createdAt as createdAt',
+        'user.nickname as nickname',
+      ])
+      .limit(LIMIT.post)
       .innerJoin('post.user', 'user')
       .orderBy('post.id', 'DESC')
-      .getMany();
-    return post;
+      .getRawMany();
+    return postList;
   }
 
   async readPostListByLastId(lastId: number): Promise<Post[] | undefined> {
-    const post = await this.createQueryBuilder('post')
+    const postList = await this.createQueryBuilder('post')
       .select(['post.id', 'post.title', 'post.content', 'post.createdAt', 'user.nickname'])
-      .take(LIMIT)
+      .limit(LIMIT.post)
       .innerJoin('post.user', 'user')
       .where('post.id < :id', { id: lastId })
       .orderBy('post.id', 'DESC')
       .getMany();
-    return post;
+    return postList;
   }
 
   async getPostForUserId(id: number): Promise<Post | undefined> {
@@ -57,7 +62,7 @@ class PostRepository extends Repository<Post> {
   }
 
   async checkPost(id: number): Promise<boolean> {
-    const post = await this.createQueryBuilder('post').where('post.id = :id', { id }).getOne();
+    const post = await this.createQueryBuilder('post').select('post.id').where('post.id = :id', { id }).getOne();
     return !!post;
   }
 }

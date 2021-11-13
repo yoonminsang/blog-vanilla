@@ -32,7 +32,7 @@ class PostDetail extends Component {
       const updateTag = isUpdated ? /* html */ `<div class="txt-bar"></div><div class="update">수정됨</div>` : '';
       const editTag =
         user?.nickname === nickname
-          ? /* html */ `<div class="txt-bar"></div><a href="/post/modify/${this.postId}">수정</a><div class="txt-bar"></div><button class="post-remove">삭제</button>`
+          ? /* html */ `<div class="txt-bar"></div><a href="/post/modify/${this.postId}" class="modify">수정</a><div class="txt-bar"></div><button class="post-remove">삭제</button>`
           : '';
       inner = /* html */ `
       <div class="title">${title}</div>
@@ -91,8 +91,7 @@ class PostDetail extends Component {
       this.setState({ post });
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // TODO: winston
-        const { errorMessage } = err.response?.data;
+        const errorMessage = err.response?.data?.errorMessage;
         if (errorMessage) {
           this.setState({ errorMessage });
         } else {
@@ -110,8 +109,7 @@ class PostDetail extends Component {
       this.history.goBack();
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // TODO: winston
-        const { errorMessage } = err.response?.data;
+        const errorMessage = err.response?.data?.errorMessage;
         if (errorMessage) {
           console.log(errorMessage);
         } else {
