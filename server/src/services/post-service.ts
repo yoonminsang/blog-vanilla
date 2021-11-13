@@ -27,7 +27,7 @@ class PostService {
 
   async readPostList() {
     const postList = await getCustomRepository(PostRepository).readPostList();
-    if (!postList) {
+    if (!postList.length) {
       throw errorGenerator({
         status: 400,
         message: POST_ERROR_MESSAGE.notFoundPostId[0],
@@ -42,7 +42,7 @@ class PostService {
 
   async readPostListByLastId(lastId: number) {
     const postList = await getCustomRepository(PostRepository).readPostListByLastId(lastId);
-    if (!postList) {
+    if (!postList.length) {
       throw errorGenerator({
         status: 400,
         message: POST_ERROR_MESSAGE.notFoundPostId[0],

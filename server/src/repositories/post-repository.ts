@@ -18,7 +18,7 @@ class PostRepository extends Repository<Post> {
     return post;
   }
 
-  async readPostList(): Promise<any[] | undefined> {
+  async readPostList(): Promise<any[]> {
     const postList = await this.createQueryBuilder('post')
       .select([
         'post.id as id',
@@ -34,7 +34,7 @@ class PostRepository extends Repository<Post> {
     return postList;
   }
 
-  async readPostListByLastId(lastId: number): Promise<Post[] | undefined> {
+  async readPostListByLastId(lastId: number): Promise<Post[]> {
     const postList = await this.createQueryBuilder('post')
       .select(['post.id', 'post.title', 'post.content', 'post.createdAt', 'user.nickname'])
       .limit(LIMIT.post)
