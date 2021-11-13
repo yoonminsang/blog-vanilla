@@ -1,4 +1,4 @@
-import { USER_ENTITY } from '../entity';
+import { POST_ENTITY, USER_ENTITY } from '../entity';
 
 const ERROR_JOI_MESSAGE = {
   invalidEmail: `올바르지 않은 이메일 형식입니다`,
@@ -11,6 +11,9 @@ const ERROR_JOI_MESSAGE = {
   exceedMaxLengthPassword: `비밀번호는 ${USER_ENTITY.passwordMaxLength}자를 넘길 수 없습니다`,
   invalidRegexPassword: `비밀번호는 대소문자, 숫자, 특수문자를 포함해야합니다`,
   fillPassword: `비밀번호를 입력해주세요`,
+  exceedMaxLengthTitle: `제목은 ${POST_ENTITY.titleMaxLength}자를 넘길 수 없습니다`,
+  fillTitle: `제목을 입력해주세요`,
+  notFoundPage: `존재하지 않는 페이지입니다`,
 };
 
 export default ERROR_JOI_MESSAGE;
