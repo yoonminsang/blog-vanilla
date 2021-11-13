@@ -5,9 +5,9 @@ name: deploy
 
 on:
   push:
-    branches: [main]
+    branches: [stop]
   pull_request:
-    branches: [main]
+    branches: [stop]
 
 jobs:
   build:
