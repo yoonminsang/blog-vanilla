@@ -16,7 +16,7 @@ class PostService {
     if (!postData) {
       throw errorGenerator({
         status: 400,
-        message: POST_ERROR_MESSAGE.notFoundPostId,
+        message: POST_ERROR_MESSAGE.notFoundPostId[0],
         from: FROM,
       });
     }
@@ -30,7 +30,7 @@ class PostService {
     if (!postList) {
       throw errorGenerator({
         status: 400,
-        message: POST_ERROR_MESSAGE.notFoundPostId,
+        message: POST_ERROR_MESSAGE.notFoundPostId[0],
         from: FROM,
       });
     }
@@ -45,7 +45,7 @@ class PostService {
     if (!postList) {
       throw errorGenerator({
         status: 400,
-        message: POST_ERROR_MESSAGE.notFoundPostId,
+        message: POST_ERROR_MESSAGE.notFoundPostId[0],
         from: FROM,
       });
     }
@@ -57,14 +57,14 @@ class PostService {
     if (!post) {
       throw errorGenerator({
         status: 400,
-        message: POST_ERROR_MESSAGE.notFoundPostId,
+        message: POST_ERROR_MESSAGE.notFoundPostId[0],
         from: FROM,
       });
     }
     if (post.userId !== userId) {
       throw errorGenerator({
         status: 403,
-        message: POST_ERROR_MESSAGE.diffrentUserId,
+        message: POST_ERROR_MESSAGE.diffrentUserId[0],
         from: FROM,
       });
     }
@@ -76,14 +76,14 @@ class PostService {
     if (!post) {
       throw errorGenerator({
         status: 400,
-        message: POST_ERROR_MESSAGE.notFoundPostId,
+        message: POST_ERROR_MESSAGE.notFoundPostId[0],
         from: FROM,
       });
     }
     if (post.userId !== userId) {
       throw errorGenerator({
         status: 403,
-        message: POST_ERROR_MESSAGE.diffrentUserId,
+        message: POST_ERROR_MESSAGE.diffrentUserId[0],
         from: FROM,
       });
     }

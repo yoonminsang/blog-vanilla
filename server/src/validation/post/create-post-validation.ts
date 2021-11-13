@@ -5,20 +5,17 @@ import { POST_ENTITY } from '@/constants/entity';
 import CustomError from '@/error/custom-error';
 import errorProcess from '@/error/error-process';
 import { JOI_ERROR_MESSAGE } from '@/constants/error-message';
+import ERROR_JOI_MESSAGE from '@/constants/error-joi-message.ts';
 
 const FROM = 'joi';
 
 const createPostValidation = (req: Request, res: Response, next: NextFunction): void => {
   try {
     const schema = Joi.object({
-      title: Joi.string()
-        .max(POST_ENTITY.titleMaxLength)
-        .required()
-        .empty('')
-        .messages({
-          'string.max': `제목은 ${POST_ENTITY.titleMaxLength}자를 넘길 수 없습니다`,
-          'any.required': `제목을 입력해주세요`,
-        }),
+      title: Joi.string().max(POST_ENTITY.titleMaxLength).required().empty('').messages({
+        'string.max': ERROR_JOI_MESSAGE.exceedMaxLengthTitle,
+        'any.required': ERROR_JOI_MESSAGE.fillTitle,
+      }),
       content: Joi.string(),
     });
 

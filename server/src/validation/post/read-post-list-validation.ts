@@ -4,6 +4,7 @@ import errorGenerator from '@/error/error-generator';
 import CustomError from '@/error/custom-error';
 import errorProcess from '@/error/error-process';
 import { JOI_ERROR_MESSAGE } from '@/constants/error-message';
+import ERROR_JOI_MESSAGE from '@/constants/error-joi-message.ts';
 
 const FROM = 'joi';
 const lastIdEmpty = 'lastId가 비어있습니다';
@@ -22,7 +23,7 @@ const readPostListValidation = (req: Request, res: Response, next: NextFunction)
         throw errorGenerator({
           status: 400,
           message: JOI_ERROR_MESSAGE.invalidRequestQuery,
-          customMessage: '존재하지 않는 페이지입니다',
+          customMessage: ERROR_JOI_MESSAGE.notFoundPage,
           from: FROM,
         });
       }

@@ -18,10 +18,10 @@ const AUTH_ERROR_MESSAGE = {
 };
 
 const POST_ERROR_MESSAGE = {
-  notFoundUserId: 'not found user id',
-  notFoundPostId: 'not found post id',
-  notFoundPostList: 'not found post list',
-  diffrentUserId: 'diffrent user id',
+  notFoundUserId: ['not found user id', '유저가 존재하지 않습니다'],
+  notFoundPostId: ['not found post id', '글이 존재하지 않습니다'],
+  notFoundPostList: ['not found post list', '글 목록이 존재하지 않습니다'],
+  diffrentUserId: ['diffrent user id', '글 작성자와 아이디가 다릅니다'],
 };
 
 const COMMENT_ERROR_MESSAGE = {
