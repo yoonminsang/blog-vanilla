@@ -4,6 +4,7 @@ import CustomError from './custom-error';
 import errorAuth from './error-handler/error-auth';
 import errorComment from './error-handler/error-comment';
 import errorJoi from './error-handler/error-joi';
+import errorMiddlewareToDo from './error-handler/error-middleware';
 import errorPost from './error-handler/error-post';
 
 const errorHandler = (err: CustomError) => {
@@ -11,6 +12,8 @@ const errorHandler = (err: CustomError) => {
   switch (err.from) {
     case 'joi':
       return errorJoi(err);
+    case 'middleware':
+      return errorMiddlewareToDo(err);
     case 'auth':
       return errorAuth(err);
     case 'post':

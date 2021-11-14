@@ -13,7 +13,7 @@ class CommentService {
     if (!existPost) {
       throw errorGenerator({
         status: 400,
-        message: COMMENT_ERROR_MESSAGE.notFoundPostId,
+        message: COMMENT_ERROR_MESSAGE.notFoundPostId[0],
         from: FROM,
       });
     }
@@ -25,11 +25,11 @@ class CommentService {
     if (!commentData) {
       throw errorGenerator({
         status: 400,
-        message: COMMENT_ERROR_MESSAGE.notFoundCommentId,
+        message: COMMENT_ERROR_MESSAGE.notFoundCommentId[0],
         from: FROM,
       });
     }
-    const isUpdated = String(commentData.createdAt) !== String(commentData.updatedAt);
+    const isUpdated = JSON.stringify(commentData.createdAt) !== JSON.stringify(commentData.updatedAt);
     const comment = { ...commentData, isUpdated };
     return comment;
   }
@@ -41,12 +41,12 @@ class CommentService {
     if (!commentListData) {
       throw errorGenerator({
         status: 400,
-        message: COMMENT_ERROR_MESSAGE.notFoundCommentList,
+        message: COMMENT_ERROR_MESSAGE.notFoundCommentList[0],
         from: FROM,
       });
     }
     const commentList = commentListData.map(comment => {
-      const isUpdated = String(comment.createdAt) !== String(comment.updatedAt);
+      const isUpdated = JSON.stringify(comment.createdAt) !== JSON.stringify(comment.updatedAt);
       return { ...comment, isUpdated };
     });
     return { commentList, lastPageId, count };
@@ -59,12 +59,12 @@ class CommentService {
     if (!commentListData) {
       throw errorGenerator({
         status: 400,
-        message: COMMENT_ERROR_MESSAGE.notFoundCommentList,
+        message: COMMENT_ERROR_MESSAGE.notFoundCommentList[0],
         from: FROM,
       });
     }
     const commentList = commentListData.map(comment => {
-      const isUpdated = String(comment.createdAt) !== String(comment.updatedAt);
+      const isUpdated = JSON.stringify(comment.createdAt) !== JSON.stringify(comment.updatedAt);
       return { ...comment, isUpdated };
     });
     return { commentList, lastPageId, count };
@@ -75,14 +75,15 @@ class CommentService {
     if (!comment) {
       throw errorGenerator({
         status: 400,
-        message: COMMENT_ERROR_MESSAGE.notFoundCommentId,
+        message: COMMENT_ERROR_MESSAGE.notFoundCommentId[0],
         from: FROM,
       });
     }
+
     if (comment.userId !== userId) {
       throw errorGenerator({
         status: 403,
-        message: COMMENT_ERROR_MESSAGE.diffrentUserId,
+        message: COMMENT_ERROR_MESSAGE.diffrentUserId[0],
         from: FROM,
       });
     }
@@ -94,14 +95,14 @@ class CommentService {
     if (!comment) {
       throw errorGenerator({
         status: 400,
-        message: COMMENT_ERROR_MESSAGE.notFoundCommentId,
+        message: COMMENT_ERROR_MESSAGE.notFoundCommentId[0],
         from: FROM,
       });
     }
     if (comment.userId !== userId) {
       throw errorGenerator({
         status: 403,
-        message: COMMENT_ERROR_MESSAGE.diffrentUserId,
+        message: COMMENT_ERROR_MESSAGE.diffrentUserId[0],
         from: FROM,
       });
     }

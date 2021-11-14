@@ -9,6 +9,11 @@ const JOI_ERROR_MESSAGE = {
   invalidRequestQuery: 'invalid request query',
 };
 
+const MIDDLEWARE_ERROR_MESSAGE = {
+  needLogin: ['need login', '로그인이 필요합니다'],
+  needLogout: ['need logout', '로그아웃이 필요합니다'],
+};
+
 const AUTH_ERROR_MESSAGE = {
   duplicateEmail: ['duplicate email', '이메일이 존재합니다'],
   duplicateNickname: ['duplicate nickname', '닉네임이 존재합니다'],
@@ -25,10 +30,10 @@ const POST_ERROR_MESSAGE = {
 };
 
 const COMMENT_ERROR_MESSAGE = {
-  notFoundPostId: 'not found post id',
-  notFoundCommentId: 'not found comment id',
-  notFoundCommentList: 'not found comment list',
-  diffrentUserId: 'diffrent user id',
+  notFoundPostId: ['not found post id', '글이 존재하지 않습니다'],
+  notFoundCommentId: ['not found comment id', '댓글이 존재하지 않습니다'],
+  notFoundCommentList: ['not found comment list', '댓글 목록이 존재하지 않습니다'],
+  diffrentUserId: ['diffre`nt user id', '글 작성자와 아이디가 다릅니다'],
 };
 
-export { JOI_ERROR_MESSAGE, AUTH_ERROR_MESSAGE, POST_ERROR_MESSAGE, COMMENT_ERROR_MESSAGE };
+export { JOI_ERROR_MESSAGE, MIDDLEWARE_ERROR_MESSAGE, AUTH_ERROR_MESSAGE, POST_ERROR_MESSAGE, COMMENT_ERROR_MESSAGE };

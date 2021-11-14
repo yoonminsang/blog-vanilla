@@ -1,13 +1,14 @@
 import logger from '@/config/logger';
-import { COMMENT_ERROR_MESSAGE } from '@/constants/error-message';
+import { MIDDLEWARE_ERROR_MESSAGE } from '@/constants/error-message';
 import CustomError from '@/error/custom-error';
 import { IError } from '@/types/error';
 
-const errorAuth = (err: CustomError): IError => {
+// TODO: 전부 에러를 마이그레이션 후에 에러 메세지를 파라미터로 받는 하나의 함수로 합치기
+const errorMiddlewareToDo = (err: CustomError): IError => {
   const { status, message } = err;
   let errorMessage: string;
 
-  const [forDeveloperError, forUserError] = Object.values(COMMENT_ERROR_MESSAGE).reduce(
+  const [forDeveloperError, forUserError] = Object.values(MIDDLEWARE_ERROR_MESSAGE).reduce(
     (acc, cur) => {
       acc[0].push(cur[0]);
       acc[1].push(cur[1]);
@@ -27,4 +28,4 @@ const errorAuth = (err: CustomError): IError => {
   return { status, errorMessage };
 };
 
-export default errorAuth;
+export default errorMiddlewareToDo;
