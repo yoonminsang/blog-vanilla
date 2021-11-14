@@ -1,10 +1,23 @@
+import { MIDDLEWARE_ERROR_MESSAGE } from '@/constants/error-message';
+import CustomError from '@/error/custom-error';
+import errorGenerator from '@/error/error-generator';
+import errorProcess from '@/error/error-process';
 import { NextFunction, Request, Response } from 'express';
+
+const FROM = 'middleware';
 
 const isNotLoggedInMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   if (!req.user) {
     return next();
   }
-  res.status(403).json({ errorMessage: '로그아웃이 필요합니다' });
+
+  const err = errorGenerator({
+    status: 403,
+    message: MIDDLEWARE_ERROR_MESSAGE.needLogout[0],
+    from: FROM,
+  });
+
+  errorProcess(res, err as CustomError);
 };
 
 export default isNotLoggedInMiddleware;

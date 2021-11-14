@@ -1,3 +1,4 @@
+import { MIDDLEWARE_ERROR_MESSAGE } from '@/constants/error-message';
 import { Request, Response } from 'express';
 import isNotLoggedInMiddleware from '../is-not-logged-in-middleware';
 
@@ -21,6 +22,6 @@ describe('isNotLoggedInMiddleware', () => {
     } as unknown as Response;
     isNotLoggedInMiddleware(req, res, next);
     expect(res.status).toBeCalledWith(403);
-    expect(res.json).toBeCalledWith({ errorMessage: '로그아웃이 필요합니다' });
+    expect(res.json).toBeCalledWith({ errorMessage: MIDDLEWARE_ERROR_MESSAGE.needLogout[1] });
   });
 });
