@@ -15,4 +15,7 @@ yarn-error.log
 # loggs
 logs
 
+# coverage
+coverage
+
 .DS_Store
