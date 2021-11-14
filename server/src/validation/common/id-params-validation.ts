@@ -19,7 +19,7 @@ const idParamsValidation = (req: Request, res: Response, next: NextFunction): vo
     if (error) {
       throw errorGenerator({
         status: 400,
-        message: JOI_ERROR_MESSAGE.invalidRequestParams,
+        message: JOI_ERROR_MESSAGE.invalidRequestParams[0],
         customMessage: 'id를 확인해주세요',
         from: FROM,
       });

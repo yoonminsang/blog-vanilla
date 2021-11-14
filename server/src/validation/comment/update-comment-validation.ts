@@ -27,7 +27,7 @@ const updateCommentValidation = (req: Request, res: Response, next: NextFunction
     if (error) {
       throw errorGenerator({
         status: 400,
-        message: JOI_ERROR_MESSAGE.invalidRequestBody,
+        message: JOI_ERROR_MESSAGE.invalidRequestBody[0],
         customMessage: error.message,
         from: FROM,
       });

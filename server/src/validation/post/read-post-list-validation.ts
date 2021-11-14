@@ -22,7 +22,7 @@ const readPostListValidation = (req: Request, res: Response, next: NextFunction)
       } else {
         throw errorGenerator({
           status: 400,
-          message: JOI_ERROR_MESSAGE.invalidRequestQuery,
+          message: JOI_ERROR_MESSAGE.invalidRequestQuery[0],
           customMessage: ERROR_JOI_MESSAGE.notFoundPage,
           from: FROM,
         });
