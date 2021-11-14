@@ -62,6 +62,26 @@ describe('basic test', () => {
     expect(res.status).toBe(200);
   });
 
+  test('read postList by lastId success', async () => {
+    const signupData = {
+      email: 'email@naver.com',
+      nickname: 'nickname',
+      password: 'qwer1234!Q',
+    };
+    const signupRes = await agent.post('/api/auth/signup').send(signupData);
+    const { accessToken } = signupRes.body;
+
+    const createPostData = {
+      title: 'title',
+      content: 'content',
+    };
+    await agent.post('/api/post').set('Authorization', `Bearer ${accessToken}`).send(createPostData);
+
+    const res = await request.get(`/api/post?lastId=1000000000`);
+    expect(res.body.postList[0]).toMatchObject(createPostData);
+    expect(res.status).toBe(200);
+  });
+
   test('read postList success', async () => {
     const signupData = {
       email: 'email@naver.com',
