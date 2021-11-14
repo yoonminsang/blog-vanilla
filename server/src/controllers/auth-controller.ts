@@ -6,13 +6,9 @@ const service = new AuthService();
 const REFRESHTOKEN = 'refreshtoken';
 
 class AuthController {
-  async checkUser(req: Request, res: Response, next: NextFunction) {
-    try {
-      const user = req.user || null;
-      res.status(200).json({ user });
-    } catch (err) {
-      next(err);
-    }
+  async checkUser(req: Request, res: Response) {
+    const user = req.user || null;
+    res.status(200).json({ user });
   }
 
   async signup(req: Request, res: Response, next: NextFunction) {
