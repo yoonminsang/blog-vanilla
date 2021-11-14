@@ -8,287 +8,285 @@ const { app } = new App();
 const request = supertest(app);
 const agent = supertest.agent(app);
 
-describe('auth', () => {
-  beforeAll(async () => {
-    await testConnection.create();
+beforeAll(async () => {
+  await testConnection.create();
+});
+
+afterAll(async () => {
+  await testConnection.close();
+});
+
+beforeEach(async () => {
+  await testConnection.clear();
+});
+
+describe('basic test', () => {
+  test('signup success', async () => {
+    const signupData = {
+      email: 'email@naver.com',
+      nickname: 'nickname',
+      password: 'qwer1234!Q',
+    };
+    const res = await request.post('/api/auth/signup').send(signupData);
+    expect(res.status).toBe(201);
   });
 
-  afterAll(async () => {
-    await testConnection.close();
+  test('login success', async () => {
+    const signupData = {
+      email: 'email@naver.com',
+      nickname: 'nickname',
+      password: 'qwer1234!Q',
+    };
+    await request.post('/api/auth/signup').send(signupData);
+
+    const loginData = { email: 'email@naver.com', password: 'qwer1234!Q' };
+    const res = await request.post('/api/auth/login').send(loginData);
+    expect(res.status).toBe(200);
   });
 
-  beforeEach(async () => {
-    await testConnection.clear();
+  test('logout success', async () => {
+    const res = await request.delete('/api/auth');
+    expect(res.status).toBe(200);
   });
 
-  describe('basic test', () => {
-    test('signup success', async () => {
+  test('checkUser null', async () => {
+    const res = await request.get('/api/auth');
+    expect(res.body).toEqual({ user: null });
+    expect(res.status).toBe(200);
+  });
+
+  test('checkUser success', async () => {
+    const signupData = {
+      email: 'email@naver.com',
+      nickname: 'nickname',
+      password: 'qwer1234!Q',
+    };
+    const signupRes = await request.post('/api/auth/signup').send(signupData);
+    const refreskToken = signupRes.headers['set-cookie'][0].split(';')[0].split('=')[1];
+    const { accessToken } = signupRes.body;
+    const checkUserRes = await request
+      .get('/api/auth')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .set('Cookie', [`refreshtoken=${refreskToken}`]);
+    expect(checkUserRes.body.user.nickname).toBe(signupData.nickname);
+    expect(checkUserRes.status).toBe(200);
+  });
+
+  test('checkUser success agent version', async () => {
+    const signupData = {
+      email: 'email@naver.com',
+      nickname: 'nickname',
+      password: 'qwer1234!Q',
+    };
+    const signupRes = await agent.post('/api/auth/signup').send(signupData);
+    const { accessToken } = signupRes.body;
+    const checkUserRes = await agent.get('/api/auth').set('Authorization', `Bearer ${accessToken}`);
+    expect(checkUserRes.body.user.nickname).toBe(signupData.nickname);
+    expect(checkUserRes.status).toBe(200);
+  });
+});
+
+describe('service test', () => {
+  test('signup exist email', async () => {
+    const signupData = {
+      email: 'email@naver.com',
+      nickname: 'nickname',
+      password: 'qwer1234!Q',
+    };
+    await request.post('/api/auth/signup').send(signupData);
+    const signupData2 = {
+      email: 'email@naver.com',
+      nickname: 'nickname2',
+      password: 'qwer1234!Q',
+    };
+    const res = await request.post('/api/auth/signup').send(signupData2);
+    expect(res.status).toBe(400);
+    expect(res.body.errorMessage).toBe(AUTH_ERROR_MESSAGE.duplicateEmail[1]);
+  });
+
+  test('signup exist nickname', async () => {
+    const signupData = {
+      email: 'email@naver.com',
+      nickname: 'nickname',
+      password: 'qwer1234!Q',
+    };
+    await request.post('/api/auth/signup').send(signupData);
+
+    const signupData2 = {
+      email: 'email2@naver.com',
+      nickname: 'nickname',
+      password: 'qwer1234!Q',
+    };
+    const res = await request.post('/api/auth/signup').send(signupData2);
+    expect(res.status).toBe(400);
+    expect(res.body.errorMessage).toBe(AUTH_ERROR_MESSAGE.duplicateNickname[1]);
+  });
+
+  test('login no exist user', async () => {
+    const loginData = {
+      email: 'email@naver.com',
+      password: 'qwer1234!Q',
+    };
+    const res = await request.post('/api/auth/login').send(loginData);
+
+    expect(res.status).toBe(409);
+    expect(res.body.errorMessage).toBe(AUTH_ERROR_MESSAGE.notFoundEmail[1]);
+  });
+
+  test('login password incorrect', async () => {
+    const signupData = {
+      email: 'email@naver.com',
+      nickname: 'nickname',
+      password: 'qwer1234!Q',
+    };
+    await request.post('/api/auth/signup').send(signupData);
+
+    const loginData = {
+      email: 'email@naver.com',
+      password: '1234123',
+    };
+    const res = await request.post('/api/auth/login').send(loginData);
+
+    expect(res.status).toBe(409);
+    expect(res.body.errorMessage).toBe(AUTH_ERROR_MESSAGE.notCorrectPassword[1]);
+  });
+});
+
+describe('auth validation fail', () => {
+  describe('signup validation fail', () => {
+    test('signup email fail', async () => {
       const signupData = {
-        email: 'email@naver.com',
+        email: 'email',
         nickname: 'nickname',
         password: 'qwer1234!Q',
       };
       const res = await request.post('/api/auth/signup').send(signupData);
-      expect(res.status).toBe(201);
-    });
-
-    test('login success', async () => {
-      const signupData = {
-        email: 'email@naver.com',
-        nickname: 'nickname',
-        password: 'qwer1234!Q',
-      };
-      await request.post('/api/auth/signup').send(signupData);
-
-      const loginData = { email: 'email@naver.com', password: 'qwer1234!Q' };
-      const res = await request.post('/api/auth/login').send(loginData);
-      expect(res.status).toBe(200);
-    });
-
-    test('logout success', async () => {
-      const res = await request.delete('/api/auth');
-      expect(res.status).toBe(200);
-    });
-
-    test('checkUser null', async () => {
-      const res = await request.get('/api/auth');
-      expect(res.body).toEqual({ user: null });
-      expect(res.status).toBe(200);
-    });
-
-    test('checkUser success', async () => {
-      const signupData = {
-        email: 'email@naver.com',
-        nickname: 'nickname',
-        password: 'qwer1234!Q',
-      };
-      const signupRes = await request.post('/api/auth/signup').send(signupData);
-      const refreskToken = signupRes.headers['set-cookie'][0].split(';')[0].split('=')[1];
-      const { accessToken } = signupRes.body;
-      const checkUserRes = await request
-        .get('/api/auth')
-        .set('Authorization', `Bearer ${accessToken}`)
-        .set('Cookie', [`refreshtoken=${refreskToken}`]);
-      expect(checkUserRes.body.user.nickname).toBe(signupData.nickname);
-      expect(checkUserRes.status).toBe(200);
-    });
-
-    test('checkUser success agent version', async () => {
-      const signupData = {
-        email: 'email@naver.com',
-        nickname: 'nickname',
-        password: 'qwer1234!Q',
-      };
-      const signupRes = await agent.post('/api/auth/signup').send(signupData);
-      const { accessToken } = signupRes.body;
-      const checkUserRes = await agent.get('/api/auth').set('Authorization', `Bearer ${accessToken}`);
-      expect(checkUserRes.body.user.nickname).toBe(signupData.nickname);
-      expect(checkUserRes.status).toBe(200);
-    });
-  });
-
-  describe('service test', () => {
-    test('signup exist email', async () => {
-      const signupData = {
-        email: 'email@naver.com',
-        nickname: 'nickname',
-        password: 'qwer1234!Q',
-      };
-      await request.post('/api/auth/signup').send(signupData);
-      const signupData2 = {
-        email: 'email@naver.com',
-        nickname: 'nickname2',
-        password: 'qwer1234!Q',
-      };
-      const res = await request.post('/api/auth/signup').send(signupData2);
       expect(res.status).toBe(400);
-      expect(res.body.errorMessage).toBe(AUTH_ERROR_MESSAGE.duplicateEmail[1]);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.invalidEmail);
     });
 
-    test('signup exist nickname', async () => {
+    test('signup email max length fail', async () => {
       const signupData = {
-        email: 'email@naver.com',
+        email: 'emailemailemailemaiilemailemail1231231sdfsdf1e12sdf123@naver.com',
         nickname: 'nickname',
         password: 'qwer1234!Q',
       };
-      await request.post('/api/auth/signup').send(signupData);
-
-      const signupData2 = {
-        email: 'email2@naver.com',
-        nickname: 'nickname',
-        password: 'qwer1234!Q',
-      };
-      const res = await request.post('/api/auth/signup').send(signupData2);
+      const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(400);
-      expect(res.body.errorMessage).toBe(AUTH_ERROR_MESSAGE.duplicateNickname[1]);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.exceedMaxLengthEmail);
     });
 
-    test('login no exist user', async () => {
-      const loginData = {
-        email: 'email@naver.com',
-        password: 'qwer1234!Q',
-      };
-      const res = await request.post('/api/auth/login').send(loginData);
-
-      expect(res.status).toBe(409);
-      expect(res.body.errorMessage).toBe(AUTH_ERROR_MESSAGE.notFoundEmail[1]);
-    });
-
-    test('login password incorrect', async () => {
+    test('signup email fill fail', async () => {
       const signupData = {
-        email: 'email@naver.com',
-        nickname: 'nickname',
-        password: 'qwer1234!Q',
-      };
-      await request.post('/api/auth/signup').send(signupData);
-
-      const loginData = {
-        email: 'email@naver.com',
-        password: '1234123',
-      };
-      const res = await request.post('/api/auth/login').send(loginData);
-
-      expect(res.status).toBe(409);
-      expect(res.body.errorMessage).toBe(AUTH_ERROR_MESSAGE.notCorrectPassword[1]);
-    });
-  });
-
-  describe('auth validation fail', () => {
-    describe('signup validation fail', () => {
-      test('signup email fail', async () => {
-        const signupData = {
-          email: 'email',
-          nickname: 'nickname',
-          password: 'qwer1234!Q',
-        };
-        const res = await request.post('/api/auth/signup').send(signupData);
-        expect(res.status).toBe(400);
-        expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.invalidEmail);
-      });
-
-      test('signup email max length fail', async () => {
-        const signupData = {
-          email: 'emailemailemailemaiilemailemail1231231sdfsdf1e12sdf123@naver.com',
-          nickname: 'nickname',
-          password: 'qwer1234!Q',
-        };
-        const res = await request.post('/api/auth/signup').send(signupData);
-        expect(res.status).toBe(400);
-        expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.exceedMaxLengthEmail);
-      });
-
-      test('signup email fill fail', async () => {
-        const signupData = {
-          email: '',
-          nickname: 'nickname',
-          password: 'qwer1234!Q',
-        };
-        const res = await request.post('/api/auth/signup').send(signupData);
-        expect(res.status).toBe(400);
-        expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.fillEmail);
-      });
-
-      test('signup nickname min length fail', async () => {
-        const signupData = {
-          email: 'email@naver.com',
-          nickname: 'a',
-          password: 'qwer1234!Q',
-        };
-        const res = await request.post('/api/auth/signup').send(signupData);
-        expect(res.status).toBe(400);
-        expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.underMinLengthNickname);
-      });
-
-      test('signup nickname max length fail', async () => {
-        const signupData = {
-          email: 'email@naver.com',
-          nickname: 'nicknamenicknamenicknamenicknamenicknamenicknamenicknamenicknamenickname',
-          password: 'qwer1234!Q',
-        };
-        const res = await request.post('/api/auth/signup').send(signupData);
-        expect(res.status).toBe(400);
-        expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.exceedMaxLengthNickname);
-      });
-
-      test('signup nickname fill fail', async () => {
-        const signupData = {
-          email: 'email@naver.com',
-          nickname: '',
-          password: 'qwer1234!Q',
-        };
-        const res = await request.post('/api/auth/signup').send(signupData);
-        expect(res.status).toBe(400);
-        expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.fillNickname);
-      });
-
-      test('signup password min length fail', async () => {
-        const signupData = {
-          email: 'email@naver.com',
-          nickname: 'nickname',
-          password: '1',
-        };
-        const res = await request.post('/api/auth/signup').send(signupData);
-        expect(res.status).toBe(400);
-        expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.underMinLengthPassword);
-      });
-
-      test('signup password max length fail', async () => {
-        const signupData = {
-          email: 'email@naver.com',
-          nickname: 'nickname',
-          password: 'qwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Q',
-        };
-        const res = await request.post('/api/auth/signup').send(signupData);
-        expect(res.status).toBe(400);
-        expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.exceedMaxLengthPassword);
-      });
-
-      test('signup password regexp fail', async () => {
-        const signupData = {
-          email: 'email@naver.com',
-          nickname: 'nickname',
-          password: '1234',
-        };
-        const res = await request.post('/api/auth/signup').send(signupData);
-        expect(res.status).toBe(400);
-        expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.invalidRegexPassword);
-      });
-
-      test('signup password fill fail', async () => {
-        const signupData = {
-          email: 'email@naver.com',
-          nickname: 'nickname',
-          password: '',
-        };
-        const res = await request.post('/api/auth/signup').send(signupData);
-        expect(res.status).toBe(400);
-        expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.fillPassword);
-      });
-    });
-
-    test('login validation fail', async () => {
-      const signupData = {
-        email: 'email@naver.com',
-        nickname: 'nickname',
-        password: 'qwer1234!Q',
-      };
-      await request.post('/api/auth/signup').send(signupData);
-
-      const loginData = {
         email: '',
+        nickname: 'nickname',
         password: 'qwer1234!Q',
       };
-      const res = await request.post('/api/auth/login').send(loginData);
+      const res = await request.post('/api/auth/signup').send(signupData);
       expect(res.status).toBe(400);
       expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.fillEmail);
+    });
 
-      const loginData2 = {
+    test('signup nickname min length fail', async () => {
+      const signupData = {
         email: 'email@naver.com',
+        nickname: 'a',
+        password: 'qwer1234!Q',
+      };
+      const res = await request.post('/api/auth/signup').send(signupData);
+      expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.underMinLengthNickname);
+    });
+
+    test('signup nickname max length fail', async () => {
+      const signupData = {
+        email: 'email@naver.com',
+        nickname: 'nicknamenicknamenicknamenicknamenicknamenicknamenicknamenicknamenickname',
+        password: 'qwer1234!Q',
+      };
+      const res = await request.post('/api/auth/signup').send(signupData);
+      expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.exceedMaxLengthNickname);
+    });
+
+    test('signup nickname fill fail', async () => {
+      const signupData = {
+        email: 'email@naver.com',
+        nickname: '',
+        password: 'qwer1234!Q',
+      };
+      const res = await request.post('/api/auth/signup').send(signupData);
+      expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.fillNickname);
+    });
+
+    test('signup password min length fail', async () => {
+      const signupData = {
+        email: 'email@naver.com',
+        nickname: 'nickname',
+        password: '1',
+      };
+      const res = await request.post('/api/auth/signup').send(signupData);
+      expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.underMinLengthPassword);
+    });
+
+    test('signup password max length fail', async () => {
+      const signupData = {
+        email: 'email@naver.com',
+        nickname: 'nickname',
+        password: 'qwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Qqwer1234!Q',
+      };
+      const res = await request.post('/api/auth/signup').send(signupData);
+      expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.exceedMaxLengthPassword);
+    });
+
+    test('signup password regexp fail', async () => {
+      const signupData = {
+        email: 'email@naver.com',
+        nickname: 'nickname',
+        password: '1234',
+      };
+      const res = await request.post('/api/auth/signup').send(signupData);
+      expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.invalidRegexPassword);
+    });
+
+    test('signup password fill fail', async () => {
+      const signupData = {
+        email: 'email@naver.com',
+        nickname: 'nickname',
         password: '',
       };
-      const res2 = await request.post('/api/auth/login').send(loginData2);
-      expect(res2.status).toBe(400);
-      expect(res2.body.errorMessage).toBe(ERROR_JOI_MESSAGE.fillPassword);
+      const res = await request.post('/api/auth/signup').send(signupData);
+      expect(res.status).toBe(400);
+      expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.fillPassword);
     });
+  });
+
+  test('login validation fail', async () => {
+    const signupData = {
+      email: 'email@naver.com',
+      nickname: 'nickname',
+      password: 'qwer1234!Q',
+    };
+    await request.post('/api/auth/signup').send(signupData);
+
+    const loginData = {
+      email: '',
+      password: 'qwer1234!Q',
+    };
+    const res = await request.post('/api/auth/login').send(loginData);
+    expect(res.status).toBe(400);
+    expect(res.body.errorMessage).toBe(ERROR_JOI_MESSAGE.fillEmail);
+
+    const loginData2 = {
+      email: 'email@naver.com',
+      password: '',
+    };
+    const res2 = await request.post('/api/auth/login').send(loginData2);
+    expect(res2.status).toBe(400);
+    expect(res2.body.errorMessage).toBe(ERROR_JOI_MESSAGE.fillPassword);
   });
 });
