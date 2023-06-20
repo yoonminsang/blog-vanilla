@@ -93,3 +93,6 @@ server
 ![image](https://user-images.githubusercontent.com/57904979/140915275-782b58bc-133b-4712-ba7f-8aea07086bc3.png)
 
 ## [기술문서](https://github.com/yoonminsang/blog-vanilla/wiki)
+
+## 유튜브 링크
+https://www.youtube.com/watch?v=NaBIJa1-Wrw&list=PLgn7cXxiKLNH4sQ4B5dOcvmAesqecHISl
